@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нетюрьма</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="popup" id="popup">
+
+        <div class="popup__window" role="dialog" aria-modal="true">
+            <button class="popup__close" aria-label="Закрыть popup">✕</button>
+
+            <div class="popup__header">
+                <h2 data-scroll class="popup__title">Политика конфидициальности</h2>
+            </div>
+
+            <div class="popup__content">
+                <h3>1. Конфиденциальность персональных данных</h3>
+                <p>Оператор и иные лица, получившие доступ к персональным данным, обязаны не раскрывать третьим лицам
+                    и не распространять персональные данные без согласия субъекта персональных данных, если иное
+                    не предусмотрено федеральным законом.</p>
+                <h3>2. Условия обработки персональных данных</h3>
+                <p>
+                    2.1. Обработка персональных данных осуществляется с согласия субъекта персональных данных
+                    на обработку его персональных данных.
+                    <br>
+                    2.2. Обработка персональных данных необходима для достижения целей, предусмотренных международным
+                    договором Российской Федерации или законом, для осуществления возложенных законодательством
+                    Российской Федерации на оператора функций, полномочий и обязанностей.
+                    <br>
+                    2.3. Обработка персональных данных необходима для осуществления правосудия, исполнения судебного
+                    акта, акта другого органа или должностного лица, подлежащих исполнению в соответствии
+                    с законодательством Российской Федерации об исполнительном производстве.
+                    <br>
+                    2.4. Обработка персональных данных необходима для исполнения договора, стороной которого либо
+                    выгодоприобретателем или поручителем по которому является субъект персональных данных, а также для
+                    заключения договора по инициативе субъекта персональных данных или договора, по которому субъект
+                    персональных данных будет являться выгодоприобретателем или поручителем.
+                    <br>
+                    2.5. Обработка персональных данных необходима для осуществления прав и законных интересов оператора
+                    или третьих лиц либо для достижения общественно значимых целей при условии, что при этом
+                    не нарушаются права и свободы субъекта персональных данных.
+                    <br>
+                    2.6. Осуществляется обработка персональных данных, доступ неограниченного круга лиц к которым
+                    предоставлен субъектом персональных данных либо по его просьбе (далее — общедоступные персональные
+                    данные).
+                    <br>
+                    2.7. Осуществляется обработка персональных данных, подлежащих опубликованию или обязательному
+                    раскрытию в соответствии с федеральным законом.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <header class="hero">
+        <div class="hero__container">
+            <div class="hero__top" data-scroll data-scroll-container data-scroll-speed="0.05">
+                <div class="hero__version"><a href="/v0">V0</a> | <a href="/v1">V1</a> | <a href="/v2" class="current">V2</a> </div>
+
+                <div class="hero__year">2026</div>
+
+                <button class="hero__theme" type="button" aria-label="Сменить тему" data-tooltip="Сменить тему">
+                    <span class="hero__theme-indicator" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="hero__main">
+                <div class="hero__brand">
+                    <div class="hero__city" data-scroll data-scroll-speed="0.9">Арт город</div>
+
+                    <div class="hero__logo" aria-label="НЕТЮРЬМА" data-scroll data-scroll-speed="0.9"></div>
+                </div>
+
+                <div class="hero__slogan">
+                    <div class="hero__word hero__word--a" data-scroll data-scroll-direction="horizontal" data-scroll-speed="0.4" data-scroll-position="left">Территория</div>
+                    <div class="hero__word hero__word--b" data-scroll data-scroll-speed="0.4">свободы,</div>
+                    <div class="hero__word hero__word--c" data-scroll data-scroll-speed="0.2">творчества,</div>
+                    <div class="hero__word hero__word--d" data-scroll data-scroll-speed="0.3">позитива</div>
+                </div>
+            </div>
+
+            <div class="hero__bottom">
+                <div class="hero__bottom-col hero__bottom-col--left">
+                    <a class="btn btn--primary" href="/">Купить билет</a>
+                </div>
+
+                <div class="hero__bottom-col hero__bottom-col--center">
+                    <a class="btn btn--open" href="#">Открыть</a>
+                </div>
+
+                <div class="hero__bottom-col hero__bottom-col--right">
+                    <div class="hero__contacts">
+                        <span class="hero__contact-title">Контакты:</span>
+                        <a class="hero__contact-email" href="mailto:hello@artgorod.ru">neturma@mail.ru</a>
+                        <a class="hero__contact-vk" href="#" target="_blank" rel="noreferrer">VK: neturma</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="main__bar">
+        <div class="main__location">
+            <span class="main__location-label">
+                Локация:
+            </span>
+            <span class="main__location-coords">
+                57.791107, 38.465832
+            </span>
+        </div>
+
+        <a href="/" class="btn btn--more">Подробнее</a>
+    </section>
+
+    <main class="main">
+        <div class="main__container">
+
+            <button class="menu-row" type="button" data-target="about" aria-expanded="false">
+                <div class="menu-row__heading">
+                    <span class="menu-row__heading-number">01</span>
+                    <h2 class="menu-row__heading-title">О проекте</h2>
+                </div>
+
+                <div class="menu-row__meta">
+                    <span class="menu-row__meta-label">Подробные ответы:</span>
+                    <span class="menu-row__meta-desc">Кто? Когда? Для Чего?</span>
+                </div>
+            </button>
+
+            <div class="menu-panel" data-panel="about" hidden>
+                <div class="menu-panel__content">
+                    <div class="menu-panel__collumns">
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="menu-row" type="button" data-target="objects" aria-expanded="false">
+                <div class="menu-row__heading">
+                    <span class="menu-row__heading-number">02</span>
+                    <h2 class="menu-row__heading-title">Арт-объекты</h2>
+                </div>
+
+                <div class="menu-row__meta">
+                    <span class="menu-row__meta-label">Важная информация:</span>
+                    <span class="menu-row__meta-desc">Про арт-объекты...</span>
+                </div>
+            </button>
+
+            <div class="menu-panel" data-panel="objects" hidden>
+                <div class="menu-panel__content">
+                    <div class="menu-panel__collumns">
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="menu-row" type="button" data-target="eat" aria-expanded="false">
+                <div class="menu-row__heading">
+                    <span class="menu-row__heading-number">03</span>
+                    <h2 class="menu-row__heading-title">О еде</h2>
+                </div>
+
+                <div class="menu-row__meta">
+                    <span class="menu-row__meta-label">Важная информация:</span>
+                    <span class="menu-row__meta-desc">Про еду...</span>
+                </div>
+            </button>
+
+            <div class="menu-panel" data-panel="eat" hidden>
+                <div class="menu-panel__content">
+                    <div class="menu-panel__collumns">
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="menu-row" type="button" data-target="visit" aria-expanded="false">
+                <div class="menu-row__heading">
+                    <span class="menu-row__heading-number">04</span>
+                    <h2 class="menu-row__heading-title">О посещении</h2>
+                </div>
+
+                <div class="menu-row__meta">
+                    <span class="menu-row__meta-label">Подробные ответы:</span>
+                    <span class="menu-row__meta-desc">Где? Для чего? Cколько?</span>
+                </div>
+            </button>
+
+            <div class="menu-panel" data-panel="visit" hidden>
+                <div class="menu-panel__content">
+                    <div class="menu-panel__collumns">
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="menu-row" type="button" data-target="freedom" aria-expanded="false">
+                <div class="menu-row__heading">
+                    <span class="menu-row__heading-number">05</span>
+                    <h2 class="menu-row__heading-title">О свободе...</h2>
+                </div>
+
+                <div class="menu-row__meta">
+                    <span class="menu-row__meta-icon">FAQ</span>
+                </div>
+            </button>
+
+            <div class="menu-panel" data-panel="freedom" hidden>
+                <div class="menu-panel__content">
+                    <div class="menu-panel__collumns">
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+
+                        <div class="menu-panel__collumn">
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into
+                            the inner sanctuary, I throw myself down among the tall grass by the trickling stream;
+                            and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear
+                            the buzz of the little world among the stalks, and grow familiar with the countless
+                            indescribable forms of the insects and flies, then I feel the presence of the Almighty, who
+                            formed us in his own image, and the breath of that universal love which bears and sustains
+                            us, as it floats around us in an eternity of bliss; and then, my friend, when darkness
+                            overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power,
+                            like the form of a beloved mistress, then I often think with longing, Oh, would I could
+                            describe these conceptions, could impress upon paper all that is living so full and warm
+                            within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite
+                            God!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container">
+
+            <div class="footer__col">
+                <h3 class="footer__title">Информация</h3>
+                <ul class="footer__list">
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Другие проекты</a></li>
+                    <li><a href="#">События</a></li>
+                    <li><a href="#" class="open-popup">Политика конфидициальности</a></li>
+                </ul>
+            </div>
+
+            <div class="footer__col">
+                <h3 class="footer__title">Подписывайся</h3>
+                <ul class="footer__list">
+                    <li><a href="#">Telegram</a></li>
+                    <li><a href="#">VK</a></li>
+                </ul>
+            </div>
+
+            <div class="footer__col">
+                <h3 class="footer__title">Для связи</h3>
+                <ul class="footer__list">
+                    <li><a href="mailto:info@netyurma.ru">NETURMA@MAIL.RU</a></li>
+                    <li><a href="tel:+74854421120">+7 (48544) 2-11-20</a></li>
+                    <li><a href="tel:+79806521120">+7 (980) 652-11-20</a></li>
+                </ul>
+            </div>
+
+            <div class="footer__dev">
+                <a href="/" class="footer__dev-logo" aria-label="Büro"></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="./scripts/locomotive-scroll.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@beta/bundled/locomotive-scroll.min.js"></script>
+    <script src="./scripts/main.js"></script>
+</body>
+
+</html>
