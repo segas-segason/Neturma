@@ -1,0 +1,24 @@
+@mixin mask-icon($url, $pos: center, $size: contain) {
+    mask: url(#{$url}) no-repeat #{$pos} / #{$size};
+    -webkit-mask: url(#{$url}) no-repeat #{$pos} / #{$size};
+}
+
+@mixin flex-center($dir: row, $justify: center, $align: center) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin button-reset {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+@mixin no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}

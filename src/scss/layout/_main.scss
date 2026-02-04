@@ -1,0 +1,30 @@
+.main {
+    border-top: var(--border-base);
+
+    &__bar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        border-top: var(--border-base);
+        border-bottom: var(--border-base);
+
+        padding: var(--pad);
+    }
+
+    &__location {
+        &-label {
+            font-weight: var(--fw-bold);
+        }
+
+        &-coords {
+            color: var(--color-muted);
+        }
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,25 @@
+.page {
+    font-family: var(--ff-base);
+    font-size: var(--fs-base);
+    line-height: var(--lh);
+    background: var(--color-bg);
+    color: var(--color-primary);
+    text-transform: var(--tt-up);
+
+    &__wrapper {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        min-height: 100vh;
+    }
+
+    &__content {
+        padding: 0 var(--pad);
+        width: 100%;
+    }
+
+    &__sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+    }
+}

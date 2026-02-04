@@ -1,0 +1,49 @@
+@use "../tools/mixins"as *;
+
+.footer {
+    &__container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 64px;
+    }
+
+    &__title {
+        border-bottom: var(--border-base);
+        padding: var(--pad);
+        margin: 0;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        list-style-type: none;
+        padding: var(--pad);
+
+        &>li a {
+            color: var(--color-muted);
+            transition: var(--transition-base);
+
+            &:hover {
+                color: var(--color-primary);
+            }
+        }
+    }
+
+    &__dev {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+
+        padding: var(--pad) 0 var(--pad);
+
+        &-logo {
+            display: block;
+            background: var(--color-muted);
+            @include mask-icon("/assets/img/logo-buro-vertical.svg");
+            width: 96px;
+            aspect-ratio: 77 / 200;
+        }
+    }
+}

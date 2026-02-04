@@ -1,0 +1,24 @@
+.ticket {
+    &__name {
+        text-transform: none;
+        font-size: var(--fs-lead);
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        letter-spacing: 0.1em;
+        text-underline-offset: 6px;
+    }
+
+    &__prices {
+        display: flex;
+        font-size: var(--fs-lead);
+    }
+
+    &__price {
+        width: 220px;
+    }
+
+    &__action {
+        display: flex;
+        justify-content: end;
+    }
+}

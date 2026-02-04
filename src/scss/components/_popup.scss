@@ -1,0 +1,45 @@
+.popup {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: var(--color-bg);
+    display: none;
+
+    width: 100%;
+    height: 100dvh;
+
+    padding: var(--pad);
+
+    &.active {
+        display: block;
+    }
+
+    &__window {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__close {
+        width: 40px;
+        height: 40px;
+
+        color: var(--color-primary);
+        border: var(--border-base);
+        border-radius: var(--radius);
+        background: transparent;
+
+        line-height: 0;
+
+        &:hover {
+            background: var(--color-primary);
+            color: var(--color-bg);
+            transform: rotate(180deg);
+        }
+    }
+
+    &__title {
+        text-align: center;
+        margin: 24px;
+    }
+}

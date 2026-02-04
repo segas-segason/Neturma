@@ -1,0 +1,53 @@
+:root {
+    /* Colors */
+    --color-primary: #000000;
+    --color-bg: #EAEAEA;
+    --color-muted: #9B9B9B;
+
+    /* Typography */
+    --ff-base: "Franklin Gothic Demi Cond", sans-serif;
+    --ff-title: "Google Sans Regular", sans-serif;
+    --ff-display: "Hagin Caps Medium", serif;
+    --ff-content: "Artifakt Element", sans-serif;
+
+    --fs-lead: clamp(1.5rem, 1.1757rem + 1.6216vw, 3rem);
+    --fs-base: clamp(1.125rem, 1.0439rem + 0.4054vw, 1.5rem);
+    --fs-display: clamp(2.5rem, 1.6892rem + 4.0541vw, 6.25rem);
+    --fs-title: clamp(2.5rem, 1.9595rem + 2.7027vw, 5rem);
+    --fs-subtitle: clamp(1.5rem, 1.0676rem + 2.1622vw, 3.5rem);
+    --fs-content: clamp(1rem, 0.7838rem + 1.0811vw, 2rem);
+    --fs-number: clamp(1rem, 0.8919rem + 0.5405vw, 1.5rem);
+
+    --lh-title: 1.2;
+    --lh: 1.45;
+    --lh-p: 1.5;
+
+    --ls: -1pt;
+
+    --fw-thin: 100;
+    --fw-extralight: 200;
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-bold: 600;
+    --fw-black: 700;
+
+    --tt-up: uppercase;
+
+    /* Layout */
+    --radius: 100px;
+    --border-base: 2px solid var(--color-primary);
+
+    /* Transition */
+    --transition-base: all 0.5s ease;
+
+    /* Adaptive helpers */
+    --pad: clamp(1rem, 0.8919rem + 0.5405vw, 1.5rem);
+    --pad-bottom: clamp(16px, 3vw, 20px);
+    --pad-btn: 8px 26px;
+
+    --gap-extrasmall: calc(var(--gap-small) / 2);
+    --gap-small: clamp(1rem, 0.8919rem + 0.5405vw, 1.5rem);
+    --gap-medium: calc(var(--gap-small) * 2);
+    --gap-large: calc(var(--gap-small) * 4);
+}

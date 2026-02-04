@@ -1,0 +1,19 @@
+@use "../tools/mixins"as *;
+
+.icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    background-color: var(--color-primary);
+
+    &[data-icon="arrow-triangle-left"] {
+        @include mask-icon("/assets/icons/arrow-triangle.svg");
+    }
+
+    &[data-icon="arrow-triangle-right"] {
+        @include mask-icon("/assets/icons/arrow-triangle.svg");
+        rotate: 180deg;
+    }
+}

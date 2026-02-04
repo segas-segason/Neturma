@@ -1,0 +1,123 @@
+@use "../tools/mixins"as *;
+
+.menu-item {
+    border-bottom: var(--border-base);
+
+    &__anchor {
+        display: block;
+        height: 0;
+        scroll-margin-top: 0;
+    }
+
+    &__trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        top: 0;
+        position: sticky;
+        z-index: 2;
+
+        background-color: var(--color-bg);
+        border: none;
+        cursor: pointer;
+
+        @include no-select;
+
+        font-family: var(--ff-content);
+        padding: 0 var(--pad);
+
+        &:hover .menu-item__heading-title {
+            transform: scale(1.05);
+            padding-left: clamp(10px, 1vw, 20px);
+        }
+
+        &[aria-expanded="true"] {
+            .menu-item__heading-title {
+                transform: scale(1);
+                padding-left: 0;
+            }
+        }
+    }
+
+    &__heading {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+
+        &-number {
+            font-size: var(--fs-number);
+            font-weight: var(--fw-bold);
+            line-height: 1.2;
+
+            border-bottom: 1px solid var(--color-primary);
+        }
+
+        &-title {
+            font-family: var(--ff-title);
+            font-size: var(--fs-display);
+            font-weight: var(--fw-regular);
+
+            transition: var(--transition-base);
+        }
+    }
+
+    &__meta {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        text-align: right;
+        font-family: var(--ff-base);
+        line-height: 1;
+
+        font-weight: var(--fw-bold);
+
+        &-label {
+            color: var(--color-muted);
+        }
+
+        &-desc {
+            text-align: right;
+        }
+
+        &-icon {
+            color: var(--color-muted);
+            font-size: clamp(1.5rem, 0.625rem + 2.8vw, 2.2rem);
+            font-weight: var(--fw-black);
+        }
+    }
+
+    &__panel {
+        overflow: hidden;
+        height: 0;
+        will-change: height;
+
+        &-inner {
+            width: 100%;
+
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity .25s ease, transform .25s ease;
+
+            will-change: opacity, transform;
+            padding-bottom: var(--pad-bottom);
+        }
+    }
+
+    &.is-open .menu-item__panel-inner {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: .08s;
+    }
+
+    &.is-open .menu-item__trigger:hover {
+        transform: scale(1);
+    }
+
+    &__freedom-text {
+        max-width: 30%;
+        font-family: var(--ff-content);
+        text-transform: none;
+    }
+}

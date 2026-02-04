@@ -1,0 +1,23 @@
+a {
+    text-decoration: none;
+    color: var(--color-primary);
+    transition: var(--transition-base);
+
+    &:hover {
+        color: var(--color-primary);
+    }
+}
+
+p {
+    text-transform: none;
+    line-height: var(--lh-p);
+}
+
+strong {
+    font-weight: var(--fw-bold);
+}
+
+::selection {
+    background: var(--color-primary);
+    color: var(--color-bg);
+}

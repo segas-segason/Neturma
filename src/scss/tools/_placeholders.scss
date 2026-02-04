@@ -1,0 +1,10 @@
+@use "mixins"as *;
+
+%logo-mask {
+    background: var(--color-primary);
+    @include mask-icon("/assets/img/logo.svg");
+    width: 100%;
+    display: block;
+    max-width: 100%;
+    pointer-events: none;
+}

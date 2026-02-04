@@ -1,0 +1,20 @@
+.location {
+    &__title {
+        text-transform: var(--tt-up);
+        font-size: var(--fs-base);
+        margin-right: 6px;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+
+        margin: calc(var(--pad) * 2) 0;
+
+        text-transform: none;
+    }
+
+    &__address {
+        color: var(--color-muted);
+    }
+}
