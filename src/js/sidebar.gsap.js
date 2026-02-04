@@ -36,11 +36,14 @@ document.addEventListener("DOMContentLoaded", () => {
         bot: { x1: 26, y1: 6, x2: 6, y2: 26 }
     };
 
-    const tl = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+    const tl = gsap.timeline({ paused: true, defaults: { ease: "sine.inOut" } });
 
     const WIDTH_FULL = "100vw";
     const WIDTH_AUTO = "auto";
 
+    let animation = null;
+
+    // Начальное состоятие сайдбара
     gsap.set(sidebar, {
         width: WIDTH_AUTO
     });
@@ -61,13 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     gsap.set(texts, {
         opacity: 0,
-        x: -8,
         display: "none"
     });
 
     gsap.set(footer, {
         opacity: 0,
-        y: 10,
         display: "none"
     });
 
@@ -100,13 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             gsap.set(texts, {
                 opacity: 1,
-                x: 0,
                 display: "block"
             });
 
             gsap.set(footer, {
                 opacity: 1,
-                display: "flex"
+                display: "flex",
+                y: 0
             });
 
             tl.play();
@@ -136,13 +137,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             gsap.set(texts, {
                 opacity: 0,
-                x: -8,
                 display: "none"
             });
 
             gsap.set(footer, {
                 opacity: 0,
-                y: 10,
                 display: "none"
             });
 

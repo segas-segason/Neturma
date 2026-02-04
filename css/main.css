@@ -443,6 +443,7 @@ strong {
   overflow: hidden;
   position: sticky;
   top: 0;
+  will-change: transform;
   background-color: var(--color-bg);
 }
 .sidebar-nav__container {
