@@ -89,9 +89,10 @@
     }
 
     &__panel {
-        overflow: hidden;
+        display: none;
+        opacity: 0;
         height: 0;
-        will-change: height;
+        overflow: hidden;
 
         &-inner {
             width: 100%;

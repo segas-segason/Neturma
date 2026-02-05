@@ -1,5 +1,3 @@
-import { gsap } from "gsap";
-
 document.addEventListener("DOMContentLoaded", () => {
     const sidebar = document.querySelector(".sidebar-nav");
     if (!sidebar) return;

@@ -1,5 +1,3 @@
-import { gsap } from "gsap";
-
 export function initPreloader() {
     const preloader = document.getElementById("preloader");
     if (!preloader) return;
