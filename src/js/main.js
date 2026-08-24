@@ -1,15 +1,37 @@
-import "../scss/main.scss";
+import "tailwindcss";
+import "../css/style.css";
 
-import { gsap } from 'gsap';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { initAnimationAccordionSections } from "./animations/animationAccordionSections";
+import { initAnimationHero } from "./animations/animationHero";
+import { initAnimationLogoMaskEffect } from "./animations/animationLogoMaskEffect";
+import { initAnimationSidebar } from "./animations/animationSidebar";
+import { initAnimationAccordionFaq } from "./animations/animationAccordionFaq";
+import { initAnimationVideoScroll } from "./animations/animationParallaxVideoEffect";
+import { initAnimationStartScrollDown } from "./animations/animationStartScrollDown";
+import { initAnimationPageLenis } from "./animations/animationsPageLenis";
+import { initAnimationButtons } from "./animations/animationButtons";
+import { initAnimationOpenCloseTrigger } from "./animations/animationOpenCloseTrigger";
 
-// Регистрация плагинов
-gsap.registerPlugin(ScrollToPlugin);
+import { initCursorSquare } from "./cursorSquare";
+import { initMapYandex } from "./mapYandex";
+import { initArtSlider, initFoodSlider } from "./fancybox";
+import { initPopup } from "./popup";
 
-window.gsap = gsap;
+document.addEventListener("DOMContentLoaded", () => {
+	initAnimationAccordionSections(); /* Анимация секций */
+	initAnimationHero(); /* Анимация главного экрана */
+	initAnimationLogoMaskEffect(); /* Анимация логотипа при движении мыши */
+	initAnimationAccordionFaq(); /* Анимация аккордеонов ответов на вопросы */
+	initAnimationVideoScroll(); /* Параллакс эффект видео */
+	initAnimationStartScrollDown(); /* Старт анимации скролла вниз */
+	initAnimationSidebar(); /* Анимация меню */
+	initAnimationPageLenis(); /* Обновление позиции страницы при прокрутке */
+	initAnimationButtons(); /* Анимация кнопок */
+	initAnimationOpenCloseTrigger();
 
-import { initPreloader } from "./preloader.gsap.js";
-initPreloader();
-
-import "./sidebar.gsap.js";
-import "./menu.gsap.js";
+	initCursorSquare(); /* Обводка курсора */
+	initMapYandex(); /* Яндекс карта */
+	initArtSlider(); /* Карусель Арт-объекты */
+	initFoodSlider(); /* Карусель О еде */
+	initPopup();
+});

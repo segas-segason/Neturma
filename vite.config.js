@@ -1,9 +1,11 @@
 import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  server: {
-    port: 5173,
-    strictPort: true,
-    open: true
-  }
+	server: {
+		port: 5173,
+		strictPort: true,
+		open: true,
+	},
+	plugins: [tailwindcss()],
 });
