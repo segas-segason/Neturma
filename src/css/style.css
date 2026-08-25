@@ -162,31 +162,28 @@ strong {
 }
 
 .cursor-square-label {
-	@apply leading-none whitespace-nowrap select-none opacity-0;
+	@apply absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none;
 }
 
-.fixed-bg {
-	--clip-top: ;
-	--clip-bottom: 0px;
-
-	clip-path: inset(var(--clip-top, 100vh) 0 var(--clip-bottom, 0px) 0);
-
-	pointer-events: none;
-	will-change: clip-path;
+.cursor-square-label svg {
+	@apply block w-6 h-6 pt-0.75;
 }
 
-.fixed-bg video,
-.fixed-bg img {
-	position: absolute;
-	inset: 0;
+@layer components {
+	.fixed-bg {
+		--clip-top: 0px;
+		--clip-bottom: 0px;
 
-	width: 100%;
-	height: 100%;
+		@apply pointer-events-none will-change-[clip-path] [clip-path:inset(var(--clip-top,100vh)_0_var(--clip-bottom,0px)_0)];
+	}
 
-	object-fit: cover;
+	.fixed-bg video,
+	.fixed-bg img {
+		@apply absolute inset-0 w-full h-full object-cover;
+	}
 }
 
 #map > ymaps,
 #map > ymaps > ymaps {
-	width: 100% !important;
+	@apply w-full!;
 }

@@ -1,18 +1,5 @@
-// ============================================================
-// AIR PARTICLES
-// ============================================================
-
 const AIR_SETTINGS = {
-	// ----------------------------------------------------------
-	// Качество:
-	// "auto"   — автоматический выбор
-	// "high"   — максимум
-	// "medium" — средний вариант
-	// "low"    — для старых компьютеров
-	// "off"    — выключить
-	// ----------------------------------------------------------
 	quality: "auto",
-	debug: true,
 
 	profiles: {
 		high: {
@@ -64,10 +51,6 @@ const AIR_SETTINGS = {
 		},
 	},
 
-	// ----------------------------------------------------------
-	// Форма "объёмной пылинки"
-	// ----------------------------------------------------------
-
 	profile: {
 		far: {
 			min: 0.55,
@@ -91,19 +74,11 @@ const AIR_SETTINGS = {
 		},
 	},
 
-	// ----------------------------------------------------------
-	// Вращение самой пылинки вокруг своей оси.
-	// ----------------------------------------------------------
-
 	rotationSpeed: {
 		far: 0.0015,
 		mid: 0.0035,
 		near: 0.006,
 	},
-
-	// ----------------------------------------------------------
-	// Общие настройки
-	// ----------------------------------------------------------
 
 	color: "#ffffff",
 
@@ -115,10 +90,6 @@ const AIR_SETTINGS = {
 	maxDpr: 1.5,
 
 	zIndex: 100,
-
-	// ----------------------------------------------------------
-	// Слои
-	// ----------------------------------------------------------
 
 	layers: {
 		far: {
@@ -144,25 +115,12 @@ const AIR_SETTINGS = {
 	},
 };
 
-// ============================================================
-// CLASS
-// ============================================================
-
 export class AirParticles {
 	static detectQuality() {
 		const cores = navigator.hardwareConcurrency || 4;
-
 		const memory = navigator.deviceMemory || 0;
-
 		const mobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
-		if (AIR_SETTINGS.debug) {
-			console.log("CPU: " + cores + "cores");
-			console.log("Memory: " + memory + "GB");
-			console.log("Mobile: " + mobile);
-		}
-
-		// Старые / слабые системы
 		if (cores <= 2) {
 			return "low";
 		}
@@ -171,14 +129,12 @@ export class AirParticles {
 			return "low";
 		}
 
-		// Мобильные устройства
 		if (mobile) {
 			return cores >= 8 && (memory === 0 || memory >= 8)
 				? "medium"
 				: "low";
 		}
 
-		// Мощные десктопы
 		if (cores >= 8 && (memory === 0 || memory >= 8)) {
 			return "high";
 		}
@@ -192,10 +148,6 @@ export class AirParticles {
 				? AirParticles.detectQuality()
 				: AIR_SETTINGS.quality;
 
-		if (AIR_SETTINGS.debug) {
-			console.log("Selected quality: " + qualityName);
-		}
-
 		const quality =
 			AIR_SETTINGS.profiles[qualityName] || AIR_SETTINGS.profiles.medium;
 
@@ -205,16 +157,8 @@ export class AirParticles {
 			quality: qualityName,
 		};
 
-		// ------------------------------------------------------
-		// Canvas
-		// ------------------------------------------------------
-
 		this.canvas = null;
 		this.ctx = null;
-
-		// ------------------------------------------------------
-		// Размеры
-		// ------------------------------------------------------
 
 		this.width = 0;
 		this.height = 0;
@@ -224,24 +168,12 @@ export class AirParticles {
 
 		this.dpr = 1;
 
-		// ------------------------------------------------------
-		// Частицы
-		// ------------------------------------------------------
-
 		this.far = [];
 		this.mid = [];
 		this.near = [];
 
-		// ------------------------------------------------------
-		// Scroll
-		// ------------------------------------------------------
-
 		this.scrollDelta = 0;
 		this.lastScroll = window.scrollY;
-
-		// ------------------------------------------------------
-		// Mouse
-		// ------------------------------------------------------
 
 		this.mouse = {
 			x: -10000,
@@ -253,19 +185,11 @@ export class AirParticles {
 
 		this.mouseSpeed = 0;
 
-		// ------------------------------------------------------
-		// Sprites
-		// ------------------------------------------------------
-
 		this.sprites = {
 			far: [],
 			mid: [],
 			near: [],
 		};
-
-		// ------------------------------------------------------
-		// Animation
-		// ------------------------------------------------------
 
 		this.raf = null;
 		this.resizeRaf = null;
@@ -275,10 +199,6 @@ export class AirParticles {
 
 		this.destroyed = false;
 	}
-
-	// ========================================================
-	// INIT
-	// ========================================================
 
 	init() {
 		if (this.options.count <= 0) return;
@@ -310,10 +230,6 @@ export class AirParticles {
 		this.raf = requestAnimationFrame(this.render);
 	}
 
-	// ========================================================
-	// CANVAS
-	// ========================================================
-
 	createCanvas() {
 		this.canvas = document.getElementById("air");
 
@@ -333,10 +249,6 @@ export class AirParticles {
 			desynchronized: true,
 		});
 	}
-
-	// ========================================================
-	// RESIZE
-	// ========================================================
 
 	resize() {
 		const oldWidth = this.width;
@@ -372,10 +284,6 @@ export class AirParticles {
 
 		this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
 
-		// ------------------------------------------------------
-		// Если окно стало больше — добавляем частицы.
-		// ------------------------------------------------------
-
 		if (oldWidth > 0 && (newWidth > oldWidth || newHeight > oldHeight)) {
 			this.addParticlesForResize(
 				oldWidth,
@@ -387,10 +295,6 @@ export class AirParticles {
 			);
 		}
 	}
-
-	// ========================================================
-	// SPRITES
-	// ========================================================
 
 	createSprites() {
 		this.sprites = {
@@ -478,23 +382,12 @@ export class AirParticles {
 		ctx.fillStyle = this.hexToRgba(this.options.color, opacity);
 
 		if (!flake) {
-			// --------------------------------------------------
-			// Дальняя частица — обычная мягкая пылинка.
-			// --------------------------------------------------
-
 			ctx.beginPath();
 
 			ctx.arc(cx, cy, size, 0, Math.PI * 2);
 
 			ctx.fill();
 		} else {
-			// --------------------------------------------------
-			// Ближняя/средняя частица.
-			//
-			// Это НЕ плоская пластинка.
-			// Делаем слегка неровный "приплюснутый комок".
-			// --------------------------------------------------
-
 			ctx.beginPath();
 
 			const points = 8;
@@ -520,12 +413,6 @@ export class AirParticles {
 			ctx.closePath();
 			ctx.fill();
 
-			// --------------------------------------------------
-			// Мягкая центральная масса.
-			// Благодаря ей частица выглядит скорее
-			// как объёмная пыль, а не как снежинка.
-			// --------------------------------------------------
-
 			ctx.beginPath();
 
 			ctx.arc(cx, cy, size * 0.65, 0, Math.PI * 2);
@@ -542,10 +429,6 @@ export class AirParticles {
 		};
 	}
 
-	// ========================================================
-	// COLOR
-	// ========================================================
-
 	hexToRgba(hex, alpha) {
 		const value = hex.replace("#", "");
 
@@ -558,10 +441,6 @@ export class AirParticles {
 		return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 	}
 
-	// ========================================================
-	// PROFILE STATES
-	// ========================================================
-
 	createProfileStates(layer) {
 		const settings = this.options.profile[layer];
 		const states = [];
@@ -572,7 +451,6 @@ export class AirParticles {
 			);
 		}
 
-		// Не даём соседним состояниям быть слишком похожими.
 		for (let i = 1; i < states.length; i++) {
 			if (Math.abs(states[i] - states[i - 1]) < 0.12) {
 				states[i] = states[i - 1] < 0.55 ? settings.max : settings.min;
@@ -582,19 +460,11 @@ export class AirParticles {
 		return states;
 	}
 
-	// ========================================================
-	// PARTICLE
-	// ========================================================
-
 	createParticle(
 		x = Math.random() * this.worldWidth,
 		y = Math.random() * this.worldHeight
 	) {
 		const depth = Math.pow(Math.random(), 2.2);
-
-		// ------------------------------------------------------
-		// Определяем слой.
-		// ------------------------------------------------------
 
 		let layer;
 
@@ -606,10 +476,6 @@ export class AirParticles {
 			layer = "near";
 		}
 
-		// ------------------------------------------------------
-		// Параметры вращения.
-		// ------------------------------------------------------
-
 		let rotationSpeed = this.options.rotationSpeed[layer];
 
 		rotationSpeed *= 0.65 + Math.random() * 0.7;
@@ -617,12 +483,6 @@ export class AirParticles {
 		if (Math.random() < 0.5) {
 			rotationSpeed *= -1;
 		}
-
-		// ------------------------------------------------------
-		// Состояния "толщины".
-		//
-		// Генерируются только один раз.
-		// ------------------------------------------------------
 
 		const profileStates = this.createProfileStates(layer);
 
@@ -632,17 +492,9 @@ export class AirParticles {
 
 			depth,
 
-			// --------------------------------------------------
-			// Движение
-			// --------------------------------------------------
-
 			vx: (Math.random() - 0.5) * 0.35,
 
 			vy: (Math.random() - 0.5) * 0.35,
-
-			// --------------------------------------------------
-			// Drift
-			// --------------------------------------------------
 
 			driftX: Math.random() * Math.PI * 2,
 
@@ -650,25 +502,13 @@ export class AirParticles {
 
 			driftSpeed: 0.002 + Math.random() * 0.003,
 
-			// --------------------------------------------------
-			// Scroll
-			// --------------------------------------------------
-
 			scrollVariation: 0.82 + Math.random() * 0.36,
-
-			// --------------------------------------------------
-			// Внешний вид
-			// --------------------------------------------------
 
 			sizeFactor: 0.65 + Math.random() * 0.7,
 
 			opacityFactor: 0.65 + Math.random() * 0.7,
 
 			spriteIndex: Math.floor(Math.random() * 5),
-
-			// --------------------------------------------------
-			// 3D-like profile
-			// --------------------------------------------------
 
 			profileStates,
 
@@ -683,27 +523,15 @@ export class AirParticles {
 			profileSpeed:
 				this.options.profile[layer].speed * (0.7 + Math.random() * 0.6),
 
-			// --------------------------------------------------
-			// Вращение вокруг собственной оси.
-			// --------------------------------------------------
-
 			rotation: Math.random() * Math.PI * 2,
 
 			rotationSpeed,
-
-			// --------------------------------------------------
-			// Предрасчёт глубины
-			// --------------------------------------------------
 
 			depthPow18: Math.pow(depth, 1.8),
 
 			depthPow17: Math.pow(depth, 1.7),
 		};
 	}
-
-	// ========================================================
-	// CREATE PARTICLES
-	// ========================================================
 
 	createParticles() {
 		this.far = [];
@@ -730,10 +558,6 @@ export class AirParticles {
 			this.near.push(particle);
 		}
 	}
-
-	// ========================================================
-	// RESIZE PARTICLES
-	// ========================================================
 
 	addParticlesForResize(
 		oldWidth,
@@ -774,10 +598,6 @@ export class AirParticles {
 		}
 	}
 
-	// ========================================================
-	// SCROLL
-	// ========================================================
-
 	handleScroll = () => {
 		const scroll = window.scrollY;
 
@@ -785,10 +605,6 @@ export class AirParticles {
 
 		this.lastScroll = scroll;
 	};
-
-	// ========================================================
-	// MOUSE
-	// ========================================================
 
 	handlePointerMove = (event) => {
 		const mouse = this.mouse;
@@ -812,10 +628,6 @@ export class AirParticles {
 		this.mouse.vy = 0;
 	};
 
-	// ========================================================
-	// PROFILE UPDATE
-	// ========================================================
-
 	updateProfile(p, delta) {
 		const states = p.profileStates;
 		const count = states.length;
@@ -824,7 +636,6 @@ export class AirParticles {
 
 		p.profileProgress += p.profileSpeed * delta;
 
-		// Переходим к следующему состоянию.
 		if (p.profileProgress >= 1) {
 			p.profileProgress -= 1;
 
@@ -835,19 +646,10 @@ export class AirParticles {
 
 		const to = states[(p.profileIndex + 1) % count];
 
-		// Плавный переход между двумя состояниями.
 		p.profile = from + (to - from) * p.profileProgress;
 	}
 
-	// ========================================================
-	// PARTICLE UPDATE
-	// ========================================================
-
 	updateParticle(p, delta) {
-		// ------------------------------------------------------
-		// drift
-		// ------------------------------------------------------
-
 		if (this.options.drift) {
 			p.driftX += p.driftSpeed * delta;
 
@@ -858,17 +660,9 @@ export class AirParticles {
 			p.vy += Math.cos(p.driftY) * this.options.driftStrength * delta;
 		}
 
-		// ------------------------------------------------------
-		// Объёмное вращение пылинки.
-		// ------------------------------------------------------
-
 		this.updateProfile(p, delta);
 
 		p.rotation += p.rotationSpeed * delta;
-
-		// ------------------------------------------------------
-		// Scroll
-		// ------------------------------------------------------
 
 		if (Math.abs(this.scrollDelta) > 0.001) {
 			const scrollFactor = 0.12 + p.depthPow18 * 0.4;
@@ -880,10 +674,6 @@ export class AirParticles {
 
 			p.vy += movement * this.options.scrollImpulse * 0.7;
 		}
-
-		// ------------------------------------------------------
-		// Mouse
-		// ------------------------------------------------------
 
 		if (this.options.mouse && this.mouse.active) {
 			const dx = p.x - this.mouse.x;
@@ -920,26 +710,14 @@ export class AirParticles {
 			}
 		}
 
-		// ------------------------------------------------------
-		// Position
-		// ------------------------------------------------------
-
 		p.x += p.vx * delta;
 
 		p.y += p.vy * delta;
-
-		// ------------------------------------------------------
-		// Friction
-		// ------------------------------------------------------
 
 		const frictionDecay = 1 - this.options.friction;
 
 		p.vx *= frictionDecay;
 		p.vy *= frictionDecay;
-
-		// ------------------------------------------------------
-		// Velocity limit
-		// ------------------------------------------------------
 
 		const speedSq = p.vx * p.vx + p.vy * p.vy;
 
@@ -953,10 +731,6 @@ export class AirParticles {
 			p.vx *= scale;
 			p.vy *= scale;
 		}
-
-		// ------------------------------------------------------
-		// Wrap
-		// ------------------------------------------------------
 
 		const margin = 40;
 
@@ -972,10 +746,6 @@ export class AirParticles {
 			p.y = -margin;
 		}
 	}
-
-	// ========================================================
-	// DRAW FAR
-	// ========================================================
 
 	drawLayer(particles, sprites) {
 		const ctx = this.ctx;
@@ -1007,10 +777,6 @@ export class AirParticles {
 		ctx.globalAlpha = 1;
 	}
 
-	// ========================================================
-	// DRAW VOLUME PARTICLES
-	// ========================================================
-
 	drawVolumeLayer(particles, sprites) {
 		const ctx = this.ctx;
 		const dpr = this.dpr;
@@ -1026,38 +792,13 @@ export class AirParticles {
 
 			const height = sprite.height * scale;
 
-			// --------------------------------------------------
-			// profile = видимая толщина пылинки.
-			//
-			// Мы сжимаем именно одну локальную ось.
-			// При этом сама частица вращается.
-			// --------------------------------------------------
-
 			const profile = p.profile;
 
 			ctx.globalAlpha = p.opacityFactor;
 
-			// --------------------------------------------------
-			// Переносим начало координат в частицу.
-			// --------------------------------------------------
-
 			ctx.setTransform(dpr, 0, 0, dpr, p.x * dpr, p.y * dpr);
 
-			// --------------------------------------------------
-			// Настоящее вращение Canvas.
-			//
-			// Нам не приходится вручную вычислять
-			// sin/cos матрицы.
-			// --------------------------------------------------
-
 			ctx.rotate(p.rotation);
-
-			// --------------------------------------------------
-			// Сжимаем одну локальную ось.
-			//
-			// Это создаёт ощущение, что приплюснутый
-			// объёмный объект поворачивается в пространстве.
-			// --------------------------------------------------
 
 			ctx.scale(1, profile);
 
@@ -1070,25 +811,13 @@ export class AirParticles {
 			);
 		}
 
-		// ------------------------------------------------------
-		// Возвращаем обычную систему координат.
-		// ------------------------------------------------------
-
 		ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
 		ctx.globalAlpha = 1;
 	}
 
-	// ========================================================
-	// RENDER
-	// ========================================================
-
 	render = (time) => {
 		if (this.destroyed) return;
-
-		// ------------------------------------------------------
-		// FPS limiter
-		// ------------------------------------------------------
 
 		const targetFps = this.options.fps;
 
@@ -1107,10 +836,6 @@ export class AirParticles {
 			this.lastFrameTime = time;
 		}
 
-		// ------------------------------------------------------
-		// Delta
-		// ------------------------------------------------------
-
 		let delta = (time - this.lastTime) / 16.666;
 
 		if (delta > 2) {
@@ -1119,10 +844,6 @@ export class AirParticles {
 
 		this.lastTime = time;
 
-		// ------------------------------------------------------
-		// Mouse speed
-		// ------------------------------------------------------
-
 		this.mouseSpeed =
 			this.options.mouse && this.mouse.active
 				? Math.min(
@@ -1130,10 +851,6 @@ export class AirParticles {
 						20
 					)
 				: 0;
-
-		// ------------------------------------------------------
-		// Update
-		// ------------------------------------------------------
 
 		for (let i = 0, len = this.far.length; i < len; i++) {
 			this.updateParticle(this.far[i], delta);
@@ -1147,28 +864,12 @@ export class AirParticles {
 			this.updateParticle(this.near[i], delta);
 		}
 
-		// ------------------------------------------------------
-		// Reset scroll impulse
-		// ------------------------------------------------------
-
 		this.scrollDelta = 0;
-
-		// ------------------------------------------------------
-		// Mouse velocity decay
-		// ------------------------------------------------------
 
 		this.mouse.vx *= 0.75;
 		this.mouse.vy *= 0.75;
 
-		// ------------------------------------------------------
-		// Clear
-		// ------------------------------------------------------
-
 		this.ctx.clearRect(0, 0, this.width, this.height);
-
-		// ------------------------------------------------------
-		// Draw
-		// ------------------------------------------------------
 
 		this.drawLayer(this.far, this.sprites.far);
 
@@ -1176,16 +877,8 @@ export class AirParticles {
 
 		this.drawVolumeLayer(this.near, this.sprites.near);
 
-		// ------------------------------------------------------
-		// Next frame
-		// ------------------------------------------------------
-
 		this.raf = requestAnimationFrame(this.render);
 	};
-
-	// ========================================================
-	// RESIZE HANDLER
-	// ========================================================
 
 	handleResize = () => {
 		if (this.resizeRaf) return;
@@ -1195,10 +888,6 @@ export class AirParticles {
 			this.resize();
 		});
 	};
-
-	// ========================================================
-	// DESTROY
-	// ========================================================
 
 	destroy() {
 		this.destroyed = true;

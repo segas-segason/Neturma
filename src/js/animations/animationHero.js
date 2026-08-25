@@ -4,9 +4,9 @@ import { initAnimationLogoMaskEffect } from "./animationLogoMaskEffect";
 
 export function initAnimationHero() {
 	const heroSection = document.querySelector("#hero");
-	const sidebar = document.querySelector("#sidebar");
+	const toggle = document.querySelector("#sidebar-toggle");
 
-	if (!heroSection || !sidebar) return;
+	if (!heroSection) return;
 
 	const year = heroSection.querySelector("#hero-year");
 	const city = heroSection.querySelector("#hero-city");
@@ -39,10 +39,13 @@ export function initAnimationHero() {
 		yPercent: 30,
 	});
 
-	gsap.set(sidebar, {
-		autoAlpha: 0,
-		xPercent: 100,
-	});
+	if (toggle) {
+		gsap.set(toggle, {
+			autoAlpha: 0,
+			transform: "scale(0)",
+			pointerEvents: "none",
+		});
+	}
 
 	gsap.set(dustLayer, {
 		autoAlpha: 0,
@@ -99,10 +102,11 @@ export function initAnimationHero() {
 			"-=0.7"
 		)
 		.to(
-			sidebar,
+			toggle,
 			{
 				autoAlpha: 1,
-				xPercent: 0,
+				transform: "scale(1)",
+				pointerEvents: "auto",
 				duration: 0.8,
 				ease: "power4.out",
 			},

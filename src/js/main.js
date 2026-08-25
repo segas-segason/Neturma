@@ -12,7 +12,7 @@ import { initAnimationPageLenis } from "./animations/animationsPageLenis";
 import { initAnimationButtons } from "./animations/animationButtons";
 import { initAnimationOpenCloseTrigger } from "./animations/animationOpenCloseTrigger";
 
-import { initCursorSquare } from "./cursorSquare";
+import { initCursorSquareDecoration } from "./cursorSquareDecoration";
 import { initMapYandex } from "./mapYandex";
 import { initArtSlider, initFoodSlider } from "./fancybox";
 import { initPopup } from "./popup";
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	initAnimationButtons(); /* Анимация кнопок */
 	initAnimationOpenCloseTrigger();
 
-	initCursorSquare(); /* Обводка курсора */
+	initCursorSquareDecoration(); /* Обводка курсора */
 	initMapYandex(); /* Яндекс карта */
 	initArtSlider(); /* Карусель Арт-объекты */
 	initFoodSlider(); /* Карусель О еде */
