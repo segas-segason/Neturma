@@ -1,5 +1,4 @@
 import gsap from "gsap";
-import { AirParticles } from "./animationDust";
 import { initAnimationLogoMaskEffect } from "./animationLogoMaskEffect";
 
 export function initAnimationHero() {
@@ -10,108 +9,125 @@ export function initAnimationHero() {
 
 	const year = heroSection.querySelector("#hero-year");
 	const city = heroSection.querySelector("#hero-city");
-	const logo = heroSection.querySelector(".logo");
+	const logo = heroSection.querySelector("#logo-head");
 	const slogan = heroSection.querySelector("#hero-slogan");
-	const cta = heroSection.querySelector("#hero-cta");
-	const address = heroSection.querySelector("#hero-address");
 	const btnDown = heroSection.querySelector("#hero-btn-down");
 	const dustLayer = document.querySelector("#air");
 
-	const dust = new AirParticles();
-	dust.init();
+	if (!dustLayer) return;
 
 	const enableLogoMask = initAnimationLogoMaskEffect();
 
 	gsap.set(logo, {
-		autoAlpha: 0,
-		transform: "scale(0)",
+		opacity: 0,
+		scale: 0,
 		transformOrigin: "center center",
 		willChange: "transform, opacity",
 	});
 
-	gsap.set([city, year, slogan], {
-		autoAlpha: 0,
-		yPercent: 30,
+	gsap.set([city, year], {
+		yPercent: 120,
 	});
 
-	gsap.set([cta, address, btnDown], {
+	gsap.set(slogan, {
+		yPercent: -120,
+	});
+
+	gsap.set(btnDown, {
 		autoAlpha: 0,
-		yPercent: 30,
+		yPercent: -30,
 	});
 
 	if (toggle) {
 		gsap.set(toggle, {
 			autoAlpha: 0,
-			transform: "scale(0)",
+			scale: 0,
 			pointerEvents: "none",
 		});
 	}
 
+	// Начальное состояние пыли
 	gsap.set(dustLayer, {
 		autoAlpha: 0,
-		transform: "scale(0)",
-		willChange: "transform, opacity",
+		scale: 0,
+		transformOrigin: "center center",
 	});
 
 	const tl = gsap.timeline({
 		delay: 0.2,
+
 		defaults: {
 			ease: "power4.out",
 			duration: 1,
 		},
 	});
 
-	tl.to(logo, {
-		autoAlpha: 1,
-		transform: "scale(1)",
-		duration: 1.5,
-		ease: "power4.out",
-	})
+	// Пыль + логотип
+	tl.to(
+		dustLayer,
+		{
+			autoAlpha: 1,
+			scale: 1,
+			duration: 1.5,
+			ease: "power2.out",
+		},
+		"0"
+	)
+
+		.to(
+			logo,
+			{
+				opacity: 1,
+				scale: 1,
+				duration: 1.5,
+				ease: "power4.out",
+			},
+			"0"
+		)
 
 		.call(() => {
 			enableLogoMask?.();
 		})
 
 		.to(
-			dustLayer,
+			[city, slogan],
 			{
-				autoAlpha: 1,
-				transform: "scale(1)",
-				duration: 1.6,
-				ease: "power2.out",
-			},
-			"0"
-		)
-
-		.to(
-			[city, year, slogan],
-			{
-				autoAlpha: 1,
 				yPercent: 0,
-				stagger: 0.1,
 			},
 			"-=0.8"
 		)
+
 		.to(
-			[cta, address, btnDown],
+			year,
 			{
-				autoAlpha: 1,
 				yPercent: 0,
-				stagger: 0.15,
 			},
 			"-=0.7"
 		)
+
 		.to(
+			btnDown,
+			{
+				autoAlpha: 1,
+				yPercent: 0,
+				ease: "power2.out",
+			},
+			"<"
+		);
+
+	if (toggle) {
+		tl.to(
 			toggle,
 			{
 				autoAlpha: 1,
-				transform: "scale(1)",
+				scale: 1,
 				pointerEvents: "auto",
 				duration: 0.8,
 				ease: "power4.out",
 			},
-			"-=0.8"
+			"-=0.7"
 		);
+	}
 
 	let completed = false;
 

@@ -1,16 +1,22 @@
 {
+	"name": "landing",
+	"version": "1.2.3",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
 		"preview": "vite preview",
-		"stop": "kill-port 5173"
+		"stop": "kill-port 5173",
+		"release:patch": "npm version patch && git push --follow-tags",
+		"release:minor": "npm version minor && git push --follow-tags",
+		"release:major": "npm version major && git push --follow-tags"
 	},
 	"dependencies": {
 		"@fancyapps/ui": "^6.1.14",
 		"@tailwindcss/vite": "^4.3.0",
 		"gsap": "^3.14.2",
 		"lenis": "^1.3.26",
+		"tailwind-clamp": "^4.5.1",
 		"tailwindcss": "^4.3.0"
 	},
 	"devDependencies": {
@@ -20,3 +26,4 @@
 		"vite": "^7.3.1"
 	}
 }
+

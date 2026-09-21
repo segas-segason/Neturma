@@ -49,3 +49,50 @@ export function initAnimationButtons(selector = ".btn") {
 		btn.addEventListener("mouseleave", () => tl.reverse());
 	});
 }
+
+export function initAnimateButtonDown() {
+	const btnDown = document.querySelector("#hero-btn-down");
+	if (!btnDown) return;
+
+	if (!window.matchMedia("(hover: hover)").matches) return;
+
+	if (btnDown.dataset.btnAnimated) return;
+	btnDown.dataset.btnAnimated = "true";
+
+	const textSpan = btnDown.querySelector(".btn-down-label > span:last-child");
+	if (!textSpan) return;
+
+	const originalText = textSpan.textContent.trim();
+	const hoverText = "узником";
+
+	textSpan.textContent = "";
+
+	const label = document.createElement("span");
+	label.className = "btn-hero__label";
+
+	const current = document.createElement("span");
+	current.className = "btn-hero__label-item";
+	current.textContent = originalText;
+
+	const next = document.createElement("span");
+	next.className = "btn-hero__label-item";
+	next.textContent = hoverText;
+
+	label.append(current, next);
+	textSpan.append(label);
+
+	gsap.set([current, next], { yPercent: 0 });
+
+	const tl = gsap
+		.timeline({
+			paused: true,
+			defaults: {
+				duration: 0.45,
+				ease: "power3.out",
+			},
+		})
+		.to([current, next], { yPercent: -100 }, 0);
+
+	btnDown.addEventListener("mouseenter", () => tl.play());
+	btnDown.addEventListener("mouseleave", () => tl.reverse());
+}

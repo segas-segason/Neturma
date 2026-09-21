@@ -1,4 +1,8 @@
 export function initAnimationLogoMaskEffect() {
+	const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+	if (isMobile) return null;
+
 	const wrapper = document.querySelector(".logo-mask-wrapper");
 	const overlay = wrapper?.querySelector(".logo-mask-image");
 	const hero = document.querySelector("#hero");

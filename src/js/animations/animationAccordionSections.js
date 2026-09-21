@@ -1,112 +1,42 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { initAnimateAboutProjectContent } from "./animateAboutProjectContent";
+import { initAnimateArtObjectsContent } from "./animateArtObjectsContent";
+import { initAnimateAboutVisitContent } from "./animateAboutVisitContent";
+import { initAnimateOnFreedomContent } from "./animateOnFreedomContent";
+import { initAnimateAboutFoodContent } from "./animateAboutFoodContent";
+import { initAnimationSceneBackground } from "./animateSceneBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function initAnimationAccordionSections({
-	root = document,
-	sectionSelector = ".menu-item",
-	triggerSelector = '[id="menu-item-trigger"]',
-	panelSelector = '[id="menu-item-panel"]',
-	duration = 0.8,
-	openDelay = 0.12,
-	closeDelay = 0.12,
-	ease = "power2.inOut",
-} = {}) {
-	if (typeof window === "undefined") return;
+ScrollTrigger.config({
+	limitCallbacks: true,
+	ignoreMobileResize: true,
+});
 
-	const sections = gsap.utils.toArray(sectionSelector, root);
+export function initAnimationAccordionSections(options = {}) {
+	const {
+		root = document,
+		sectionSelector = ".menu-item",
+		triggerSelector = '[id="menu-item-trigger"]',
+		panelSelector = '[id="menu-item-panel"]',
+		backgroundMap = {},
+	} = options;
+
+	const sections = root.querySelectorAll(sectionSelector);
+
 	if (!sections.length) return;
 
-	const reduced = window.matchMedia(
-		"(prefers-reduced-motion: reduce)"
-	).matches;
+	const globalBackgrounds = {};
 
-	const d = reduced ? 0 : duration;
-	const od = reduced ? 0 : openDelay;
-	const cd = reduced ? 0 : closeDelay;
-
-	const scenes = gsap.utils.toArray(".scene", root);
-
-	const getSceneNumber = (scene) => {
-		if (!scene) return null;
-
-		const className = [...scene.classList].find((name) =>
-			name.startsWith("scene--")
-		);
-
-		return className?.replace("scene--", "") ?? null;
-	};
-
-	const getSceneBackground = (scene) => {
-		const number = getSceneNumber(scene);
-
-		if (!number) return null;
-
-		return root.querySelector(`.fixed-bg--${number}`);
-	};
-
-	const getSceneClip = (scene) => {
-		const number = getSceneNumber(scene);
-
-		if (!number) return null;
-
-		return root.querySelector(`.scene-bg--${number}`);
-	};
-
-	const updateClip = (clipScene, background) => {
-		if (!clipScene || !background) return;
-
-		const rect = clipScene.getBoundingClientRect();
-
-		const top = Math.max(0, rect.top);
-		const bottom = Math.max(0, window.innerHeight - rect.bottom);
-
-		background.style.setProperty("--clip-top", `${top}px`);
-
-		background.style.setProperty("--clip-bottom", `${bottom}px`);
-	};
-
-	const initSceneClip = (clipScene, background) => {
-		if (!clipScene || !background) return;
-
-		updateClip(clipScene, background);
-
-		ScrollTrigger.create({
-			trigger: clipScene,
-
-			start: "top bottom",
-			end: "bottom top",
-
-			onUpdate: () => {
-				updateClip(clipScene, background);
-			},
-
-			onEnter: () => {
-				updateClip(clipScene, background);
-			},
-
-			onEnterBack: () => {
-				updateClip(clipScene, background);
-			},
-
-			onLeave: () => {
-				updateClip(clipScene, background);
-			},
-
-			onLeaveBack: () => {
-				updateClip(clipScene, background);
-			},
-		});
-	};
-
-	scenes.forEach((scene) => {
-		const clipScene = getSceneClip(scene);
-		const background = getSceneBackground(scene);
-
-		if (!clipScene || !background) return;
-
-		initSceneClip(clipScene, background);
+	sections.forEach((section) => {
+		const bgOptions = backgroundMap[section.id];
+		if (bgOptions) {
+			globalBackgrounds[section.id] = initAnimationSceneBackground({
+				...bgOptions,
+				triggerSelector: bgOptions.triggerSelector || `#${section.id}`,
+			});
+		}
 	});
 
 	sections.forEach((section) => {
@@ -115,125 +45,179 @@ export function initAnimationAccordionSections({
 
 		if (!trigger || !panel) return;
 
-		const scene = section.matches(".scene")
-			? section
-			: section.querySelector(".scene");
-
-		const clipScene = scene ? getSceneClip(scene) : null;
-
-		const background = scene ? getSceneBackground(scene) : null;
-
-		trigger.setAttribute("role", "button");
-		trigger.tabIndex = 0;
-		trigger.setAttribute("aria-expanded", "false");
+		let isOpen = false;
+		let panelAnimation = null;
+		let contentAnimation = null;
 
 		gsap.set(panel, {
 			height: 0,
 			overflow: "hidden",
 		});
 
-		const killAnimations = () => {
-			gsap.killTweensOf(panel);
-		};
-
-		const updateSceneClip = () => {
-			if (clipScene && background) {
-				updateClip(clipScene, background);
+		const getContentAnimator = (sectionId) => {
+			switch (sectionId) {
+				case "about-project":
+					return initAnimateAboutProjectContent;
+				case "art-objects-section":
+					return initAnimateArtObjectsContent;
+				case "about-visit":
+					return initAnimateAboutVisitContent;
+				case "on-freedom":
+					return initAnimateOnFreedomContent;
+				case "about-food":
+					return initAnimateAboutFoodContent;
+				default:
+					return null;
 			}
 		};
 
-		const open = () => {
-			if (section.classList.contains("is-open")) return;
+		const backgroundAnimation = globalBackgrounds[section.id] || null;
 
-			section.classList.add("is-open");
+		const destroyAllAnimations = () => {
+			if (panelAnimation) {
+				panelAnimation.kill();
+				panelAnimation = null;
+			}
+
+			gsap.killTweensOf(panel);
+
+			if (contentAnimation) {
+				if (typeof contentAnimation.destroy === "function") {
+					contentAnimation.destroy();
+				}
+				contentAnimation = null;
+			}
+		};
+
+		const calculateDuration = (
+			height,
+			speed = 1200,
+			min = 0.4,
+			max = 2.5
+		) => {
+			const duration = height / speed;
+			return Math.min(Math.max(duration, min), max);
+		};
+
+		const openSection = () => {
+			if (isOpen) return;
+			destroyAllAnimations();
+			isOpen = true;
 			trigger.setAttribute("aria-expanded", "true");
 
-			killAnimations();
+			const bgContainer = section.querySelector(
+				"[data-scene-bg-neturma]"
+			);
+			if (bgContainer) {
+				bgContainer.classList.add("is-active");
+			}
 
-			const targetHeight = panel.scrollHeight;
+			const animatorFn = getContentAnimator(section.id);
+			if (animatorFn) {
+				contentAnimation = animatorFn(panel);
+			}
 
-			gsap.set(panel, {
-				height: panel.offsetHeight,
-				overflow: "hidden",
-			});
+			// 1. Измеряем реальную высоту контента
+			gsap.set(panel, { height: "auto" });
+			const contentHeight = panel.scrollHeight;
+			gsap.set(panel, { height: 0 });
 
-			gsap.to(panel, {
-				height: targetHeight,
-				duration: d,
-				delay: od,
-				ease,
-				overwrite: true,
+			const duration = calculateDuration(contentHeight);
 
-				onUpdate: updateSceneClip,
+			// 2. Запускаем анимацию контента.
+			// Если она имеет свою длительность, её ScrollTrigger-ы должны оживать ПОСЛЕ открытия панели.
+			if (contentAnimation?.open) {
+				contentAnimation.open();
+			}
 
+			panelAnimation = gsap.to(panel, {
+				height: contentHeight,
+				duration,
+				ease: "power2.out",
 				onComplete: () => {
-					if (!section.classList.contains("is-open")) return;
+					gsap.set(panel, { height: "auto" });
 
-					gsap.set(panel, {
-						height: "auto",
-						overflow: "visible",
-					});
+					// 3. ОБНОВЛЯЕМ БЭКГРАУНД И СКРОЛЛ ТОЛЬКО ЗДЕСЬ, КОГДА ВСЁ ОТКРЫЛОСЬ
+					if (backgroundAnimation) {
+						backgroundAnimation.updateSize();
+					}
 
-					updateSceneClip();
-
+					// Даем микрозадержку, чтобы DOM успел отрендерить "height: auto"
 					ScrollTrigger.refresh();
+
+					section.dispatchEvent(
+						new CustomEvent("menu-item:opened", { bubbles: true })
+					);
 				},
 			});
 		};
 
-		const close = () => {
-			if (!section.classList.contains("is-open")) return;
-
-			section.classList.remove("is-open");
+		const closeSection = () => {
+			if (!isOpen) return;
+			isOpen = false;
 			trigger.setAttribute("aria-expanded", "false");
 
-			killAnimations();
+			const bgContainer = section.querySelector(
+				"[data-scene-bg-neturma]"
+			);
+			if (bgContainer) {
+				bgContainer.classList.remove("is-active");
+			}
+
+			if (contentAnimation?.close) {
+				contentAnimation.close();
+			}
 
 			const currentHeight = panel.offsetHeight;
+			const duration = calculateDuration(currentHeight);
 
-			gsap.set(panel, {
-				height: currentHeight,
-				overflow: "hidden",
-			});
+			if (panelAnimation) {
+				panelAnimation.kill();
+				panelAnimation = null;
+			}
+			gsap.killTweensOf(panel);
 
-			gsap.to(panel, {
+			panelAnimation = gsap.to(panel, {
 				height: 0,
-				duration: d,
-				delay: cd,
-				ease,
-				overwrite: true,
-
-				onUpdate: updateSceneClip,
-
+				duration,
+				ease: "power2.inOut",
 				onComplete: () => {
-					if (section.classList.contains("is-open")) return;
+					if (
+						contentAnimation &&
+						typeof contentAnimation.destroy === "function"
+					) {
+						contentAnimation.destroy();
+					}
+					contentAnimation = null;
 
-					gsap.set(panel, {
-						height: 0,
-					});
-
-					updateSceneClip();
+					// 4. После закрытия бэкграунд тоже должен обновить размеры
+					if (backgroundAnimation) {
+						backgroundAnimation.updateSize();
+					}
 
 					ScrollTrigger.refresh();
+
+					section.dispatchEvent(
+						new CustomEvent("menu-item:closed", { bubbles: true })
+					);
 				},
 			});
 		};
 
-		const toggle = () => {
-			if (section.classList.contains("is-open")) {
-				close();
+		trigger.addEventListener("click", () => {
+			if (isOpen) {
+				closeSection();
 			} else {
-				open();
-			}
-		};
-
-		trigger.addEventListener("click", toggle);
-
-		trigger.addEventListener("keydown", (event) => {
-			if (event.key === "Enter" || event.key === " ") {
-				event.preventDefault();
-				toggle();
+				openSection();
 			}
 		});
 	});
+
+	return {
+		destroy: () => {
+			Object.values(globalBackgrounds).forEach((bg) => {
+				if (bg && typeof bg.destroy === "function") bg.destroy();
+			});
+		},
+	};
 }

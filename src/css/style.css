@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "tailwind-clamp";
 
 @font-face {
 	font-family: "Hagin Caps Medium";
@@ -47,6 +48,8 @@
 	--tracking-wide: 5%;
 	--tracking-wider: 15%;
 	--tracking-widest: 20%;
+
+	--breakpoint-xs: 20rem;
 }
 
 a {
@@ -78,7 +81,7 @@ strong {
 }
 
 .btn {
-	@apply bg-primary py-4 px-12 inline-flex items-center justify-center h-fit w-fit text-neutral hover:text-neutral rounded-full uppercase font-deco text-2xl transition-colors text-nowrap relative;
+	@apply bg-primary py-4 px-12 inline-flex items-center justify-center h-fit w-fit text-neutral hover:text-neutral rounded-full uppercase font-deco clamp-[text,xl,2xl,xs,2xl] transition-colors text-nowrap relative;
 }
 
 .btn__label {
@@ -93,8 +96,16 @@ strong {
 	@apply absolute left-0 top-full w-full;
 }
 
+.btn-hero__label {
+	@apply block relative overflow-hidden h-[1.2em] leading-[1.2];
+}
+
+.btn-hero__label-item {
+	@apply block h-full;
+}
+
 .logo {
-	@apply mask-[url(/assets/img/logo.svg)] mask-no-repeat mask-cover pointer-events-none bg-primary aspect-240/41 relative;
+	@apply mask-[url(/assets/logo.svg)] mask-no-repeat mask-cover pointer-events-none bg-primary aspect-240/41 relative;
 }
 
 .logo-mask-image {
@@ -105,7 +116,7 @@ strong {
 	opacity: 0;
 	transition: opacity 0.35s ease;
 
-	background: url("/assets/img/bg.jpg") center / cover no-repeat;
+	background: url("/assets/img/bg.webp") center / cover no-repeat;
 
 	--x: 50%;
 	--y: 50%;
@@ -129,36 +140,73 @@ strong {
 	@apply opacity-100;
 }
 
-#carousel-art-objects .f-carousel__slide {
-	width: max-content !important;
-	flex: 0 0 auto !important;
-}
-
-#carousel-art-objects .f-carousel__slide img {
-	max-width: fit-content !important;
-	object-fit: contain;
-	display: block;
-}
-
 #carousel-art-objects {
 	--f-carousel-slide-width: max-content !important;
-	overflow: hidden;
 	--f-carousel-gap: 8px;
+	@apply overflow-hidden;
+}
+
+#carousel-art-objects .f-carousel__slide {
+	@apply w-max! shrink-0 grow-0 overflow-hidden;
 }
 
 #carousel-art-objects a.art-slider__slide {
-	display: block;
-	overflow: hidden;
+	@apply block w-max overflow-hidden;
 }
 
 #carousel-art-objects .f-carousel__slide img {
-	transform-origin: center center;
-	will-change: transform, filter;
-	transition: none;
+	@apply w-max! object-cover! lg:contrast-100 lg:transition-[filter,scale,contrast] lg:duration-500 lg:ease-in-out;
+}
+
+#carousel-art-objects:has(.f-carousel__slide:hover)
+	.f-carousel__slide:not(:hover)
+	img {
+	@apply lg:grayscale;
+}
+
+#carousel-art-objects .f-carousel__slide:hover img {
+	@apply lg:grayscale-0 lg:scale-110;
+}
+
+.food-first-gallery a[data-fancybox] img,
+#carousel-food-secondary .f-carousel__slide img {
+	@apply lg:grayscale-0 lg:contrast-100 lg:transition-[filter,scale,contrast] lg:duration-500 lg:ease-in-out;
+}
+
+#menu-item-panel:has(a[data-fancybox]:hover) a[data-fancybox]:not(:hover) img {
+	@apply lg:grayscale lg:contrast-150;
+}
+
+#menu-item-panel a[data-fancybox]:hover img {
+	@apply lg:grayscale-0 lg:scale-110;
+}
+
+#menu-item-trigger {
+	@apply text-primary transition-colors;
+}
+
+#main:has(#menu-item-trigger:hover) #menu-item-trigger:not(:hover) {
+	@apply lg:text-muted;
+}
+
+#menu-item-trigger:hover {
+	@apply text-primary;
+}
+
+.sidebar-link-label {
+	@apply text-primary transition-colors;
+}
+
+#sidebar-items:has(.sidebar-link-label:hover) .sidebar-link-label:not(:hover) {
+	@apply lg:text-muted;
+}
+
+.sidebar-link-label:hover {
+	@apply text-primary;
 }
 
 .cursor-square {
-	@apply fixed top-0 left-0 flex items-center justify-center border-2 border-primary/30 rounded-full pointer-events-none z-9999 w-9 h-9;
+	@apply fixed inset-0 flex items-center justify-center bg-primary rounded-full pointer-events-none z-9999 invert mix-blend-difference text-neutral;
 }
 
 .cursor-square-label {
@@ -169,21 +217,28 @@ strong {
 	@apply block w-6 h-6 pt-0.75;
 }
 
-@layer components {
-	.fixed-bg {
-		--clip-top: 0px;
-		--clip-bottom: 0px;
-
-		@apply pointer-events-none will-change-[clip-path] [clip-path:inset(var(--clip-top,100vh)_0_var(--clip-bottom,0px)_0)];
-	}
-
-	.fixed-bg video,
-	.fixed-bg img {
-		@apply absolute inset-0 w-full h-full object-cover;
-	}
-}
-
 #map > ymaps,
 #map > ymaps > ymaps {
 	@apply w-full!;
+}
+
+html.lenis,
+html.lenis body {
+	@apply h-auto;
+}
+
+.lenis-smooth {
+	@apply scroll-auto!;
+}
+
+.lenis-smooth [data-lenis-prevent] {
+	@apply overscroll-contain;
+}
+
+.lenis-stopped {
+	@apply overflow-hidden;
+}
+
+.lenis-scrolling iframe {
+	@apply pointer-events-none;
 }
