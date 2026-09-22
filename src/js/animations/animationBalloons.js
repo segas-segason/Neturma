@@ -15,28 +15,23 @@ const BALLOON_IMAGES = [
 const BASE_CONFIG = {
 	COUNT: 12,
 
-	// Физика отталкивания курсором
-	INFLUENCE_RADIUS: 200,
+	INFLUENCE_RADIUS: 0,
 	PUSH_STRENGTH: 30,
 	SPRING: 0.01,
 	DAMPING: 0.6,
 	MAX_OFFSET: 260,
 
-	// Геометрия
 	BALLOON_SIZE: 620,
 	ANCHOR_X: 0.5,
 	ANCHOR_Y: 0.95,
 
-	// Нитка
-	STRING_SEGMENTS: 9,
+	STRING_SEGMENTS: 24,
 	STRING_LENGTH_MIN: 400,
 	STRING_LENGTH_MAX: 400,
-	STRING_STROKE: 1,
+	STRING_STROKE: 1.5,
 
-	// Раскладка
 	SLOT_JITTER: 8,
 
-	// Коллизии
 	COLLISION_RATIO: 1,
 	SEPARATION_PADDING: 100,
 	SEPARATION_ITERATIONS: 6,
@@ -50,15 +45,14 @@ const RESPONSIVE_CONFIGS = [
 		name: "mobile",
 		media: "(max-width: 639px)",
 		config: {
-			COUNT: 6,
+			COUNT: 9,
 			BALLOON_SIZE: 320,
 			INFLUENCE_RADIUS: 0,
 			PUSH_STRENGTH: 22,
 			MAX_OFFSET: 110,
-			STRING_SEGMENTS: 9,
 			STRING_LENGTH_MIN: 180,
 			STRING_LENGTH_MAX: 180,
-			STRING_SEGMENTS: 7,
+			STRING_SEGMENTS: 18,
 			SEPARATION_PADDING: 30,
 			SEPARATION_ITERATIONS: 4,
 			SLOT_JITTER: 12,
@@ -75,7 +69,7 @@ const RESPONSIVE_CONFIGS = [
 			MAX_OFFSET: 190,
 			STRING_LENGTH_MIN: 280,
 			STRING_LENGTH_MAX: 280,
-			STRING_SEGMENTS: 8,
+			STRING_SEGMENTS: 18,
 			SEPARATION_PADDING: 60,
 			SEPARATION_ITERATIONS: 5,
 			SLOT_JITTER: 12,
@@ -119,28 +113,11 @@ function createLayer() {
 		"style",
 		"position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:100;"
 	);
-
-	const svg = document.createElementNS(SVG_NS, "svg");
-	svg.setAttribute("width", "100%");
-	svg.setAttribute("height", "100%");
-	svg.style.cssText =
-		"position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:100;overflow:visible;";
-
-	const stringsG = document.createElementNS(SVG_NS, "g");
-	svg.appendChild(stringsG);
-
-	const items = document.createElement("div");
-	items.style.cssText =
-		"position:absolute;inset:0;z-index:2;pointer-events:none;";
-
-	layer.appendChild(svg);
-	layer.appendChild(items);
 	document.body.appendChild(layer);
-
-	return { layer, stringsG, items };
+	return { layer };
 }
 
-/* ======================= РАСКЛАДКА ПО СЕТКЕ ======================= */
+/* ======================= РАСКЛАДКА ======================= */
 
 function stratify(count, cfg) {
 	const aspect = window.innerWidth / Math.max(1, window.innerHeight);
@@ -166,9 +143,31 @@ function stratify(count, cfg) {
 	}));
 }
 
-/* ======================= ОДИН ШАРИК ======================= */
+/* ======================= ОДИН ШАРИК + НИТКА ======================= */
 
-function createBalloon({ items, stringsG, index, xVW, yVH, cfg }) {
+function createBalloon({ layer, index, xVW, yVH, cfg }) {
+	const wrap = document.createElement("div");
+	wrap.className = "bln";
+	wrap.style.cssText =
+		"position:absolute;inset:0;pointer-events:none;overflow:visible;";
+
+	const svg = document.createElementNS(SVG_NS, "svg");
+	svg.setAttribute("width", "100%");
+	svg.setAttribute("height", "100%");
+	svg.style.cssText =
+		"position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;";
+
+	const path = document.createElementNS(SVG_NS, "path");
+	path.setAttribute("fill", "none");
+	path.setAttribute("stroke", "#555");
+	path.setAttribute("stroke-width", String(cfg.STRING_STROKE));
+	path.setAttribute("stroke-linecap", "round");
+	path.setAttribute("stroke-linejoin", "round");
+	path.style.opacity = "0";
+	path.style.visibility = "hidden";
+
+	svg.appendChild(path);
+
 	const img = document.createElement("img");
 	img.className = "bln__img";
 	img.draggable = false;
@@ -191,41 +190,73 @@ function createBalloon({ items, stringsG, index, xVW, yVH, cfg }) {
 	img.style.setProperty("opacity", "0", "important");
 	img.style.setProperty("visibility", "hidden", "important");
 
-	const path = document.createElementNS(SVG_NS, "path");
-	path.setAttribute("fill", "none");
-	path.setAttribute("stroke", "#555");
-	path.setAttribute("stroke-width", String(cfg.STRING_STROKE));
-	path.setAttribute("stroke-linecap", "round");
-	path.setAttribute("stroke-linejoin", "round");
-	path.style.opacity = "0";
-	path.style.visibility = "hidden";
-
-	items.appendChild(img);
-	stringsG.appendChild(path);
+	wrap.appendChild(svg);
+	wrap.appendChild(img);
+	layer.appendChild(wrap);
 
 	const b = {
 		img,
 		path,
+		wrap,
 
 		xVW,
 		restYVH: yVH,
 		scaleTo: gsap.utils.random(0.7, 0.9),
-		rot: gsap.utils.random(-12, 12),
+		rot: gsap.utils.random(-8, 8),
 
 		px: 0,
 		py: 0,
 		vx: 0,
 		vy: 0,
 		tiltAngle: 0,
+		stringBend: 0,
+		stringBendVel: 0,
+		stringStretch: 0,
 
 		avgScale: 1,
 		radius: 0,
 		centerOffX: 0,
 		centerOffY: 0,
 
-		swaySpeed: gsap.utils.random(0.5, 1.1),
+		// --- Естественный дрейф (плавное «дыхание» шарика) ---
+		// --- Естественное колыхание ---
+		driftSpeedX: gsap.utils.random(0.4, 0.6),
+		driftSpeedY: gsap.utils.random(0.2, 0.28),
+
+		driftAmpX: gsap.utils.random(8, 22),
+		driftAmpY: gsap.utils.random(3, 9),
+
+		driftPhaseX: gsap.utils.random(0, Math.PI * 2),
+		driftPhaseY: gsap.utils.random(0, Math.PI * 2),
+
+		flySwayAmp: gsap.utils.random(10, 30),
+		flySwaySpeed: gsap.utils.random(3, 3.8),
+		flySwayPhase: gsap.utils.random(0, Math.PI * 2),
+
+		flySwayX: 0, // текущее смещение по X
+		flySwayVx: 0, // скорость смещения (для наклона)
+
+		ambientX: 0,
+		ambientY: 0,
+
+		ambientVx: 0,
+		ambientVy: 0,
+
+		// Физическое состояние
+		swayX: 0,
+		swayY: 0,
+
+		swayVx: 0,
+		swayVy: 0,
+
+		// Инерция наклона
+		tiltVelocity: 0,
+
+		swaySpeed: gsap.utils.random(0.1, 0.3),
 		swayPhase: gsap.utils.random(0, Math.PI * 2),
-		swayAmount: gsap.utils.random(4, 9),
+
+		// Очень небольшое колыхание
+		swayAmount: gsap.utils.random(10, 20),
 		stringLength: gsap.utils.random(
 			cfg.STRING_LENGTH_MIN,
 			cfg.STRING_LENGTH_MAX
@@ -276,25 +307,79 @@ function getAnchorFromRect(rect, img, cfg) {
 
 function renderString(b, ax, ay, scale, cfg) {
 	const pts = b.points;
+	const N = pts.length - 1;
+	if (N <= 0) return;
+
+	const t = gsap.ticker.time;
+	const len = b.stringLength * scale;
+
+	// --- Полная скорость шарика (курсор + дрейф) ---
+	const vxTotal = b.vx + b.ambientVx + b.flySwayVx * 8;
+	const vyTotal = b.vy + (b.ambientVy || 0);
+
+	// --- Горизонтальный изгиб (пружина с перелётом) ---
+	// Шарик вправо → низ влево; шарик влево → низ вправо.
+	const targetBend = -vxTotal * 2;
+
+	b.stringBendVel += (targetBend - b.stringBend) * 0.1;
+
+	b.stringBendVel *= 0.91;
+
+	b.stringBend += b.stringBendVel;
+
+	// --- Вертикальное натяжение ---
+	// Шарик вверх → нитка визуально длиннее и прямее; вниз → чуть короче.
+	const targetStretch = -vyTotal * 0.8;
+	b.stringStretch += (targetStretch - b.stringStretch) * 0.2;
+	const effectiveLen = len + b.stringStretch;
+
+	// --- При подъёме ветер гасится → нитка становится прямой ---
+	const taut = gsap.utils.clamp(0, 1, -vyTotal / 12);
+	const windFactor = 1 - taut * 1;
+
+	// --- Параметры ветра ---
+	const wt = t * (b.swaySpeed * 0.7) + b.swayPhase;
+	const gust = 0.65 + 0.35 * Math.sin(t * 0.31 + b.swayPhase * 0.1);
+	const lenFactor = len / 400;
+	const windAmp = b.swayAmount * 0.55 * gust * lenFactor * scale * windFactor;
+
+	// Волновое число: сколько "горбов" укладывается по длине нитки.
+	// 3.2 — три-четыре изгиба, как у настоящей нитки на ветру.
+	const kWave = 20;
+
 	pts[0].x = ax;
 	pts[0].y = ay;
 
-	const t = gsap.ticker.time;
+	for (let i = 1; i <= N; i++) {
+		const f = i / N;
 
-	const len = b.stringLength * scale;
-	const sway = Math.sin(t * b.swaySpeed + b.swayPhase) * b.swayAmount * scale;
+		// Изгиб от скорости: верх почти не гнётся, низ — сильно
+		const bendEase = Math.pow(f, 1.5);
 
-	for (let i = 1; i <= cfg.STRING_SEGMENTS; i++) {
-		const f = i / cfg.STRING_SEGMENTS;
-		const infl = f * f;
+		// Бегущая волна вдоль нитки — фаза смещается по длине
+		const phase = wt - f * kWave;
 
-		const inertia = -b.vx * 4 * infl * scale;
-		const wave = sway * infl;
+		const wave1 = Math.sin(phase) * windAmp;
+		const wave2 = Math.sin(phase * 1.7 + 1.3) * windAmp * 0.22;
+		const wave3 = Math.sin(phase * 1.7 + 2.1) * windAmp * 0.18;
 
-		pts[i].x = ax + inertia + wave;
-		pts[i].y = ay + len * f + b.vy * 1.5 * infl * scale;
+		// Амплитуда волны растёт к свободному концу
+		const waveEase = Math.pow(f, 3);
+
+		// Врождённая кривизна — нитка никогда не бывает прямой палкой
+		const innate =
+			Math.sin(f * Math.PI * 1.3 + b.swayPhase * 0.5) * windAmp * 0.35;
+
+		pts[i].x =
+			ax +
+			b.stringBend * bendEase +
+			(wave1 + wave2 + wave3) * waveEase +
+			innate;
+
+		pts[i].y = ay + effectiveLen * f;
 	}
 
+	// --- Гладкая кривая через все точки ---
 	let d = `M ${pts[0].x.toFixed(2)} ${pts[0].y.toFixed(2)}`;
 	for (let i = 1; i < pts.length - 1; i++) {
 		const cur = pts[i];
@@ -314,15 +399,14 @@ function renderString(b, ax, ay, scale, cfg) {
 /* ======================= СБОРКА СЦЕНЫ ======================= */
 
 function buildScene(count, cfg) {
-	const { layer, stringsG, items } = createLayer();
+	const { layer } = createLayer();
 	const slots = stratify(count, cfg);
 
 	const balloons = [];
 	for (let i = 0; i < count; i++) {
 		balloons.push(
 			createBalloon({
-				items,
-				stringsG,
+				layer,
 				index: i,
 				xVW: slots[i].xVW,
 				yVH: slots[i].yVH,
@@ -351,7 +435,74 @@ function buildScene(count, cfg) {
 		const vh = window.innerHeight;
 		const t = gsap.ticker.time;
 
-		/* ПРОХОД 0: радиусы коллизии */
+		/* --- 1. Естественный дрейф шариков --- */
+		for (let i = 0; i < balloons.length; i++) {
+			const b = balloons[i];
+
+			/*
+			 * Медленный поток воздуха.
+			 *
+			 * Это не движение шарика напрямую.
+			 * Это только "ветер", который толкает шарик.
+			 */
+			const windX =
+				Math.sin(t * b.driftSpeedX + b.driftPhaseX) * b.driftAmpX +
+				Math.sin(t * b.driftSpeedX * 0.47 + b.driftPhaseX * 1.7) *
+					b.driftAmpX *
+					3;
+
+			const windY =
+				Math.sin(t * b.driftSpeedY + b.driftPhaseY) * b.driftAmpY +
+				Math.sin(t * b.driftSpeedY * 0.63 + b.driftPhaseY * 1.4) *
+					b.driftAmpY *
+					0.3;
+
+			/*
+			 * Пружина.
+			 *
+			 * Шарик стремится к позиции,
+			 * но не телепортируется туда.
+			 */
+			const spring = 0.018;
+			const damping = 0.88;
+
+			b.swayVx += (windX - b.swayX) * spring;
+			b.swayVy += (windY - b.swayY) * spring;
+
+			b.swayVx *= damping;
+			b.swayVy *= damping;
+
+			b.swayX += b.swayVx;
+			b.swayY += b.swayVy;
+
+			/*
+			 * Плавная скорость движения.
+			 * Она понадобится нитке и наклону.
+			 */
+			b.ambientVx += (b.swayVx - b.ambientVx) * 0.12;
+			b.ambientVy += (b.swayVy - b.ambientVy) * 0.12;
+
+			b.ambientX += (b.swayX - b.ambientX) * 0.18;
+
+			b.ambientY += (b.swayY - b.ambientY) * 0.18;
+
+			/*
+			 * Летящее колыхание слева-направо.
+			 * Две синусоиды с разной частотой — движение не выглядит
+			 * механическим маятником, а «дышит».
+			 */
+			const flyTarget =
+				Math.sin(t * b.flySwaySpeed + b.flySwayPhase) * b.flySwayAmp +
+				Math.sin(t * b.flySwaySpeed * 0.53 + b.flySwayPhase * 2.1) *
+					b.flySwayAmp *
+					0.4;
+
+			const prevFlySwayX = b.flySwayX;
+			b.flySwayX += (flyTarget - b.flySwayX) * 0.15; // мягкая инерция
+			b.flySwayVx = b.flySwayX - prevFlySwayX; // скорость для наклона
+		}
+
+		/* --- 2. Пересчёт радиусов/центров --- */
 		for (let i = 0; i < balloons.length; i++) {
 			const b = balloons[i];
 
@@ -371,11 +522,12 @@ function buildScene(count, cfg) {
 			b.centerOffY = (0.5 - cfg.ANCHOR_Y) * cfg.BALLOON_SIZE * s;
 		}
 
+		/* --- 3. Физика отталкивания курсором + пружина к покою --- */
 		for (let i = 0; i < balloons.length; i++) {
 			const b = balloons[i];
 
-			const restX = (b.xVW / 100) * vw;
-			const restY = (b.restYVH / 100) * vh;
+			const restX = (b.xVW / 100) * vw + b.ambientX;
+			const restY = (b.restYVH / 100) * vh + b.ambientY;
 
 			const probe = b.lastAnchor || { x: restX + b.px, y: restY + b.py };
 
@@ -402,6 +554,7 @@ function buildScene(count, cfg) {
 			b.py = gsap.utils.clamp(-cfg.MAX_OFFSET, cfg.MAX_OFFSET, b.py);
 		}
 
+		/* --- 4. Разделение шариков (коллизии) --- */
 		for (let iter = 0; iter < cfg.SEPARATION_ITERATIONS; iter++) {
 			for (let i = 0; i < balloons.length; i++) {
 				const a = balloons[i];
@@ -411,10 +564,20 @@ function buildScene(count, cfg) {
 					const c = balloons[j];
 					if (c.radius <= 0) continue;
 
-					const ax = (a.xVW / 100) * vw + a.px + a.centerOffX;
-					const ay = (a.restYVH / 100) * vh + a.py + a.centerOffY;
-					const cx = (c.xVW / 100) * vw + c.px + c.centerOffX;
-					const cy = (c.restYVH / 100) * vh + c.py + c.centerOffY;
+					const ax =
+						(a.xVW / 100) * vw + a.px + a.ambientX + a.centerOffX;
+					const ay =
+						(a.restYVH / 100) * vh +
+						a.py +
+						a.ambientY +
+						a.centerOffY;
+					const cx =
+						(c.xVW / 100) * vw + c.px + c.ambientX + c.centerOffX;
+					const cy =
+						(c.restYVH / 100) * vh +
+						c.py +
+						c.ambientY +
+						c.centerOffY;
 
 					let ddx = cx - ax;
 					let ddy = cy - ay;
@@ -450,22 +613,86 @@ function buildScene(count, cfg) {
 			b.py = gsap.utils.clamp(-cfg.MAX_OFFSET, cfg.MAX_OFFSET, b.py);
 		}
 
+		/* --- 5. Установка позиции + наклон шарика --- */
 		for (let i = 0; i < balloons.length; i++) {
 			const b = balloons[i];
 
 			const restX = (b.xVW / 100) * vw;
 			const restY = (b.restYVH / 100) * vh;
 
-			b.setX(restX + b.px - cfg.BALLOON_SIZE * cfg.ANCHOR_X);
-			b.setY(restY + b.py - cfg.BALLOON_SIZE * cfg.ANCHOR_Y);
+			// Позиция
+			b.setX(
+				restX +
+					b.px +
+					b.ambientX +
+					b.flySwayX - // ← летящее колыхание по X
+					cfg.BALLOON_SIZE * cfg.ANCHOR_X
+			);
+			b.setY(restY + b.py + b.ambientY - cfg.BALLOON_SIZE * cfg.ANCHOR_Y);
 
-			const targetTilt =
-				Math.sin(t * b.swaySpeed * 0.6 + b.swayPhase) * 1.5 -
-				b.vx * 0.25;
-			b.tiltAngle += (targetTilt - b.tiltAngle) * 0.1;
-			b.setRot(b.rot + b.tiltAngle);
+			/*
+			 * ==========================================
+			 * ДИНАМИЧЕСКОЕ КОЛЫХАНИЕ
+			 * ==========================================
+			 *
+			 * Угол постоянно меняется.
+			 * Шарик не получает один постоянный наклон.
+			 */
+
+			const naturalSway =
+				Math.sin(t * b.swaySpeed + b.swayPhase) * b.swayAmount;
+
+			/*
+			 * Медленная вторая волна.
+			 * Она делает движение менее механическим.
+			 */
+			const secondarySway =
+				Math.sin(t * b.swaySpeed * 0.43 + b.swayPhase * 1.7) *
+				b.swayAmount *
+				0.35;
+
+			/*
+			 * Реакция на движение.
+			 *
+			 * Если шарик движется вправо,
+			 * его корпус немного отклоняется назад.
+			 */
+			const velocityTilt = -b.vx * 0.32 - b.ambientVx * 0.6; // ← реакция на летящее колыхание
+
+			const targetTilt = naturalSway + secondarySway + velocityTilt;
+
+			/*
+			 * Пружина наклона.
+			 *
+			 * Здесь важно НЕ делать:
+			 *
+			 * tiltAngle = targetTilt
+			 *
+			 * иначе наклон будет меняться слишком резко.
+			 */
+			const tiltForce = (targetTilt - b.tiltAngle) * 0.02;
+
+			b.tiltVelocity += tiltForce;
+
+			/*
+			 * Сопротивление воздуха.
+			 */
+			b.tiltVelocity *= 0.82;
+
+			/*
+			 * Изменяем текущий угол.
+			 */
+			b.tiltAngle += b.tiltVelocity;
+
+			/*
+			 * Ограничиваем угол.
+			 */
+			b.tiltAngle = gsap.utils.clamp(-2, 2, b.tiltAngle);
+
+			b.setRot(b.tiltAngle);
 		}
 
+		/* --- 6. Нитка --- */
 		for (let i = 0; i < balloons.length; i++) {
 			const b = balloons[i];
 
@@ -501,8 +728,7 @@ function buildScene(count, cfg) {
 		window.removeEventListener("touchmove", onTouchMove);
 		balloons.forEach((b) => {
 			gsap.killTweensOf(b.img);
-			b.img.remove();
-			b.path.remove();
+			b.wrap.remove(); // wrap уносит с собой и img, и path
 		});
 		layer.remove();
 	};
@@ -518,7 +744,7 @@ function buildScene(count, cfg) {
 
 export function initBalloons(options = {}) {
 	const overrides = {};
-	let countBase = null; // эталон для desktop
+	let countBase = null;
 
 	if (typeof options === "number") {
 		countBase = Math.max(0, Math.floor(options));

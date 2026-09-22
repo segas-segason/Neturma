@@ -34,7 +34,7 @@ export function initCursorSquareDecoration() {
 	const MENU_SIZE = {
 		width: 64,
 		height: 64,
-		borderRadius: 9999,
+		borderRadius: 999,
 	};
 
 	const pressCursor = () => {
@@ -59,7 +59,7 @@ export function initCursorSquareDecoration() {
 		yPercent: -50,
 		width: DEFAULT_SIZE,
 		height: DEFAULT_SIZE,
-		borderRadius: 9999,
+		borderRadius: 999,
 		scale: 1,
 	});
 
@@ -215,7 +215,7 @@ export function initCursorSquareDecoration() {
 				{
 					width: DEFAULT_SIZE,
 					height: DEFAULT_SIZE,
-					borderRadius: 9999,
+					borderRadius: 999,
 					scale: 1,
 				},
 				0.65

@@ -92,12 +92,12 @@ export function initAnimationStartScrollDown() {
 	const { balloons, elements: balloonEls } = balloonSystem;
 
 	const isMobile = window.matchMedia("(max-width: 1023px)").matches;
-	const Y_START = isMobile ? 260 : 220;
+	const Y_START = isMobile ? 260 : 320;
 	const Y_END = isMobile ? -420 : -280;
 
 	gsap.set(balloonEls, {
-		yPercent: 220,
-		scale: 0,
+		yPercent: 320,
+		scale: 0.5,
 		rotation: (i) => balloons[i].rot,
 		autoAlpha: 0,
 		transformOrigin: "50% 80%",
@@ -111,15 +111,14 @@ export function initAnimationStartScrollDown() {
 			{
 				yPercent: Y_END,
 				xPercent: (i) => gsap.utils.random(-80, 80),
-				rotation: (i) => balloons[i].rot + gsap.utils.random(-15, 15),
-				duration: (i) => gsap.utils.random(2.0, 2.8),
+				duration: (i) => gsap.utils.random(3.4, 4),
 				ease: "none",
 			},
 			{ autoAlpha: 0, duration: 0.3 },
 		],
-		scale: (i) => balloons[i].scaleTo,
+		scale: (i) => gsap.utils.random(0.2, 0.5),
 		stagger: {
-			each: (i) => gsap.utils.random(0.05, 0.2),
+			each: (i) => gsap.utils.random(0.5, 0.8),
 			from: "random",
 		},
 	});

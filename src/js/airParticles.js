@@ -3,10 +3,10 @@ export class AirParticles {
 		quality: "auto",
 		maxDpr: 1.5,
 		color: "#ffffff",
-		scrollImpulse: 0.001,
+		scrollImpulse: 0.1,
 		friction: 0.05,
 		maxVelocity: 55,
-		mouseRadius: 250,
+		mouseRadius: 100,
 		mouseForce: 0.5,
 		driftStrength: 0.008,
 		profiles: {
@@ -68,8 +68,28 @@ export class AirParticles {
 		this.lastScroll = window.scrollY;
 		this.raf = null;
 		this.lastTime = 0;
+		this.lastFrameTime = 0;
 		this.frameInterval = 0;
 		this.destroyed = false;
+		this._resizeRaf = null;
+
+		this._updateParticleBound = this._updateParticle.bind(this);
+
+		this.optParams = {
+			drift: false,
+			driftStrength: 0,
+			mouseEnabled: false,
+			mouseRadius: 0,
+			mouseForce: 0,
+			friction: 0,
+			maxVelSq: 0,
+			scrollImpulse: 0,
+			mouse: null,
+			mouseSpeed: 0,
+			scrollDelta: 0,
+			w: 0,
+			h: 0,
+		};
 	}
 
 	init() {
@@ -91,6 +111,7 @@ export class AirParticles {
 		this._createSprites();
 		this._createParticles();
 		this.lastTime = performance.now();
+		this.lastFrameTime = this.lastTime; // Синхронизация старта
 		this.raf = requestAnimationFrame(this._render);
 	}
 
@@ -275,26 +296,11 @@ export class AirParticles {
 	}
 
 	_updateParticle(p, delta, opt) {
-		const {
-			drift,
-			driftStrength,
-			mouseEnabled,
-			mouseRadius,
-			mouseForce,
-			friction,
-			maxVelSq,
-			scrollImpulse,
-			mouse,
-			scrollDelta,
-			w,
-			h,
-		} = opt;
-
-		if (drift) {
+		if (opt.drift) {
 			p.driftX += p.driftSpeed * delta;
 			p.driftY += p.driftSpeed * 0.8 * delta;
-			p.vx += Math.sin(p.driftX) * driftStrength * delta;
-			p.vy += Math.cos(p.driftY) * driftStrength * delta;
+			p.vx += Math.sin(p.driftX) * opt.driftStrength * delta;
+			p.vy += Math.cos(p.driftY) * opt.driftStrength * delta;
 		}
 
 		const states = p.states;
@@ -311,58 +317,70 @@ export class AirParticles {
 
 		p.rotation += p.rotationSpeed * delta;
 
-		if (Math.abs(scrollDelta) > 0.001) {
+		if (Math.abs(opt.scrollDelta) > 0.001) {
 			const move =
-				-scrollDelta * (0.12 + p.depthPow18 * 0.4) * p.scrollVar;
+				-opt.scrollDelta * (0.12 + p.depthPow18 * 0.4) * p.scrollVar;
 			p.y += move;
-			p.vy += move * scrollImpulse * 0.7;
+			p.vy += move * opt.scrollImpulse * 0.7 * delta;
 		}
 
-		if (mouseEnabled && mouse.active) {
-			const dx = p.x - mouse.x,
-				dy = p.y - mouse.y;
+		if (opt.mouseEnabled && opt.mouse.active) {
+			const dx = p.x - opt.mouse.x;
+			const dy = p.y - opt.mouse.y;
 			const distSq = dx * dx + dy * dy;
-			const radSq = mouseRadius * mouseRadius;
+			const radSq = opt.mouseRadius * opt.mouseRadius;
+
 			if (distSq < radSq && distSq > 0.01) {
 				const dist = Math.sqrt(distSq);
-				const infl = 1 - dist / mouseRadius;
-				const force = infl * infl * p.depthPow17 * mouseForce * 0.35;
-				const normX = dx / dist,
-					normY = dy / dist;
-				p.vx += normX * force * opt.mouseSpeed;
-				p.vy += normY * force * opt.mouseSpeed;
+				const infl = 1 - dist / opt.mouseRadius;
+				const depthFactor = 0.35 + p.depthPow17 * 0.65;
+				const force = infl * infl * depthFactor * opt.mouseForce;
+
+				const normX = dx / dist;
+				const normY = dy / dist;
+
+				// Отталкивание + передача скорости мыши для плавности
+				p.vx +=
+					(normX * force * 10 + opt.mouse.vx * infl * 0.1) * delta;
+				p.vy +=
+					(normY * force * 10 + opt.mouse.vy * infl * 0.1) * delta;
 			}
 		}
 
 		p.x += p.vx * delta;
 		p.y += p.vy * delta;
-		const fric = 1 - friction;
+
+		const fric = Math.pow(1 - opt.friction, delta);
 		p.vx *= fric;
 		p.vy *= fric;
+
 		const spdSq = p.vx * p.vx + p.vy * p.vy;
-		if (spdSq > maxVelSq) {
-			const scale = Math.sqrt(maxVelSq / spdSq);
+		if (spdSq > opt.maxVelSq) {
+			const scale = Math.sqrt(opt.maxVelSq / spdSq);
 			p.vx *= scale;
 			p.vy *= scale;
 		}
 
 		const margin = 40;
-		if (p.x < -margin) p.x = w + margin;
-		else if (p.x > w + margin) p.x = -margin;
-		if (p.y < -margin) p.y = h + margin;
-		else if (p.y > h + margin) p.y = -margin;
+		if (p.x < -margin) p.x = opt.w + margin;
+		else if (p.x > opt.w + margin) p.x = -margin;
+		if (p.y < -margin) p.y = opt.h + margin;
+		else if (p.y > opt.h + margin) p.y = -margin;
 	}
 
 	_render = (time) => {
 		if (this.destroyed) return;
 
 		const targetFps = this.config.fps;
-		if (targetFps > 0) {
+		if (targetFps > 0 && targetFps < 60) {
 			const interval = 1000 / targetFps;
-			if (time - this.lastFrameTime < interval) {
+			const elapsed = time - this.lastFrameTime;
+			if (elapsed < interval - 2) {
 				this.raf = requestAnimationFrame(this._render);
 				return;
 			}
+			this.lastFrameTime = time - (elapsed % interval);
+		} else {
 			this.lastFrameTime = time;
 		}
 
@@ -371,28 +389,23 @@ export class AirParticles {
 		this.lastTime = time;
 
 		const mouse = this.mouse;
-		const mouseSpeed =
-			this.config.mouse && mouse.active
-				? Math.min(Math.abs(mouse.vx) + Math.abs(mouse.vy), 20)
-				: 0;
 
-		const opt = {
-			drift: this.config.drift,
-			driftStrength: this.config.driftStrength,
-			mouseEnabled: this.config.mouse,
-			mouseRadius: this.config.mouseRadius,
-			mouseForce: this.config.mouseForce,
-			friction: this.config.friction,
-			maxVelSq: this.config.maxVelocity * this.config.maxVelocity,
-			scrollImpulse: this.config.scrollImpulse,
-			mouse: mouse,
-			mouseSpeed: mouseSpeed,
-			scrollDelta: this.scrollDelta,
-			w: this.width,
-			h: this.height,
-		};
+		// Заполняем существующий объект параметров вместо создания нового
+		const opt = this.optParams;
+		opt.drift = this.config.drift;
+		opt.driftStrength = this.config.driftStrength;
+		opt.mouseEnabled = this.config.mouse;
+		opt.mouseRadius = this.config.mouseRadius;
+		opt.mouseForce = this.config.mouseForce;
+		opt.friction = this.config.friction;
+		opt.maxVelSq = this.config.maxVelocity * this.config.maxVelocity;
+		opt.scrollImpulse = this.config.scrollImpulse;
+		opt.mouse = mouse;
+		opt.scrollDelta = this.scrollDelta;
+		opt.w = this.width;
+		opt.h = this.height;
 
-		const upd = this._updateParticle.bind(this);
+		const upd = this._updateParticleBound;
 		const parts = this.particles;
 		for (const key of ["far", "mid", "near"]) {
 			const arr = parts[key];
