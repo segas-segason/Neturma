@@ -1,7 +1,8 @@
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollToPlugin);
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
 const SCROLL_SPACER_ID = "sidebar-scroll-spacer";
 
@@ -68,7 +69,7 @@ const getAccordionTrigger = (section) =>
 const getAccordionPanel = (section) =>
 	section.querySelector(".menu-item-panel, [id='menu-item-panel']");
 
-export function initAnimationSidebar({ navigate } = {}) {
+export function initAnimationSidebar({ navigate, openAccordion } = {}) {
 	const sidebar = document.querySelector("#sidebar");
 	const logo = document.querySelector("#sidebar-logo");
 	const toggle = document.querySelector("#sidebar-toggle");
@@ -118,7 +119,7 @@ export function initAnimationSidebar({ navigate } = {}) {
 	const tl = gsap.timeline({ paused: true, reversed: true });
 
 	tl.to(sidebar, { xPercent: 0, duration: 0.3, ease: "power2.out" })
-	
+
 		.to(
 			lineTop,
 			{
@@ -209,131 +210,94 @@ export function initAnimationSidebar({ navigate } = {}) {
 		});
 	});
 
-	const openAccordionFor = (hash, onReady) => {
-		const id = hash.startsWith("#") ? hash.slice(1) : hash;
-		if (!id) return onReady();
-
-		const targetEl = document.getElementById(id);
-		if (!targetEl) return onReady();
-
-		const section = targetEl.closest(".menu-item") || targetEl;
-		const trigger = getAccordionTrigger(section);
-		const panel = getAccordionPanel(section);
-
-		if (!trigger || !panel) return onReady();
-
-		if (trigger.getAttribute("aria-expanded") === "true") {
-			return onReady();
-		}
-
-		let done = false;
-		let ro = null;
-		let fallbackTimer = null;
-
-		const finish = () => {
-			if (done) return;
-			done = true;
-			ro?.disconnect();
-			fallbackTimer?.kill();
-			section.removeEventListener("menu-item:opened", finish);
-			onReady();
-		};
-
-		section.addEventListener("menu-item:opened", finish, {
-			once: true,
-			signal,
-		});
-
-		if (typeof ResizeObserver !== "undefined") {
-			let stable = 0;
-			let lastH = -1;
-			ro = new ResizeObserver(() => {
-				const h = panel.offsetHeight;
-				if (h > 0 && h === lastH) {
-					stable++;
-					if (stable >= 2) finish();
-				} else {
-					stable = 0;
-					lastH = h;
-				}
-			});
-			ro.observe(panel);
-		}
-
-		fallbackTimer = gsap.delayedCall(3, finish);
-
-		trigger.click();
-	};
-
-	const SCROLL_START_DELAY = 0.25;
-	const SCROLL_DURATION = 1.0;
+	const SCROLL_DURATION = 0.75;
 
 	sidebar.addEventListener(
 		"click",
 		(e) => {
 			const link = e.target.closest("a[href^='#']");
+
 			if (!link || !sidebar.contains(link)) return;
 
 			e.preventDefault();
 
 			const targetId = link.getAttribute("href");
+
 			if (!targetId || targetId === "#") return;
 
-			const startScroll = () => {
+			const startScroll = async () => {
+				/*
+				 * Сначала выполняем переход hero → main,
+				 * если он требуется.
+				 */
+				if (typeof navigate === "function") {
+					await navigate(targetId);
+				}
+
+				/* ---------- HERO ---------- */
+
+				if (targetId === "#hero") {
+					window.scrollTo(0, 0);
+					return;
+				}
+
+				/* ---------- MAIN ---------- */
+
 				const id = targetId.slice(1);
 				const targetEl = document.getElementById(id);
+
 				if (!targetEl) return;
 
 				const sectionEl = targetEl.closest(".menu-item") || targetEl;
+
 				const trigger = getAccordionTrigger(sectionEl);
 				const panel = getAccordionPanel(sectionEl);
 
+				/* Секция без accordion */
+
 				if (!trigger || !panel) {
-					if (typeof navigate === "function") navigate(targetId);
 					scrollSectionToTop(sectionEl, {
 						duration: SCROLL_DURATION,
 					});
+
 					return;
 				}
 
-				const isOpen = trigger.getAttribute("aria-expanded") === "true";
+				/* Accordion уже открыт */
 
-				if (isOpen) {
-					if (typeof navigate === "function") navigate(targetId);
+				if (trigger.getAttribute("aria-expanded") === "true") {
 					scrollSectionToTop(sectionEl, {
 						duration: SCROLL_DURATION,
 					});
+
 					return;
 				}
 
-				sectionEl.addEventListener(
-					"menu-item:opened",
-					() => {
-						const top =
-							sectionEl.getBoundingClientRect().top +
-							window.scrollY;
-						if (Math.abs(window.scrollY - top) > 6) {
-							scrollSectionToTop(sectionEl, { duration: 0.6 });
-						}
-					},
-					{ once: true, signal }
-				);
+				/* Accordion закрыт */
 
-				trigger.click();
+				const opened = openAccordion?.(id, { immediate: true });
 
-				gsap.delayedCall(SCROLL_START_DELAY, () => {
-					if (typeof navigate === "function") navigate(targetId);
+				if (!opened) {
+					trigger.click();
+				}
+
+				ScrollTrigger.refresh();
+
+				requestAnimationFrame(() => {
 					scrollSectionToTop(sectionEl, {
 						duration: SCROLL_DURATION,
+						ease: "power3.inOut",
 					});
 				});
 			};
 
 			const isOpen = !tl.reversed();
+
 			if (isOpen) {
-				closeSidebar(startScroll);
+				closeSidebar();
+				void startScroll();
 			} else {
-				startScroll();
+				void startScroll();
 			}
 		},
 		{ signal }

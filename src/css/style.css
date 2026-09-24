@@ -155,7 +155,7 @@ strong {
 }
 
 #carousel-art-objects .f-carousel__slide img {
-	@apply w-max! object-cover! lg:contrast-100 lg:transition-[filter,scale,contrast] lg:duration-500 lg:ease-in-out;
+	@apply w-max! object-cover! lg:transition-[filter,scale] lg:duration-500 lg:ease-in-out;
 }
 
 #carousel-art-objects:has(.f-carousel__slide:hover)
@@ -170,11 +170,11 @@ strong {
 
 .food-first-gallery a[data-fancybox] img,
 #carousel-food-secondary .f-carousel__slide img {
-	@apply lg:grayscale-0 lg:contrast-100 lg:transition-[filter,scale,contrast] lg:duration-500 lg:ease-in-out;
+	@apply lg:grayscale-0 lg:transition-[filter,scale] lg:duration-500 lg:ease-in-out;
 }
 
 #menu-item-panel:has(a[data-fancybox]:hover) a[data-fancybox]:not(:hover) img {
-	@apply lg:grayscale lg:contrast-150;
+	@apply lg:grayscale;
 }
 
 #menu-item-panel a[data-fancybox]:hover img {

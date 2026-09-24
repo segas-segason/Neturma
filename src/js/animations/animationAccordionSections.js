@@ -24,6 +24,7 @@ export function initAnimationAccordionSections(options = {}) {
 	} = options;
 
 	const sections = root.querySelectorAll(sectionSelector);
+	const sectionControllers = new Map();
 
 	if (!sections.length) return;
 
@@ -99,7 +100,21 @@ export function initAnimationAccordionSections(options = {}) {
 			return Math.min(Math.max(duration, min), max);
 		};
 
-		const openSection = () => {
+		const completeOpen = () => {
+			gsap.set(panel, { height: "auto" });
+
+			if (backgroundAnimation) {
+				backgroundAnimation.updateSize();
+			}
+
+			ScrollTrigger.refresh();
+
+			section.dispatchEvent(
+				new CustomEvent("menu-item:opened", { bubbles: true })
+			);
+		};
+
+		const openSection = ({ immediate = false } = {}) => {
 			if (isOpen) return;
 			destroyAllAnimations();
 			isOpen = true;
@@ -126,29 +141,19 @@ export function initAnimationAccordionSections(options = {}) {
 
 			// 2. Запускаем анимацию контента.
 			// Если она имеет свою длительность, её ScrollTrigger-ы должны оживать ПОСЛЕ открытия панели.
-			if (contentAnimation?.open) {
-				contentAnimation.open();
+			const contentTimeline = contentAnimation?.open?.();
+
+			if (immediate) {
+				contentTimeline?.progress?.(1);
+				completeOpen();
+				return;
 			}
 
 			panelAnimation = gsap.to(panel, {
 				height: contentHeight,
 				duration,
 				ease: "power2.out",
-				onComplete: () => {
-					gsap.set(panel, { height: "auto" });
-
-					// 3. ОБНОВЛЯЕМ БЭКГРАУНД И СКРОЛЛ ТОЛЬКО ЗДЕСЬ, КОГДА ВСЁ ОТКРЫЛОСЬ
-					if (backgroundAnimation) {
-						backgroundAnimation.updateSize();
-					}
-
-					// Даем микрозадержку, чтобы DOM успел отрендерить "height: auto"
-					ScrollTrigger.refresh();
-
-					section.dispatchEvent(
-						new CustomEvent("menu-item:opened", { bubbles: true })
-					);
-				},
+				onComplete: completeOpen,
 			});
 		};
 
@@ -211,9 +216,24 @@ export function initAnimationAccordionSections(options = {}) {
 				openSection();
 			}
 		});
+
+		sectionControllers.set(section.id, {
+			open: openSection,
+		});
 	});
 
 	return {
+		open: (sectionId, options) => {
+			const id = sectionId.startsWith("#")
+				? sectionId.slice(1)
+				: sectionId;
+			const controller = sectionControllers.get(id);
+
+			if (!controller) return false;
+
+			controller.open(options);
+			return true;
+		},
 		destroy: () => {
 			Object.values(globalBackgrounds).forEach((bg) => {
 				if (bg && typeof bg.destroy === "function") bg.destroy();

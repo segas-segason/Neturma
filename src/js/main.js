@@ -14,6 +14,7 @@ import {
 	initAnimateButtonDown,
 } from "./animations/animationButtons";
 import { initAnimationScenes } from "./animations/animateScences";
+import { initAnimationNotFoundGallery } from "./animations/animationNotFoundGallery";
 
 import { initCursorSquareDecoration } from "./cursorSquareDecoration";
 import { initYandexMap, initYandexMetrika } from "./yandexApp";
@@ -27,17 +28,22 @@ import { initPopup } from "./popup";
 import { initFixedBgOnFreedom } from "./fixedBgOnFreedom";
 
 document.addEventListener("DOMContentLoaded", () => {
-	initAnimationAccordionSections(); /* Анимация секций */
+	const accordionSections = initAnimationAccordionSections(); /* Анимация секций */
 	initAirParticles(); /* Пыль */
 	initAnimationHero(); /* Анимация главного экрана */
 	initAnimationLogoMaskEffect(); /* Анимация логотипа при движении мыши */
 	initAnimationAccordionFaq(); /* Анимация аккордеонов ответов на вопросы */
-	initAnimationStartScrollDown(); /* Старт анимации скролла вниз */
-	initAnimationSidebar(); /* Анимация меню */
+	const heroNavigation = initAnimationStartScrollDown();
+
+	initAnimationSidebar({
+		navigate: heroNavigation?.navigate,
+		openAccordion: accordionSections?.open,
+	});
 	initAnimationsSmoothScroll(); /* Обновление позиции страницы при прокрутке */
 	initAnimationButtons(); /* Анимация кнопок */
 	initAnimateButtonDown(); /* Анимация кнопки Вниз */
 	initAnimationScenes(); /* Параметры сцен */
+	initAnimationNotFoundGallery();
 	initFixedBgOnFreedom(); /* Фикс фоновой картинки в секции О свободе */
 
 	initCursorSquareDecoration(); /* Обводка курсора */

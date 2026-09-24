@@ -3,7 +3,8 @@ export class AirParticles {
 		quality: "auto",
 		maxDpr: 1.5,
 		color: "#ffffff",
-		scrollImpulse: 0.1,
+		scrollImpulse: 0.025,
+		maxScrollDelta: 48,
 		friction: 0.05,
 		maxVelocity: 55,
 		mouseRadius: 100,
@@ -321,7 +322,7 @@ export class AirParticles {
 			const move =
 				-opt.scrollDelta * (0.12 + p.depthPow18 * 0.4) * p.scrollVar;
 			p.y += move;
-			p.vy += move * opt.scrollImpulse * 0.7 * delta;
+			p.vy += move * opt.scrollImpulse;
 		}
 
 		if (opt.mouseEnabled && opt.mouse.active) {
@@ -460,7 +461,12 @@ export class AirParticles {
 
 	_onScroll = () => {
 		const s = window.scrollY;
-		this.scrollDelta = s - this.lastScroll;
+		const delta = s - this.lastScroll;
+		const limit = this.config.maxScrollDelta;
+		this.scrollDelta = Math.max(
+			-limit,
+			Math.min(limit, this.scrollDelta + delta)
+		);
 		this.lastScroll = s;
 	};
 

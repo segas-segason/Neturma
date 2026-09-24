@@ -25,7 +25,6 @@ export function initAnimationStartScrollDown() {
 	const dividerLine = document.querySelectorAll("#line-divider");
 
 	const mainSections = gsap.utils.toArray("#main > section");
-	const sidebarLinks = document.querySelectorAll("#sidebar-nav a[href^='#']");
 
 	const dustLayer = document.getElementById("air");
 	const aboutProjectSection = document.querySelector(
@@ -34,8 +33,14 @@ export function initAnimationStartScrollDown() {
 	const onFreedomSection = document.querySelector("[data-on-freedom-panel]");
 
 	const clipTargets = [hero, aboutProjectSection, onFreedomSection];
+	let dustClipRaf = null;
+	let lastDustClip = "";
+	let isHeroVisible = true;
+	let isAnimating = false;
+	let tlDirection = 1;
 
 	const updateDustClip = () => {
+		dustClipRaf = null;
 		if (!dustLayer) return;
 
 		const vw = window.innerWidth;
@@ -59,16 +64,27 @@ export function initAnimationStartScrollDown() {
 			}
 		});
 
-		dustLayer.style.clipPath = parts.length
+		const nextDustClip = parts.length
 			? `path('${parts.join(" ")}')`
 			: "inset(100%)";
+
+		if (nextDustClip !== lastDustClip) {
+			dustLayer.style.clipPath = nextDustClip;
+			lastDustClip = nextDustClip;
+		}
 	};
 
-	gsap.ticker.add(updateDustClip);
+	const scheduleDustClip = () => {
+		if (dustClipRaf !== null) return;
+		dustClipRaf = requestAnimationFrame(updateDustClip);
+	};
 
-	let isHeroVisible = true;
-	let isAnimating = false;
-	let tlDirection = 1;
+	window.addEventListener("scroll", scheduleDustClip, { passive: true });
+	window.addEventListener("resize", scheduleDustClip, { passive: true });
+	gsap.ticker.add(() => {
+		if (isAnimating) scheduleDustClip();
+	});
+	scheduleDustClip();
 
 	window.scrollTo(0, 0);
 
@@ -92,11 +108,13 @@ export function initAnimationStartScrollDown() {
 	const { balloons, elements: balloonEls } = balloonSystem;
 
 	const isMobile = window.matchMedia("(max-width: 1023px)").matches;
-	const Y_START = isMobile ? 260 : 320;
-	const Y_END = isMobile ? -420 : -280;
+	const SIZE = isMobile ? 320 : 620;
+
+	const belowViewport = () => ((window.innerHeight + SIZE) / SIZE) * 100;
+	const aboveViewport = () => -((window.innerHeight + SIZE) / SIZE) * 100;
 
 	gsap.set(balloonEls, {
-		yPercent: 320,
+		yPercent: belowViewport,
 		scale: 0.5,
 		rotation: (i) => balloons[i].rot,
 		autoAlpha: 0,
@@ -107,26 +125,23 @@ export function initAnimationStartScrollDown() {
 
 	balloonTL.to(balloonEls, {
 		keyframes: [
-			{ autoAlpha: 1, duration: 0.3 },
+			{ autoAlpha: 1, duration: 0.15 },
 			{
-				yPercent: Y_END,
+				yPercent: aboveViewport,
 				xPercent: (i) => gsap.utils.random(-80, 80),
-				duration: (i) => gsap.utils.random(3.4, 4),
+				duration: (i) => gsap.utils.random(3, 3.2),
 				ease: "none",
 			},
 			{ autoAlpha: 0, duration: 0.3 },
 		],
 		scale: (i) => gsap.utils.random(0.2, 0.5),
-		stagger: {
-			each: (i) => gsap.utils.random(0.5, 0.8),
-			from: "random",
-		},
+		stagger: { each: (i) => gsap.utils.random(0.1, 0.25), from: "random" },
 	});
 
 	const resetBalloons = () => {
 		balloonTL.pause(0);
 		gsap.set(balloonEls, {
-			yPercent: Y_START,
+			yPercent: belowViewport,
 			scale: 0,
 			autoAlpha: 0,
 		});
@@ -216,6 +231,7 @@ export function initAnimationStartScrollDown() {
 			"-=1.2"
 		)
 		.to(heroBtnDownLabel, { autoAlpha: 0 }, "-=1.5")
+
 		.to(
 			heroBtnDown,
 			{
@@ -247,17 +263,6 @@ export function initAnimationStartScrollDown() {
 			duration: 0.5,
 			ease: "power2.in",
 		})
-
-		/* ---- Запуск шариков поверх. Они летят параллельно main. ---- */
-		.call(
-			() => {
-				if (tlDirection === 1) {
-					balloonTL.restart();
-				}
-			},
-			null,
-			"-=2"
-		)
 
 		/* ---- main/footer появляются СРАЗУ, не ждут шариков. ---- */
 		.set(hero, { display: "none" })
@@ -298,63 +303,84 @@ export function initAnimationStartScrollDown() {
 			tlDirection = 1;
 			window.scrollTo(0, 0);
 			tl.play();
+			gsap.delayedCall(0.1, () => {
+				if (tlDirection === 1) balloonTL.restart();
+			});
 		}
+	};
+
+	const navigate = async (targetId) => {
+		if (!targetId) return;
+
+		/* ===================== НА HERO ===================== */
+
+		if (targetId === "#hero") {
+			if (isHeroVisible && !isAnimating) {
+				window.scrollTo(0, 0);
+				return;
+			}
+
+			isAnimating = true;
+			tlDirection = -1;
+
+			gsap.to(window, {
+				duration: 0.8,
+				scrollTo: 0,
+				ease: "power3.inOut",
+				overwrite: true,
+			});
+
+			tl.reverse();
+
+			// Ждём полного возвращения hero
+			await tl.then();
+
+			return;
+		}
+
+		/* ===================== ИЗ HERO В MAIN ===================== */
+
+		if (isHeroVisible) {
+			if (isAnimating && tlDirection === 1) {
+				await tl.then();
+				return;
+			}
+
+			isAnimating = true;
+			tlDirection = 1;
+
+			window.scrollTo(0, 0);
+
+			/*
+			 * Hero и шарики запускаются параллельно.
+			 * Шарики больше не являются частью основного timeline.
+			 */
+			tl.play();
+
+			gsap.delayedCall(0.1, () => {
+				if (tlDirection === 1) {
+					balloonTL.restart();
+				}
+			});
+
+			/*
+			 * Очень важно:
+			 * ждём пока timeline покажет #main.
+			 *
+			 * Только после этого sidebar сможет вычислять
+			 * правильную позицию нужной секции.
+			 */
+			await tl.then();
+		}
+
+		/* ===================== MAIN УЖЕ ОТКРЫТ ===================== */
+
+		return;
 	};
 
 	if (heroBtnDown) {
 		heroBtnDown.addEventListener("click", goDown);
 	}
-
-	sidebarLinks.forEach((link) => {
-		link.addEventListener("click", (e) => {
-			e.preventDefault();
-
-			const targetId = link.getAttribute("href");
-			if (!targetId) return;
-
-			if (targetId === "#hero") {
-				if (isHeroVisible && !isAnimating) return;
-
-				isAnimating = true;
-				tlDirection = -1;
-				tl.reverse();
-
-				gsap.to(window, {
-					duration: 1.2,
-					scrollTo: 0,
-					ease: "power3.inOut",
-					overwrite: true,
-				});
-
-				return;
-			}
-
-			if (isHeroVisible) {
-				isAnimating = true;
-				tlDirection = 1;
-
-				window.scrollTo(0, 0);
-
-				tl.play();
-
-				gsap.to(window, {
-					duration: 1.2,
-					scrollTo: targetId,
-					ease: "power3.inOut",
-					overwrite: true,
-				});
-
-				return;
-			}
-
-			gsap.to(window, {
-				duration: 1,
-				scrollTo: targetId,
-				ease: "power3.inOut",
-				overwrite: true,
-			});
-		});
-	});
 
 	window.addEventListener(
 		"wheel",
@@ -405,5 +431,8 @@ export function initAnimationStartScrollDown() {
 		{ passive: false }
 	);
 
-	return balloonSystem;
+	return {
+		balloonSystem,
+		navigate,
+	};
 }
