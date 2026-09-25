@@ -918,50 +918,52 @@
                         </div>
                     </header>
 
-                    <nav id="sidebar-items" class="flex flex-col tracking-wide clamp-[text,xl,2xl,xs,2xl]"
+                    <nav id="sidebar-items" class="flex flex-col tracking-wide clamp-[text,2xl,3xl,xs,2xl]"
                         aria-label="Основная навигация">
-                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                        <a class="flex py-3 lg:py-4 gap-4 uppercase group items-center w-full! sidebar-link-label will-change-transform"
                             href="#hero">
                             <span
-                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">00</span>
-                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">Главная</span>
+                                class="font-deco border-b border-b-muted w-8 flex justify-center clamp-[text,lg,xl,xs,2xl]">00</span>
+                            <span
+                                class="md:group-hover:pl-4 transition-[padding] duration-500 tracking-wide ">Главная</span>
                         </a>
 
-                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                        <a class="flex py-3 lg:py-4 gap-4 uppercase group items-center w-full! sidebar-link-label will-change-transform"
                             href="#about-project">
                             <span
-                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">01</span>
-                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">О
+                                class="font-deco border-b border-b-muted w-8 flex justify-center clamp-[text,lg,xl,xs,2xl]">01</span>
+                            <span class="md:group-hover:pl-4 transition-[padding] duration-500 tracking-wide ">О
                                 проекте</span>
                         </a>
 
-                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                        <a class="flex py-3 lg:py-4 gap-4 uppercase group items-center w-full! sidebar-link-label will-change-transform"
                             href="#art-objects-section">
                             <span
-                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">02</span>
-                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">Арт-объекты</span>
+                                class="font-deco border-b border-b-muted w-8 flex justify-center clamp-[text,lg,xl,xs,2xl]">02</span>
+                            <span
+                                class="md:group-hover:pl-4 transition-[padding] duration-500 tracking-wide ">Арт-объекты</span>
                         </a>
 
-                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                        <a class="flex py-3 lg:py-4 gap-4 uppercase group items-center w-full! sidebar-link-label will-change-transform"
                             href="#about-visit">
                             <span
-                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">03</span>
-                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">О
+                                class="font-deco border-b border-b-muted w-8 flex justify-center clamp-[text,lg,xl,xs,2xl]">03</span>
+                            <span class="md:group-hover:pl-4 transition-[padding] duration-500 tracking-wide ">О
                                 посещении</span>
                         </a>
 
-                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                        <a class="flex py-3 lg:py-4 gap-4 uppercase group items-center w-full! sidebar-link-label will-change-transform"
                             href="#on-freedom">
                             <span
-                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">04</span>
-                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">О
+                                class="font-deco border-b border-b-muted w-8 flex justify-center clamp-[text,lg,xl,xs,2xl]">04</span>
+                            <span class="md:group-hover:pl-4 transition-[padding] duration-500 tracking-wide ">О
                                 свободе</span>
                         </a>
 
-                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                        <a class="flex py-3 lg:py-4 gap-4 uppercase group items-center w-full! sidebar-link-label will-change-transform"
                             href="#about-food">
                             <span
-                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">05</span>
+                                class="font-deco border-b border-b-muted w-8 flex justify-center clamp-[text,lg,xl,xs,2xl]">05</span>
                             <span class="md:group-hover:pl-4 transition-[padding] duration-500">О
                                 еде</span>
                         </a>
