@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru" class="overflow-y-scroll! scrollbar-thin bg-secondary">
+
+<head>
+    <base href="<?php echo esc_url( trailingslashit( get_template_directory_uri() ) ); ?>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <?php wp_head(); ?>
+</head>
+
+<body id="page" class="font-body bg-secondary text-2xl text-semilight selection:bg-primary selection:text-secondary"><?php wp_body_open(); ?>
+    <div id="page-wrapper"
+        class="min-h-dvh mx-auto flex items-center justify-center w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] lg:w-[calc(100%-8rem)] max-w-406.25">
+        <div id="page-404" class="flex flex-col justify-center items-center">
+            <h1 class="font-brand clamp-[text,10rem,20rem,xs,2xl] leading-none">404</h1>
+
+            <p id="404-slogan"
+                class="uppercase clamp-[text,1.75rem,3rem,xs,2xl] w-full text-slogan text-center will-change-transform">
+                Свобода — это иногда свернуть не туда
+            </p>
+
+            <div class="mt-30 w-full flex justify-center">
+                <a class="btn w-full! sm:w-fit! will-change-transform" href="/">На главную</a>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="air"
+        class="pointer-events-none fixed inset-0 mix-blend-difference z-1 will-change-[transform,clip-path]"
+        data-air-404></canvas>
+
+
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/112671475" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
+    <?php wp_footer(); ?>
+</body>
+
+</html>

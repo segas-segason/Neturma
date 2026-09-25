@@ -14,6 +14,7 @@ import {
 	initAnimateButtonDown,
 } from "./animations/animationButtons";
 import { initAnimationScenes } from "./animations/animateScences";
+import { initAnimationNotFound } from "./animations/animationNotFound";
 import { initAnimationNotFoundGallery } from "./animations/animationNotFoundGallery";
 
 import { initCursorSquareDecoration } from "./cursorSquareDecoration";
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	initAnimationButtons(); /* Анимация кнопок */
 	initAnimateButtonDown(); /* Анимация кнопки Вниз */
 	initAnimationScenes(); /* Параметры сцен */
+	initAnimationNotFound();
 	initAnimationNotFoundGallery();
 	initFixedBgOnFreedom(); /* Фикс фоновой картинки в секции О свободе */
 

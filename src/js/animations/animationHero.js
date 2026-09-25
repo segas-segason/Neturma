@@ -46,7 +46,6 @@ export function initAnimationHero() {
 		});
 	}
 
-	// Начальное состояние пыли
 	gsap.set(dustLayer, {
 		autoAlpha: 0,
 		scale: 0,
@@ -62,7 +61,6 @@ export function initAnimationHero() {
 		},
 	});
 
-	// Пыль + логотип
 	tl.to(
 		dustLayer,
 		{

@@ -1,12 +1,11 @@
 import { AirParticles } from "./airParticles";
 
 export function initAirParticles() {
-	const hero = document.querySelector("#hero");
 	const air = document.querySelector("#air");
 
-	if (!hero || !air) return null;
+	if (!air) return null;
 
-	const dust = new AirParticles(hero);
+	const dust = new AirParticles();
 
 	dust.init();
 

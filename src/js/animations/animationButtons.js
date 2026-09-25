@@ -59,8 +59,22 @@ export function initAnimateButtonDown() {
 	if (btnDown.dataset.btnAnimated) return;
 	btnDown.dataset.btnAnimated = "true";
 
-	const textSpan = btnDown.querySelector(".btn-down-label > span:last-child");
+	const textContainer = btnDown.querySelector(".btn-down-label");
+	if (!textContainer) return;
+
+	const textSpan = textContainer.querySelector(":scope > span:last-child");
 	if (!textSpan) return;
+
+	if (textContainer.querySelectorAll(":scope > span").length === 1) {
+		const textParts = textSpan.textContent.trim().split(/\s+/);
+
+		if (textParts.length > 1) {
+			const fixedText = document.createElement("span");
+			fixedText.textContent = textParts.slice(0, -1).join(" ");
+			textSpan.textContent = textParts.at(-1);
+			textContainer.prepend(fixedText);
+		}
+	}
 
 	const originalText = textSpan.textContent.trim();
 	const hoverText = "узником";

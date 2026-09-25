@@ -46,5 +46,11 @@ export default defineConfig({
 		minify: "esbuild",
 		cssMinify: "esbuild",
 		sourcemap: false,
+		rollupOptions: {
+			input: {
+				main: "index.html",
+				notFound: "404.html",
+			},
+		},
 	},
 });

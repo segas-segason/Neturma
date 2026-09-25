@@ -1,10 +1,11 @@
 {
 	"name": "landing",
-	"version": "1.2.5",
+	"version": "1.2.6",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
+		"deploy:wp": "npm run build && node scripts/deploy-wp.mjs",
 		"preview": "vite preview",
 		"stop": "kill-port 5173",
 		"release:patch": "npm version patch && git push --follow-tags",

@@ -1,0 +1,76 @@
+{
+  "key": "group_neturma_content",
+  "title": "Контент сайта",
+  "fields": [
+    {"key":"field_neturma_tab_hero","label":"Первый экран","name":"","type":"tab","placement":"top"},
+    {"key":"field_neturma_hero_year","label":"Год","name":"hero_year","type":"text","default_value":"1855","wrapper":{"width":"25"}},
+    {"key":"field_neturma_hero_city","label":"Надпись слева","name":"hero_city","type":"text","default_value":"Арт-город","wrapper":{"width":"25"}},
+    {"key":"field_neturma_hero_slogan","label":"Надпись справа","name":"hero_slogan","type":"text","default_value":"Город Мышкин","wrapper":{"width":"25"}},
+    {"key":"field_neturma_hero_button","label":"Кнопка","name":"hero_button","type":"text","default_value":"Стать жителем","wrapper":{"width":"25"}},
+
+    {"key":"field_neturma_tab_about","label":"О проекте","name":"","type":"tab","placement":"top"},
+    {"key":"field_neturma_about_title","label":"Заголовок","name":"about_title","type":"text","default_value":"О проекте","wrapper":{"width":"50"}},
+    {"key":"field_neturma_about_subtitle","label":"Подзаголовок","name":"about_subtitle","type":"textarea","rows":3,"new_lines":"br","wrapper":{"width":"50"}},
+    {"key":"field_neturma_about_content","label":"Текст секции","name":"about_content","type":"wysiwyg","tabs":"all","toolbar":"full","media_upload":0,"delay":0},
+
+    {"key":"field_neturma_tab_art","label":"Арт-объекты","name":"","type":"tab","placement":"top"},
+    {"key":"field_neturma_art_title","label":"Заголовок","name":"art_title","type":"text","default_value":"Арт-объекты","wrapper":{"width":"50"}},
+    {"key":"field_neturma_art_subtitle","label":"Подзаголовок","name":"art_subtitle","type":"textarea","rows":3,"new_lines":"br","wrapper":{"width":"50"}},
+    {"key":"field_neturma_art_intro","label":"Текст до галереи","name":"art_intro","type":"wysiwyg","tabs":"all","toolbar":"full","media_upload":0,"delay":0},
+    {"key":"field_neturma_art_gallery","label":"Галерея арт-объектов","name":"art_gallery","type":"gallery","return_format":"array","preview_size":"medium","insert":"append","library":"all","min":1},
+    {"key":"field_neturma_art_outro","label":"Текст после галереи","name":"art_outro","type":"wysiwyg","tabs":"all","toolbar":"full","media_upload":0,"delay":0},
+
+    {"key":"field_neturma_tab_visit","label":"Посещение и FAQ","name":"","type":"tab","placement":"top"},
+    {"key":"field_neturma_visit_title","label":"Заголовок","name":"visit_title","type":"text","default_value":"О посещении","wrapper":{"width":"50"}},
+    {"key":"field_neturma_visit_subtitle","label":"Подзаголовок","name":"visit_subtitle","type":"textarea","rows":3,"new_lines":"br","wrapper":{"width":"50"}},
+    {"key":"field_neturma_ticket_link","label":"Ссылка на билеты","name":"ticket_link","type":"link","return_format":"array"},
+    {"key":"field_neturma_visit_location","label":"Адрес и координаты","name":"visit_location","type":"textarea","rows":3,"new_lines":"br"},
+    {"key":"field_neturma_faq","label":"Вопросы и ответы","name":"faq","type":"repeater","layout":"block","button_label":"Добавить вопрос","collapsed":"field_neturma_faq_question","sub_fields":[
+      {"key":"field_neturma_faq_question","label":"Вопрос","name":"question","type":"text","parent_repeater":"field_neturma_faq"},
+      {"key":"field_neturma_faq_answer","label":"Ответ","name":"answer","type":"wysiwyg","tabs":"all","toolbar":"basic","media_upload":0,"delay":0,"parent_repeater":"field_neturma_faq"}
+    ]},
+
+    {"key":"field_neturma_tab_freedom","label":"О свободе","name":"","type":"tab","placement":"top"},
+    {"key":"field_neturma_freedom_title","label":"Заголовок","name":"freedom_title","type":"text","default_value":"О свободе","wrapper":{"width":"50"}},
+    {"key":"field_neturma_freedom_subtitle","label":"Подзаголовок","name":"freedom_subtitle","type":"textarea","rows":3,"new_lines":"br","wrapper":{"width":"50"}},
+    {"key":"field_neturma_freedom_content","label":"Текст секции","name":"freedom_content","type":"wysiwyg","tabs":"all","toolbar":"full","media_upload":0,"delay":0},
+
+    {"key":"field_neturma_tab_food","label":"О еде","name":"","type":"tab","placement":"top"},
+    {"key":"field_neturma_food_title","label":"Заголовок","name":"food_title","type":"text","default_value":"О еде","wrapper":{"width":"50"}},
+    {"key":"field_neturma_food_subtitle","label":"Подзаголовок","name":"food_subtitle","type":"textarea","rows":3,"new_lines":"br","wrapper":{"width":"50"}},
+    {"key":"field_neturma_food_content","label":"Текст секции","name":"food_content","type":"wysiwyg","tabs":"all","toolbar":"full","media_upload":0,"delay":0},
+    {"key":"field_neturma_food_gallery","label":"Верхняя галерея","name":"food_gallery","type":"gallery","return_format":"array","preview_size":"medium","insert":"append","library":"all","min":1,"max":3},
+    {"key":"field_neturma_food_slider","label":"Нижняя галерея","name":"food_slider","type":"gallery","return_format":"array","preview_size":"medium","insert":"append","library":"all","min":1},
+
+    {"key":"field_neturma_tab_contacts","label":"Контакты и документы","name":"","type":"tab","placement":"top"},
+    {"key":"field_neturma_info_email","label":"E-mail в подвале","name":"info_email","type":"email","default_value":"info@neturma.ru","wrapper":{"width":"50"}},
+    {"key":"field_neturma_contact_email","label":"Контактный e-mail","name":"contact_email","type":"email","wrapper":{"width":"50"}},
+    {"key":"field_neturma_phones","label":"Телефоны","name":"phones","type":"repeater","layout":"table","button_label":"Добавить телефон","sub_fields":[
+      {"key":"field_neturma_phone_label","label":"Подпись","name":"label","type":"text","parent_repeater":"field_neturma_phones"},
+      {"key":"field_neturma_phone_number","label":"Номер","name":"number","type":"text","parent_repeater":"field_neturma_phones"}
+    ]},
+    {"key":"field_neturma_socials","label":"Социальные сети","name":"socials","type":"repeater","layout":"table","button_label":"Добавить ссылку","sub_fields":[
+      {"key":"field_neturma_social_title","label":"Название","name":"title","type":"text","parent_repeater":"field_neturma_socials"},
+      {"key":"field_neturma_social_url","label":"Ссылка","name":"url","type":"url","parent_repeater":"field_neturma_socials"}
+    ]},
+    {"key":"field_neturma_copyright","label":"Копирайт","name":"copyright","type":"text","default_value":"НЕТЮРЬМА. 2026. Все права защищены."},
+    {"key":"field_neturma_company_name","label":"Название организации","name":"company_name","type":"text","default_value":"ООО «Саммит»","wrapper":{"width":"34"}},
+    {"key":"field_neturma_company_inn","label":"ИНН","name":"company_inn","type":"text","default_value":"7719676182","wrapper":{"width":"33"}},
+    {"key":"field_neturma_company_ogrn","label":"ОГРН","name":"company_ogrn","type":"text","default_value":"1087746466334","wrapper":{"width":"33"}},
+    {"key":"field_neturma_documents","label":"Документы","name":"documents","type":"repeater","layout":"table","button_label":"Добавить документ","sub_fields":[
+      {"key":"field_neturma_document_title","label":"Название","name":"title","type":"text","parent_repeater":"field_neturma_documents"},
+      {"key":"field_neturma_document_file","label":"Файл","name":"file","type":"file","return_format":"array","library":"all","mime_types":"pdf,doc,docx","parent_repeater":"field_neturma_documents"}
+    ]}
+  ],
+  "location": [[{"param":"options_page","operator":"==","value":"neturma-content"}]],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": [],
+  "active": true,
+  "description": "",
+  "show_in_rest": 0,
+  "modified": 1790265600
+}

@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="ru" class="overflow-y-scroll! scrollbar-thin bg-secondary">
+
+<head>
+    <base href="<?php echo esc_url( trailingslashit( get_template_directory_uri() ) ); ?>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <?php wp_head(); ?>
+</head>
+
+<body id="page" class="font-body bg-secondary text-2xl text-semilight selection:bg-primary selection:text-secondary"><?php wp_body_open(); ?>
+    <div id="page-wrapper">
+        <div id="page-screen" class="w-full flex flex-col items-center overflow-hidden">
+            <section id="hero" class="w-full min-h-dvh py-6 sm:py-10 lg:py-16 flex justify-center">
+                <div
+                    class="flex flex-col justify-between items-center h-full min-h-[calc(100dvh-3rem)] sm:min-h-[calc(100dvh-5rem)] lg:min-h-[calc(100dvh-8rem)] w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] lg:w-[calc(100%-8rem)] max-w-406.25">
+
+                    <div class="overflow-hidden">
+                        <p id="hero-year" class="font-deco clamp-[text,xl,2xl,xs,2xl] font-bold will-change-transform">
+                            1855
+                        </p>
+                    </div>
+
+                    <div class="w-full @container">
+                        <div class="overflow-hidden">
+                            <p id="hero-city"
+                                class="uppercase clamp-[text,1.75rem,3rem,xs,2xl] w-full text-slogan will-change-transform">
+                                Арт-город
+                            </p>
+                        </div>
+
+                        <div id="hero-logo" class="logo-mask-wrapper">
+                            <h1 id="logo-head" class="logo will-change-contents" aria-label="НЕТЮРЬМА">
+                                <span class="logo-mask-image will-change-transform" aria-hidden="true"></span>
+                            </h1>
+                        </div>
+
+                        <div class="overflow-hidden mt-1">
+                            <p id="hero-slogan"
+                                class="uppercase clamp-[text,1.75rem,3rem,xs,2xl] w-full text-slogan text-right will-change-transform">
+                                Город Мышкин
+                            </p>
+                        </div>
+                    </div>
+
+                    <button id="hero-btn-down" aria-label="Открыть меню"
+                        class="cursor-pointer fill-muted/50 hover:fill-primary transition-[fill] duration-500 flex flex-col justify-center items-center gap-2 will-change-transform">
+
+                        <div id="hero-btn-down-label" class="uppercase flex items-center justify-center gap-1 clamp-[text,2xl,3xl,xs,2xl] 
+                        btn-down-label">
+                            <span>Стать</span>
+                            <span>жителем</span>
+                        </div>
+
+                        <div class="relative w-4 h-4 sm:w-6 sm:h-6 lg:w-10 lg:h-10">
+                            <svg id="hero-btn-down-icon"
+                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 lg:w-18 lg:h-18 will-change-transform"
+                                viewBox="0 0 39 36" xmlns="http://w3.org">
+                                <path d="M19.0508 36L38.1033 0H-0.00177765L19.0508 36Z" />
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </section>
+
+            <main id="main" class="w-full">
+                <section id="about-project" class="menu-item relative" data-about-project>
+                    <header id="menu-item-trigger"
+                        class="relative z-2 py-6 flex items-center cursor-pointer w-full group bg-secondary md:py-8"
+                        tabindex="0" aria-expanded="false">
+                        <div
+                            class="mx-auto flex w-full max-w-406.25 flex-col items-start gap-2 px-4 sm:px-8 md:flex-row md:items-center md:justify-between md:gap-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0 transition-transform duration-500 lg:group-hover:translate-x-4 will-change-transform">
+                            <hgroup class="flex items-center clamp-[gap,0.5rem,3rem,sm,2xl]">
+                                <div class="w-8">
+                                    <p class="font-deco border-b clamp-[text,lg,2xl,xs,2xl] w-fit">01</p>
+                                </div>
+
+                                <h2 id="trigger-title"
+                                    class="font-title uppercase leading-tight pointer-events-none clamp-[text,1.95rem,5.125rem,xs,2xl] xl:-mt-2 transition-transform duration-500 lg:group-hover:translate-x-8 will-change-transform text-nowrap">
+                                    О проекте</h2>
+                            </hgroup>
+
+                            <p
+                                class="text-left uppercase tracking-wide leading-relaxed clamp-[text,lg,2xl,xs,2xl] md:leading-none! md:text-right ml-10 md:ml-0 transition-transform duration-500 lg:group-hover:-translate-x-12 will-change-transform">
+                                Ответы<br class="hidden md:inline-block"> О чем? Зачем?<br
+                                    class="hidden md:inline-block"> Для Чего?
+                            </p>
+                        </div>
+                    </header>
+
+                    <div id="menu-item-panel" class="relative w-full menu-item [clip-path:inset(0)]"
+                        data-about-project-panel>
+                        <div class="relative w-full z-2">
+                            <div
+                                class="mx-auto flex w-full max-w-406.25 py-10 px-4 sm:px-8 md:py-12 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0 xl:py-16">
+                                <div id="line-content" class="w-0.5 shrink-0 bg-secondary"></div>
+                                <div
+                                    class="flex min-w-0 flex-col tracking-wide text-secondary px-4 sm:clamp-[px,2.25rem,5rem,sm,2xl] clamp-[text,xl,3xl,xs,2xl]">
+                                    <p class="my-2 xl:my-3">
+                                        «НЕтюрьма» — это арт-город, родившийся в&nbsp;здании бывшей тюрьмы. <br
+                                            class="hidden xl:inline">
+                                        НЕ&nbsp;музей, НЕ&nbsp;реконструкция, а&nbsp;пространство, где НЕсвобода
+                                        стала
+                                        фоном <br class="hidden xl:inline">
+                                        для&nbsp;разговора о&nbsp;свободе, творчестве и&nbsp;преодолении
+                                        внутренних
+                                        барьеров.
+                                    </p>
+                                    <p class="my-2 xl:my-3">
+                                        Здесь НЕ&nbsp;скрывают шрамы Времени — их&nbsp;подчеркивают: <br
+                                            class="hidden xl:inline">
+                                        каждая плитка, лестница, ржавый замок стали частью художественного
+                                        языка. <br class="hidden xl:inline">
+                                        Пространство НЕ&nbsp;иллюстрирует прошлое — <br class="hidden xl:inline">
+                                        оно приглашает к&nbsp;диалогу с&nbsp;настоящим, в&nbsp;надежде
+                                        на&nbsp;будущее.
+                                    </p>
+                                    <p class="my-2 xl:my-3">
+                                        Чистый Дизайн Времени: без&nbsp;глянца и&nbsp;новодела, <br
+                                            class="hidden xl:inline">
+                                        только честные материалы, смыслы и&nbsp;метафоры. <br class="hidden xl:inline">
+                                        Уличные арт-объекты, интерактивные инсталляции, <br class="hidden xl:inline">
+                                        экспонаты внутри бывших камер — всё&nbsp;говорит и&nbsp;просит <br
+                                            class="hidden xl:inline">
+                                    </p>
+                                    <h3
+                                        class="my-2 font-brand clamp-[text,2xl,4.375rem,xs,2xl] uppercase tracking-normal leading-tight xl:my-3.5 xl:leading-tight">
+                                        Задержаться,
+                                        задуматься, заметить!</h3>
+                                    <p class="my-2 xl:my-3">
+                                        «НЕтюрьма» — это не&nbsp;про&nbsp;искусство. Это про&nbsp;выбор. <br
+                                            class="hidden xl:inline">
+                                        Это место не&nbsp;даёт ответов — оно создаёт пространство для
+                                        собственных...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fixed inset-0 w-full pointer-events-none overflow-hidden z-0" data-scene-bg-neturma>
+                            <canvas id="neturma-canvas" class="block size-full" data-neturma-canvas></canvas>
+                        </div>
+                    </div>
+
+                    <div id="line-divider-wrapper"
+                        class="w-full px-4 absolute bottom-0 z-100 max-w-450 mx-auto left-0 right-0 sm:px-6"
+                        data-project-line-hidden>
+                        <div id="line-divider" class="h-0.5 bg-primary"></div>
+                    </div>
+                </section>
+
+                <section id="art-objects-section" class="menu-item relative bg-secondary z-2" data-art-objects>
+                    <header id="menu-item-trigger"
+                        class="relative z-2 py-6 flex items-center cursor-pointer w-full group bg-secondary md:py-8"
+                        tabindex="0" aria-expanded="false">
+                        <div
+                            class="mx-auto flex w-full max-w-406.25 flex-col items-start gap-2 px-4 sm:px-8 md:flex-row md:items-center md:justify-between md:gap-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0 transition-transform duration-500 lg:group-hover:translate-x-4 will-change-transform">
+                            <hgroup class="flex items-center clamp-[gap,0.5rem,3rem,sm,2xl]">
+                                <div class="w-8">
+                                    <p class="font-deco border-b clamp-[text,lg,2xl,xs,2xl] w-fit">02</p>
+                                </div>
+
+                                <h2 id="trigger-title"
+                                    class="font-title uppercase leading-tight pointer-events-none clamp-[text,1.95rem,5.125rem,xs,2xl] xl:-mt-2 transition-transform duration-500 lg:group-hover:translate-x-8 will-change-transform text-nowrap">
+                                    Арт-объекты</h2>
+                            </hgroup>
+
+                            <p
+                                class="text-left uppercase tracking-wide leading-relaxed clamp-[text,lg,2xl,xs,2xl] md:leading-none! md:text-right ml-10 md:ml-0 transition-transform duration-500 lg:group-hover:-translate-x-12 will-change-transform">
+                                Инсталяции<br class="hidden md:inline-block"> Скульптуры<br
+                                    class="hidden md:inline-block"> Картины
+                            </p>
+                        </div>
+                    </header>
+
+                    <div id="menu-item-panel" class="relative bg-secondary z-2" data-art-objects-panel>
+                        <div
+                            class="mx-auto flex w-full max-w-406.25 flex-col gap-6 border-l-2 border-l-secondary px-4 pb-10 clamp-[text,xl,3xl,xs,2xl] tracking-wide text-primary sm:gap-8 sm:px-8 sm:pl-8 md:gap-10 md:pb-14 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:gap-10 xl:px-0 xl:pb-16">
+                            <p>
+                                Мы не&nbsp;скрываем историю этих стен — мы делаем её&nbsp;частью искусства.<br
+                                    class="hidden xl:inline">
+                                Сводчатые потолки бывших камер становятся галереей для&nbsp;современных
+                                художников.<br class="hidden xl:inline">
+                                Ржавые бочки становятся «Барабанами судьбы», люстра из&nbsp;заброшенного офиса
+                                освещает
+                                путь к&nbsp;новым смыслам.
+                            </p>
+                            <div id="carousel-wrapper-art" class="relative" data-carousel-art-objects>
+                                <div class="f-carousel" id="carousel-art-objects">
+                                    <div class="f-carousel__viewport">
+                                        <div class="f-carousel__slide">
+                                            <a href="assets/img/art-object-01.webp" data-fancybox="art-objects"
+                                                class="art-slider__slide h-120 lg:h-150">
+                                                <img src="assets/img/art-object-01.webp" loading="lazy" width="900"
+                                                    height="1200" alt="Арт-объект 1"
+                                                    class="block h-full w-full object-cover" />
+                                            </a>
+                                        </div>
+                                        <div class="f-carousel__slide">
+                                            <a href="assets/img/art-object-02.webp" data-fancybox="art-objects"
+                                                class="art-slider__slide h-120 lg:h-150">
+                                                <img src="assets/img/art-object-02.webp" loading="lazy" width="900"
+                                                    height="1200" alt="Арт-объект 2"
+                                                    class="block h-full w-full object-cover" />
+                                            </a>
+                                        </div>
+                                        <div class="f-carousel__slide">
+                                            <a href="assets/img/art-object-03.webp" data-fancybox="art-objects"
+                                                class="art-slider__slide h-120 lg:h-150">
+                                                <img src="assets/img/art-object-03.webp" loading="lazy" width="900"
+                                                    height="1200" alt="Арт-объект 3"
+                                                    class="block h-full w-full object-cover" />
+                                            </a>
+                                        </div>
+                                        <div class="f-carousel__slide">
+                                            <a href="assets/img/art-object-04.webp" data-fancybox="art-objects"
+                                                class="art-slider__slide h-120 lg:h-150">
+                                                <img src="assets/img/art-object-04.webp" loading="lazy" width="1200"
+                                                    height="900" alt="Арт-объект 4"
+                                                    class="block h-full w-full object-cover" />
+                                            </a>
+                                        </div>
+                                        <div class="f-carousel__slide">
+                                            <a href="assets/img/art-object-05.webp" data-fancybox="art-objects"
+                                                class="art-slider__slide h-120 lg:h-150">
+                                                <img src="assets/img/art-object-05.webp" loading="lazy" width="900"
+                                                    height="1200" alt="Арт-объект 5"
+                                                    class="block h-full w-full object-cover" />
+                                            </a>
+                                        </div>
+                                        <div class="f-carousel__slide">
+                                            <a href="assets/img/art-object-06.webp" data-fancybox="art-objects"
+                                                class="art-slider__slide h-120 lg:h-150">
+                                                <img src="assets/img/art-object-06.webp" loading="lazy" width="1200"
+                                                    height="900" alt="Арт-объект 6"
+                                                    class="block h-full w-full object-cover" />
+                                            </a>
+                                        </div>
+                                        <div class="f-carousel__slide">
+                                            <a href="assets/img/art-object-07.webp" data-fancybox="art-objects"
+                                                class="art-slider__slide h-120 lg:h-150">
+                                                <img src="assets/img/art-object-07.webp" loading="lazy" width="900"
+                                                    height="1200" alt="Арт-объект 7"
+                                                    class="block h-full w-full object-cover" />
+                                            </a>
+                                        </div>
+                                        <div class="f-carousel__slide">
+                                            <a href="assets/img/art-object-08.webp" data-fancybox="art-objects"
+                                                class="art-slider__slide h-120 lg:h-150">
+                                                <img src="assets/img/art-object-08.webp" loading="lazy" width="899"
+                                                    height="1200" alt="Арт-объект 8"
+                                                    class="block h-full w-full object-cover" />
+                                            </a>
+                                        </div>
+                                        <div class="f-carousel__slide">
+                                            <a href="assets/img/art-object-09.webp" data-fancybox="art-objects"
+                                                class="art-slider__slide h-120 lg:h-150">
+                                                <img src="assets/img/art-object-09.webp" loading="lazy" width="900"
+                                                    height="1200" alt="Арт-объект 9"
+                                                    class="block h-full w-full object-cover" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="absolute inset-x-0 top-1/2 -translate-y-1/2 justify-between pointer-events-none hidden md:flex">
+                                    <button
+                                        class="carousel-art-prev pointer-events-auto absolute left-0 -translate-x-4 cursor-pointer fill-muted/50 transition-colors hover:fill-muted sm:-translate-x-10"
+                                        type="button">
+                                        <svg class="h-8 w-6 rotate-90 sm:h-10 sm:w-8" viewBox="0 0 39 36"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M19.0508 36L38.1033 0H-0.00177765L19.0508 36Z" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        class="carousel-art-next pointer-events-auto absolute right-0 translate-x-4 cursor-pointer fill-muted/50 transition-colors hover:fill-muted sm:translate-x-10"
+                                        type="button">
+                                        <svg class="h-8 w-6 -rotate-90 sm:h-10 sm:w-8" viewBox="0 0 39 36"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M19.0508 36L38.1033 0H-0.00177765L19.0508 36Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p>Это наш принцип — разумное потребление и&nbsp;дизайн
+                                от&nbsp;<strong>Его&nbsp;Величества&nbsp;Времени</strong>. <br class="hidden xl:inline">
+                                Мы не&nbsp;замазываем шрамы здания, мы их&nbsp;консервируем, делаем объектом
+                                созерцания
+                                и&nbsp;размышления.<br class="hidden xl:inline">
+                                Сегодня «НЕтюрьма» — это&nbsp;растущий арт-город. На&nbsp;территории
+                                уже&nbsp;живут
+                                «Крылатые качели»,<br class="hidden xl:inline">
+                                ироничная «Скамья Смертников», «Дерево свободы» и&nbsp;работы других известных
+                                современных авторов.
+                            </p>
+                        </div>
+                    </div>
+                    <div id="line-divider-wrapper"
+                        class="w-full px-4 absolute bottom-0 z-100 max-w-450 mx-auto left-0 right-0 sm:px-6">
+                        <div id="line-divider" class="h-0.5 bg-primary"></div>
+                    </div>
+                </section>
+
+                <section id="about-visit" class="menu-item relative" data-about-visit>
+                    <header id="menu-item-trigger"
+                        class="relative z-2 py-6 flex items-center cursor-pointer w-full group bg-secondary md:py-8"
+                        tabindex="0" aria-expanded="false">
+                        <div
+                            class="mx-auto flex w-full max-w-406.25 flex-col items-start gap-2 px-4 sm:px-8 md:flex-row md:items-center md:justify-between md:gap-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0 transition-transform duration-500 lg:group-hover:translate-x-4 will-change-transform">
+                            <hgroup class="flex items-center clamp-[gap,0.5rem,3rem,sm,2xl]">
+                                <div class="w-8">
+                                    <p class="font-deco border-b clamp-[text,lg,2xl,xs,2xl] w-fit">03</p>
+                                </div>
+
+                                <h2 id="trigger-title"
+                                    class="font-title uppercase leading-tight pointer-events-none clamp-[text,1.95rem,5.125rem,xs,2xl] xl:-mt-2 transition-transform duration-500 lg:group-hover:translate-x-8 will-change-transform text-nowrap">
+                                    О посещении</h2>
+                            </hgroup>
+
+                            <p
+                                class="text-left uppercase tracking-wide leading-relaxed clamp-[text,lg,2xl,xs,2xl] md:leading-none! md:text-right ml-10 md:ml-0 transition-transform duration-500 lg:group-hover:-translate-x-12 will-change-transform">
+                                Подробные ответы:<br class="hidden md:inline-block"> Где? Для чего?<br
+                                    class="hidden md:inline-block"> FAQ
+                            </p>
+                        </div>
+                    </header>
+
+                    <div id="menu-item-panel" class="flex flex-col" data-visit-panel>
+                        
+                        
+                        <div class="relative z-10 bg-secondary clamp-[text,xl,3xl,xs,2xl]">
+                            <div class="bg-secondary z-2 pb-10 sm:pb-12 md:pb-14 xl:pb-16">
+                                <div
+                                    class="mx-auto w-full max-w-406.25 px-4 sm:px-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0">
+                                    <div class="relative bg-neutral
+                                    before:pointer-events-none before:absolute before:inset-y-0 before:left-0 before:w-3
+                                    before:bg-[radial-gradient(circle_at_0_12.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_37.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_62.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_87.5%,var(--color-secondary)_0_8px,transparent_8.5px)]
+                                    sm:before:w-5 sm:before:bg-[radial-gradient(circle_at_0_12.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_0_37.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_0_62.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_0_87.5%,var(--color-secondary)_0_12px,transparent_12.5px)]
+                                    after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:w-3
+                                    after:bg-[radial-gradient(circle_at_100%_12.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_37.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_62.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_87.5%,var(--color-secondary)_0_8px,transparent_8.5px)]
+                                    sm:after:w-5 sm:after:bg-[radial-gradient(circle_at_100%_12.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_100%_37.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_100%_62.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_100%_87.5%,var(--color-secondary)_0_12px,transparent_12.5px)]"
+                                        data-tickets-block>
+                                        <div
+                                            class="flex w-full flex-col gap-6 px-4 py-8 sm:py-12 sm:px-8 md:clamp-[px,2.5rem,5rem,sm,xl] xl:gap-6 xl:px-20.5">
+
+                                            <h3
+                                                class="text-2xl uppercase -mb-2 text-bold sm:text-3xl md:text-4xl xl:text-[40px]">
+                                                Открытие летом 2027 года
+                                            </h3>
+                                            <p>Каждую субботу проводятся бесплатные экскурсии для гостей <a
+                                                    href="https://myshkinn.ru/"
+                                                    class="underline underline-offset-3 decoration-2" rel="nofollow"
+                                                    target="_blank">отеля «Мышк
+                                                    Инн»</a>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-4 z-2 bg-secondary sm:gap-5 md:gap-6" data-map-block>
+                                <div class="mx-auto flex w-full max-w-406.25 gap-2 px-4 clamp-[text,xl,3xl,xs,2xl] sm:px-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-20.5"
+                                    data-map-location>
+                                    <p class="uppercase text-bold">Локация:</p>
+                                    <p class="text-semibold text-muted-secondary">57.791107, 38.465832, Мышкин,
+                                        Ярославская область, Никольская улица, 47/2</p>
+                                </div>
+                                <div id="map"
+                                    class="w-full! min-h-80 grayscale-40 relative z-10 sm:min-h-96 md:min-h-108 xl:min-h-120"
+                                    data-map>
+                                </div>
+                            </div>
+
+                            <div class="bg-secondary flex flex-col z-2 py-10 sm:py-12 md:py-14 xl:py-16 gap-6"
+                                data-questions-block>
+                                <div
+                                    class="mx-auto flex w-full max-w-406.25 items-center justify-between px-4 sm:px-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0">
+                                    <h3
+                                        class="text-bold text-2xl -mb-2 uppercase sm:text-3xl md:text-4xl xl:text-[4.375rem]">
+                                        Вопросы и ответы
+                                    </h3>
+                                </div>
+                                <div class="px-4 tracking-[10%] text-muted sm:px-6 xl:px-6 clamp-[text,xl,3xl,xs,2xl]">
+                                    <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
+                                        <button type="button"
+                                            class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
+                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span
+                                                class="ml-10 xl:mx-auto max-w-406.25 text-semibold md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)]">
+                                                Что такое «НЕтюрьма»?
+                                            </span>
+                                        </button>
+                                        <div class="faq-item__content h-0 overflow-hidden">
+                                            <p
+                                                class="mx-auto w-full max-w-406.25 pb-6 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)]">
+                                                «НЕтюрьма» — это арт-город, который не стирает прошлое,
+                                                а&nbsp;<strong>«консервирует» его</strong>, сохраняя для будущих
+                                                поколений. Мы даём художникам и гостям простор для творчества,
+                                                свободу
+                                                самовыражения и возможность для современного диалога с историей.
+                                                Это
+                                                пространство, где главный экспонат — сама идея свободы во всех
+                                                её
+                                                проявлениях.
+                                            </p>
+                                        </div>
+                                    </article>
+
+                                    <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
+                                        <button type="button"
+                                            class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
+                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span
+                                                class="ml-10 xl:mx-auto max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                Это правда бывшая тюрьма?
+                                            </span>
+                                        </button>
+                                        <div class="faq-item__content h-0 overflow-hidden">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                                Да, за 150 с лишним лет «НЕтюрьма» успела послужить острогом,
+                                                Домом
+                                                труда, колонией для несовершеннолетних, детским домом и
+                                                коррекционной
+                                                школой, после чего пришла в запустение.<br><br>
+                                                Теперь бывший тюремный замок стал арт-городом, однако он не
+                                                спешит
+                                                смывать историю со своих стен —&nbsp;напротив, следы прошедших
+                                                лет
+                                                надёжно «задокументированы» и бережно вписаны в интерьер нового
+                                                арт-пространства.
+                                            </p>
+                                        </div>
+                                    </article>
+
+                                    <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
+                                        <button type="button"
+                                            class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
+                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span
+                                                class="ml-10 xl:mx-auto max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                Почему такое название — «НЕтюрьма»?
+                                            </span>
+                                        </button>
+                                        <div class="faq-item__content h-0 overflow-hidden">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                                Название работает в двух смыслах. Во-первых, это
+                                                прямая&nbsp;<strong>
+                                                    отсылка к
+                                                    прошлому</strong>&nbsp;здания. Во-вторых, это&nbsp;<strong>
+                                                    философский
+                                                    манифест
+                                                </strong>:
+                                                абсолютной свободы не бывает, мы всегда в каких-то рамках. Но
+                                                самая
+                                                прочная тюрьма — та, что у нас в голове. «НЕтюрьма» призывает
+                                                выйти за
+                                                её пределы, освободиться от мешающих привычек и шаблонов
+                                                мышления.
+                                            </p>
+                                        </div>
+                                    </article>
+
+                                    <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
+                                        <button type="button"
+                                            class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
+                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span
+                                                class="ml-10 xl:mx-auto w-full max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                Где вы находитесь?
+                                            </span>
+                                        </button>
+                                        <div class="faq-item__content h-0 overflow-hidden">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                                Мы в сердце Мышкина, на его главной исторической улице, с лучшим
+                                                видом
+                                                на Волгу. <strong>Адрес:</strong> Ярославская обл., г. Мышкин,
+                                                ул.
+                                                Никольская, 47.
+                                            </p>
+                                        </div>
+                                    </article>
+
+                                    <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
+                                        <button type="button"
+                                            class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
+                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span
+                                                class="ml-10 xl:mx-auto w-full max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                Что можно увидеть и сделать на территории?
+                                            </span>
+                                        </button>
+                                        <div class="faq-item__content h-0 overflow-hidden">
+                                            <p class="ml-10 mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                                «НЕтюрьма» — это целый мир. Вы можете:
+                                            </p>
+                                            <ul
+                                                class="mx-auto w-full max-w-406.25 pb-6 pl-7 list-disc xl:w-[calc(100%-8rem)]">
+                                                <li>Погрузиться в&nbsp;<strong>историю места</strong>&nbsp;в
+                                                    нашей
+                                                    экспозиции.</li>
+                                                <li>
+                                                    Увидеть&nbsp;<strong>современное искусство</strong>&nbsp;в
+                                                    тематических залах и
+                                                    открытой
+                                                    территории.
+                                                </li>
+                                                <li>Отдохнуть в&nbsp;<strong>арт-кафе «Пищеблок»</strong>.</li>
+                                                <li>
+                                                    Заглянуть в&nbsp;<strong>«Библиотеку
+                                                        смыслов»</strong>&nbsp;и
+                                                    творческие
+                                                    мастерские.
+                                                </li>
+                                                <li>
+                                                    Просто гулять, размышлять и фотографировать среди уникальных
+                                                    арт-объектов.
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </article>
+
+                                    <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
+                                        <button type="button"
+                                            class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
+                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span
+                                                class="ml-10 xl:mx-auto w-full max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                Можно ли провести фото- или видеосъёмку?
+                                            </span>
+                                        </button>
+                                        <div class="faq-item__content h-0 overflow-hidden">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                                <strong>Конечно!</strong> «НЕтюрьма» — готовая, драматичная
+                                                съёмочная
+                                                площадка.
+                                                <strong>
+                                                    Грубые
+                                                    текстуры стен, контрастный свет из высоких окон, атмосфера
+                                                    «заброшенного
+                                                    замка»
+                                                </strong> — здесь сама локация становится соавтором. Мы
+                                                предоставляем
+                                                пространство для аренды и готовы обсудить ваши творческие
+                                                задачи.
+                                            </p>
+                                        </div>
+                                    </article>
+
+                                    <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
+                                        <button type="button"
+                                            class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
+                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span
+                                                class="ml-10 xl:mx-auto w-full max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                А можно организовать мероприятие (праздник, корпоратив,
+                                                воркшоп)?
+                                            </span>
+                                        </button>
+                                        <div class="faq-item__content h-0 overflow-hidden">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                                <strong>Да, это одна из наших ключевых функций</strong>. У нас
+                                                есть
+                                                уютное кафе-лофт и
+                                                живописная открытая территория. Идеально для камерных свадеб,
+                                                дней
+                                                рождений, неформальных корпоративов, творческих воркшопов и
+                                                лекций.
+                                                Можно привезти свой кейтеринг или заказать его у наших
+                                                партнёров.
+                                            </p>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div id="line-divider" data-visit-line-hidden
+                        class="absolute bottom-0 left-1/2 z-100 w-full max-w-450 -translate-x-1/2 px-4 sm:px-6">
+                        <div class="h-0.5 bg-primary"></div>
+                    </div>
+
+
+                </section>
+
+                <section id="on-freedom" class="menu-item relative" data-on-freedom>
+                    <header id="menu-item-trigger"
+                        class="relative z-2 py-6 flex items-center cursor-pointer w-full group bg-secondary md:py-8"
+                        tabindex="0" aria-expanded="false">
+                        <div
+                            class="mx-auto flex w-full max-w-406.25 flex-col items-start gap-2 px-4 sm:px-8 md:flex-row md:items-center md:justify-between md:gap-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0 transition-transform duration-500 lg:group-hover:translate-x-4 will-change-transform">
+                            <hgroup class="flex items-center clamp-[gap,0.5rem,3rem,sm,2xl]">
+                                <div class="w-8">
+                                    <p class="font-deco border-b clamp-[text,lg,2xl,xs,2xl] w-fit">04</p>
+                                </div>
+
+                                <h2 id="trigger-title"
+                                    class="font-title uppercase leading-tight pointer-events-none clamp-[text,1.95rem,5.125rem,xs,2xl] xl:-mt-2 transition-transform duration-500 lg:group-hover:translate-x-8 will-change-transform text-nowrap">
+                                    О свободе</h2>
+                            </hgroup>
+
+                            <p
+                                class="text-left uppercase tracking-wide leading-relaxed clamp-[text,lg,2xl,xs,2xl] md:leading-none! md:text-right ml-10 md:ml-0 transition-transform duration-500 lg:group-hover:-translate-x-12 will-change-transform">
+                                О важном!
+                            </p>
+                        </div>
+                    </header>
+
+                    <div id="menu-item-panel" class="relative w-full [clip-path:inset(0)]" data-on-freedom-panel>
+                        <div
+                            class="relative z-2 flex flex-col gap-10 py-10 sm:gap-12 sm:py-12 md:gap-14 md:py-14 xl:gap-16 xl:py-16">
+                            <div
+                                class="mx-auto flex w-full max-w-406.25 px-4 sm:px-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0">
+                                <div id="line-content" class="w-0.5 shrink-0 bg-secondary"></div>
+                                <div
+                                    class="flex min-w-0 flex-col tracking-wide text-secondary px-4 sm:clamp-[px,2.25rem,5rem,sm,2xl] clamp-[text,xl,3xl,xs,2xl]">
+                                    <p class="my-2 xl:my-3">
+                                        Свобода — не&nbsp;подарок и&nbsp;не&nbsp;лозунг.<br class="hidden xl:inline">
+                                        Не то, что&nbsp;можно выдать по&nbsp;запросу.
+                                        Это то, что собирается по&nbsp;кусочкам.<br class="hidden xl:inline">
+                                        Годами. Иногда&nbsp;—&nbsp;болью. Иногда&nbsp;—&nbsp;молчанием.
+                                    </p>
+                                    <p class="my-2 xl:my-3">
+                                        Свобода — внутренняя настройка. Прояснение.&nbsp;Осознание. <br
+                                            class="hidden xl:inline">
+                                        Иногда она приходит поздно. <br class="hidden xl:inline">
+                                        Иногда путается с&nbsp;одиночеством, растерянностью, риском.
+                                    </p>
+                                    <p class="my-2 xl:my-3">
+                                        НЕсвобода — не&nbsp;только стены и&nbsp;решётки. <br class="hidden xl:inline">
+                                        Она может жить в&nbsp;привычке. <br class="hidden xl:inline">
+                                        В&nbsp;страхе, что не&nbsp;получится. В&nbsp;«так&nbsp;принято».
+                                        В&nbsp;«потом». <br class="hidden xl:inline">
+                                        И&nbsp;даже в&nbsp;уюте — если он больше не&nbsp;радует.
+                                    </p>
+                                    <p class="my-2 xl:my-3">
+                                        НЕтюрьма — это не&nbsp;музей&nbsp;НЕсвободы. <br class="hidden xl:inline">
+                                        Это рассказ о&nbsp;том, как&nbsp;выйти. Из&nbsp;каждой. Из&nbsp;своей.
+                                        <br class="hidden xl:inline">
+                                        Из&nbsp;НЕосознанной.
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="mx-auto flex w-full max-w-406.25 px-4 sm:px-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0">
+                                <div id="line-content" class="w-0.5 shrink-0 bg-secondary"></div>
+                                <div
+                                    class="flex min-w-0 flex-col text-lg tracking-wide text-secondary sm:text-xl md:text-2xl px-4 sm:clamp-[px,2.25rem,5rem,sm,2xl] xl:px-20 xl:text-3xl">
+                                    <p class="clamp-[text,2xl,5xl,xs,2xl]">
+                                        ЗАсомневаться. ЗАбеспокоиться. ЗАнять свободное место, может,
+                                        с&nbsp;этого
+                                        всё и&nbsp;начнётся...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full absolute z-0 inset-0" data-freedom-bg-inner>
+                            <div class="fixed inset-0 w-full pointer-events-none h-lvh" data-freedom-bg-wrapper>
+                                <img src="assets/img/freedom-bg.webp" alt=""
+                                    class="size-full object-cover object-[60%] lg:object-center" data-freedom-bg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="line-divider-wrapper" data-freedom-line-hidden
+                        class="w-full px-4 absolute bottom-0 z-100 max-w-450 mx-auto left-0 right-0 sm:px-6">
+                        <div id="line-divider" class="h-0.5 bg-primary"></div>
+                    </div>
+                </section>
+
+                <section id="about-food" class="menu-item relative bg-secondary z-2" data-about-food>
+                    <header id="menu-item-trigger"
+                        class="relative z-2 py-6 flex items-center cursor-pointer w-full group bg-secondary md:py-8"
+                        tabindex="0" aria-expanded="false">
+                        <div
+                            class="mx-auto flex w-full max-w-406.25 flex-col items-start gap-2 px-4 sm:px-8 md:flex-row md:items-center md:justify-between md:gap-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0 transition-transform duration-500 lg:group-hover:translate-x-4 will-change-transform">
+                            <hgroup class="flex items-center clamp-[gap,0.5rem,3rem,sm,2xl]">
+                                <div class="w-8">
+                                    <p class="font-deco border-b clamp-[text,lg,2xl,xs,2xl] w-fit">05</p>
+                                </div>
+
+                                <h2 id="trigger-title"
+                                    class="font-title uppercase leading-tight pointer-events-none clamp-[text,1.95rem,5.125rem,xs,2xl] xl:-mt-2 transition-transform duration-500 lg:group-hover:translate-x-8 will-change-transform text-nowrap">
+                                    О еде</h2>
+                            </hgroup>
+
+                            <p
+                                class="text-left uppercase tracking-wide leading-relaxed clamp-[text,lg,2xl,xs,2xl] md:leading-none! md:text-right ml-10 md:ml-0 transition-transform duration-500 lg:group-hover:-translate-x-12 will-change-transform">
+                                О насущном...
+                            </p>
+                        </div>
+                    </header>
+
+                    <div id="menu-item-panel" class="relative bg-secondary z-2" data-about-food-panel>
+                        <div
+                            class="mx-auto flex w-full max-w-406.25 flex-col gap-6 border-l-2 border-l-secondary pb-8 clamp-[text,xl,3xl,xs,2xl] tracking-wide text-primary sm:gap-8 px-4 sm:px-8 sm:pl-8 md:gap-10 md:pb-10 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:gap-10 xl:px-0 xl:pb-10 @container">
+                            <p class="clamp-[text,2xl,5xl,xs,xl] 2xl:text-[2.88cqi] tracking-widest! 2xl:whitespace-nowrap"
+                                data-food-slogan>
+                                Еда — не&nbsp;повод, но&nbsp;достойный спутник диалога, выставки, встречи!
+                            </p>
+                            <div class="grid grid-cols-1 gap-4 food-first-gallery sm:gap-6 md:grid-cols-2 lg:grid-cols-3 xl:gap-6"
+                                data-food-top-block>
+
+                                <article class="overflow-hidden lg:row-span-2">
+                                    <a href="assets/img/eat-01.webp" data-fancybox="food-first"
+                                        class="block w-full h-full">
+                                        <img src="assets/img/eat-01.webp" alt="О еде" loading="lazy"
+                                            class="h-full w-full object-cover object-center" />
+                                    </a>
+                                </article>
+
+                                <article class="w-full lg:col-span-2">
+                                    <p>
+                                        Здесь когда-то кипела стирка. <br class="hidden md:inline">
+                                        Сегодня — варится кофе. <br class="hidden md:inline">
+                                        Бывшая прачечная и&nbsp;мастерские превратились в&nbsp;место, <br
+                                            class="hidden md:inline">
+                                        где можно поесть, поговорить и&nbsp;просто передохнуть. <br
+                                            class="hidden md:inline">
+                                    </p>
+                                    <p class="my-2">
+                                        Теперь это — «ПИЩЕБЛОК». <br class="hidden md:inline">
+                                        Маленькое кафе в&nbsp;арт-городе «НЕтюрьма». <br class="hidden md:inline">
+                                        Без глянца и&nbsp;без&nbsp;суеты — с&nbsp;уважением ко&nbsp;Времени: <br
+                                            class="hidden md:inline">
+                                        открытая кирпичная кладка, старинные артефакты, уютный камин.
+                                    </p>
+                                    <p>
+                                        А&nbsp;за&nbsp;окном — ВОздух, ВОлга и&nbsp;сВОбода!
+                                    </p>
+                                </article>
+
+                                <article class="overflow-hidden">
+                                    <a href="assets/img/eat-02.webp" data-fancybox="food-first"
+                                        class="block aspect-square w-full">
+                                        <img src="assets/img/eat-02.webp" alt="О еде" loading="lazy"
+                                            class="h-full w-full object-cover" />
+                                    </a>
+                                </article>
+
+                                <article class="overflow-hidden">
+                                    <a href="assets/img/eat-03.webp" data-fancybox="food-first"
+                                        class="block aspect-square w-full">
+                                        <img src="assets/img/eat-03.webp" alt="О еде" loading="lazy"
+                                            class="h-full w-full object-cover" />
+                                    </a>
+                                </article>
+                            </div>
+                            <h3
+                                class="font-brand clamp-[text,2xl,4.375rem,xs,xl] 2xl:text-[5.76cqi] 2xl:whitespace-nowrap leading-normal uppercase">
+                                Где свобода выбора -
+                                главное
+                                блюдо</h3>
+                        </div>
+                        <div id="line-visible" class="w-full max-w-450 mx-auto px-4 sm:px-6" data-food-line-block>
+                            <div class="h-0.5 bg-primary"></div>
+                        </div>
+                        <div class="mx-auto grid w-full max-w-406.25 grid-cols-1 md:gap-8 sm:px-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] md:grid-cols-2 xl:gap-10 xl:px-0"
+                            data-freedom-bottom-block>
+                            <div
+                                class="relative z-5 flex flex-col gap-8 pt-10 sm:gap-10 sm:pt-12 md:gap-12 md:py-14 xl:gap-16 xl:py-16 clamp-[text,xl,3xl,xs,2xl] px-4 sm:px-0">
+                                <div
+                                    class="flex flex-col border-l-2 border-l-primary px-4 tracking-wide sm:px-6 xl:px-20">
+                                    <p class="mb-2 xl:mb-3">
+                                        Если вы&nbsp;ищете НЕобычное место&nbsp;для:
+                                    </p>
+                                    <ul>
+                                        <li class="mb-2 xl:mb-3">— cемейного праздника или&nbsp;дня рождения
+                                        </li>
+                                        <li class="mb-2 xl:mb-3">— творческой встречи или&nbsp;камерного вечера
+                                        </li>
+                                        <li class="mb-2 xl:mb-3">— частного ужина в&nbsp;кругу друзей</li>
+                                    </ul>
+                                </div>
+                                <div
+                                    class="relative flex flex-col gap-4 tracking-wide sm:gap-5 md:gap-6 xl:gap-6 clamp-[px,2.5rem,5rem,xs,2xl]">
+                                    <p class="absolute left-0 translate-x-4 sm:translate-x-6 xl:translate-x-8">
+                                        ●
+                                    </p>
+                                    <p class="uppercase">
+                                        Мы&nbsp;предлагаем:
+                                    </p>
+                                </div>
+                                <div
+                                    class="flex flex-col gap-4 border-l-2 border-l-primary px-4 tracking-wide sm:gap-5 sm:px-6 md:gap-6 xl:gap-6 xl:px-20">
+                                    <p>
+                                        <strong>Аренду пространства:</strong> сам&nbsp;«ПИЩЕБЛОК» <br
+                                            class="hidden xl:inline">
+                                        и/или&nbsp;летняя площадка среди арт-объектов! <br class="hidden xl:inline">
+                                        Привезите кейтеринг с&nbsp;собой, <br class="hidden xl:inline">
+                                        или&nbsp;доверьтесь ресторану отеля <strong>«Мышк Инн»</strong>.
+                                    </p>
+                                </div>
+                                <div
+                                    class="flex flex-col gap-4 border-l-2 border-l-primary px-4 tracking-wide sm:gap-5 sm:px-6 md:gap-6 xl:gap-6 xl:px-20">
+                                    <p>
+                                        <strong>
+                                            Связаться с&nbsp;нами — просто. Как&nbsp;сказать: «ещё&nbsp;кофе».
+                                        </strong>
+                                    </p>
+                                </div>
+                                
+                            </div>
+                            <div class="h-full py-10 sm:py-12 md:py-14 xl:py-16 w-full px-4 sm:px-0">
+                                <div class="relative h-full w-full max-h-120! sm:max-h-150! md:max-h-170!">
+                                    <div class="f-carousel food-slider h-full w-full" id="carousel-food-secondary">
+                                        <div class="f-carousel__viewport h-full w-full">
+                                            <div class="f-carousel__slide flex h-full w-full">
+                                                <a href="assets/img/eat-slide-01.webp" data-fancybox="food-secondary"
+                                                    class="food-slider__slide flex h-full w-full flex-1">
+                                                    <img src="assets/img/eat-slide-01.webp" alt="О еде" loading="lazy"
+                                                        class="block flex-1 h-full! w-full! object-cover" />
+                                                </a>
+                                            </div>
+                                            <div class="f-carousel__slide flex h-full w-full">
+                                                <a href="assets/img/eat-slide-02.webp" data-fancybox="food-secondary"
+                                                    class="food-slider__slide flex h-full w-full flex-1">
+                                                    <img src="assets/img/eat-slide-02.webp" alt="О еде" loading="lazy"
+                                                        class="block flex-1 h-full! w-full! object-cover" />
+                                                </a>
+                                            </div>
+                                            <div class="f-carousel__slide flex h-full w-full">
+                                                <a href="assets/img/eat-slide-03.webp" data-fancybox="food-secondary"
+                                                    class="food-slider__slide flex h-full w-full flex-1">
+                                                    <img src="assets/img/eat-slide-03.webp" alt="О еде" loading="lazy"
+                                                        class="block flex-1 h-full! w-full! object-cover" />
+                                                </a>
+                                            </div>
+                                            <div class="f-carousel__slide flex h-full w-full">
+                                                <a href="assets/img/eat-slide-04.webp" data-fancybox="food-secondary"
+                                                    class="food-slider__slide flex h-full w-full flex-1">
+                                                    <img src="assets/img/eat-slide-04.webp" alt="О еде" loading="lazy"
+                                                        class="block flex-1 h-full! w-full! object-cover" />
+                                                </a>
+                                            </div>
+                                            <div class="f-carousel__slide flex h-full w-full">
+                                                <a href="assets/img/eat-slide-05.webp" data-fancybox="food-secondary"
+                                                    class="food-slider__slide flex h-full w-full flex-1">
+                                                    <img src="assets/img/eat-slide-05.webp" alt="О еде" loading="lazy"
+                                                        class="block flex-1 h-full! w-full! object-cover" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="pointer-events-none absolute inset-x-0 top-1/2 z-10 -translate-y-1/2 justify-between hidden md:flex">
+                                        <button
+                                            class="carousel-food-prev pointer-events-auto absolute left-0 -translate-x-4 cursor-pointer fill-muted/50 transition-colors hover:fill-muted sm:-translate-x-10"
+                                            type="button">
+                                            <svg class="h-8 w-6 rotate-90 sm:h-10 sm:w-8" viewBox="0 0 39 36"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M19.0508 36L38.1033 0H-0.00177765L19.0508 36Z" />
+                                            </svg>
+                                        </button>
+                                        <button
+                                            class="carousel-food-next pointer-events-auto absolute right-0 translate-x-4 cursor-pointer fill-muted/50 transition-colors hover:fill-muted sm:translate-x-10"
+                                            type="button">
+                                            <svg class="h-8 w-6 -rotate-90 sm:h-10 sm:w-8" viewBox="0 0 39 36"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M19.0508 36L38.1033 0H-0.00177765L19.0508 36Z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="line-divider-wrapper" data-food-line-hidden
+                        class="w-full px-4 absolute bottom-0 z-100 max-w-450 mx-auto left-0 right-0 sm:px-6">
+                        <div id="line-divider" class="h-0.5 bg-primary"></div>
+                    </div>
+                </section>
+            </main>
+
+            <footer id="footer"
+                class="bg-secondary uppercase text-muted tracking-wide w-full flex flex-col items-center z-2 will-change-transform">
+                <div
+                    class="grid w-full min-w-0 max-w-406.25 gap-y-10 px-4 sm:px-8 md:gap-x-10 md:gap-y-12 xl:w-[calc(100%-8rem)] xl:gap-x-16 xl:gap-y-0 xl:px-0">
+                    <div class="row-end-1 flex min-w-0 flex-col gap-6 xl:gap-10">
+                        <div class="border-b-2 border-b-primary pb-4 pt-6 px-6 xl:px-10 xl:pb-6 xl:pt-10">
+                            <h3 class="text-primary text-2xl">Информация</h3>
+                        </div>
+
+                        <nav class="flex flex-col gap-4 xl:gap-6 clamp-[text,xl,2xl,xs,2xl]">
+                            <a href="mailto:info@neturma.ru" class="transition-colors hover:text-primary px-6 xl:px-10">
+                                info@neturma.ru
+                            </a>
+
+                            <a href="/"
+                                class="open-requisites-modal transition-colors hover:text-primary px-6 xl:px-10">
+                                Реквизиты
+                            </a>
+                        </nav>
+                    </div>
+                    
+
+                    
+                    <div
+                        class="row-end-2 xl:row-end-2 md:col-span-4 flex w-full min-w-0 max-w-406.25 justify-start xl:w-[calc(100%-8rem)] py-6 xl:py-16">
+                        <p class="wrap-break-word clamp-[text,xl,2xl,xs,2xl]">НЕТЮРЬМА. 2026. Все права защищены.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <aside id="sidebar"
+            class="fixed top-0 right-0 h-dvh w-full sm:w-80 overflow-hidden bg-secondary z-900 will-change-transform opacity-0">
+            <div id="sidebar-nav" class="h-full w-full overflow-y-auto scrollbar-thin overscroll-contain">
+                <div
+                    class="grid grid-rows-[1fr_auto_1fr] gap-6 min-h-full w-full sm:border-l-2 sm:border-l-primary p-6 overflow-hidden">
+                    <header class="flex items-start w-full">
+                        <div class="flex items-center w-full gap-8 justify-between">
+                            <div id="sidebar-logo" class="w-47.5 logo will-change-transform" aria-label="НЕТЮРЬМА">
+                            </div>
+                        </div>
+                    </header>
+
+                    <nav id="sidebar-items" class="flex flex-col tracking-wide clamp-[text,xl,2xl,xs,2xl]"
+                        aria-label="Основная навигация">
+                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                            href="#hero">
+                            <span
+                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">00</span>
+                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">Главная</span>
+                        </a>
+
+                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                            href="#about-project">
+                            <span
+                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">01</span>
+                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">О
+                                проекте</span>
+                        </a>
+
+                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                            href="#art-objects-section">
+                            <span
+                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">02</span>
+                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">Арт-объекты</span>
+                        </a>
+
+                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                            href="#about-visit">
+                            <span
+                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">03</span>
+                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">О
+                                посещении</span>
+                        </a>
+
+                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                            href="#on-freedom">
+                            <span
+                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">04</span>
+                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">О
+                                свободе</span>
+                        </a>
+
+                        <a class="flex py-3 lg:py-4 gap-2 uppercase group items-center w-full! sidebar-link-label will-change-transform"
+                            href="#about-food">
+                            <span
+                                class="font-deco border-b border-b-muted w-8 flex justify-center text-muted group-hover:text-primary transition-colors">05</span>
+                            <span class="md:group-hover:pl-4 transition-[padding] duration-500">О
+                                еде</span>
+                        </a>
+                    </nav>
+
+                    <div id="sidebar-footer" class="hidden items-end">
+                        <a id="sidebar-btn" class="btn w-full! sm:w-fit will-change-transform" href="/">Купить
+                            билет</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <button id="sidebar-toggle"
+            class="fixed top-5 sm:top-5 right-4 sm:right-6 z-910 cursor-pointer p-4 -m-4 invert mix-blend-difference will-change-transform"
+            type="button" aria-label="Открыть меню" aria-expanded="false">
+            <svg id="sidebar-toggle-icon" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+                <line class="stroke-primary stroke-2 [stroke-linecap:butt] l--top" x1="0" y1="9" x2="32" y2="9" />
+                <line class="stroke-primary stroke-2 [stroke-linecap:butt] l--mid" x1="0" y1="16" x2="32" y2="16" />
+                <line class="stroke-primary stroke-2 [stroke-linecap:butt] l--bot" x1="0" y1="23" x2="32" y2="23" />
+            </svg>
+        </button>
+    </div>
+
+    <canvas id="air"
+        class="pointer-events-none fixed inset-0 mix-blend-difference z-1 will-change-[transform,clip-path]"></canvas>
+
+    <div id="requisites-modal" class="fixed inset-0 z-999 pointer-events-none opacity-0" aria-hidden="true"
+        role="dialog" aria-modal="true" aria-labelledby="requisites-modal-title">
+        <div class="modal-backdrop absolute inset-0 bg-secondary/95"></div>
+
+        <div class="relative z-10 flex h-full w-full items-center justify-center p-4 sm:p-6">
+            <div
+                class="modal-content relative w-full max-w-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto bg-secondary text-primary border-2 border-primary p-6 sm:p-8 md:p-10 lg:p-12">
+
+                <button type="button"
+                    class="modal-close absolute top-4 right-4 sm:top-5 sm:right-5 md:top-6 md:right-6 cursor-pointer text-primary transition-colors"
+                    aria-label="Закрыть">
+                    <svg class="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" viewBox="0 0 32 32" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M4 4L28 28M28 4L4 28" />
+                    </svg>
+                </button>
+
+                <h2 class="font-title text-3xl sm:text-4xl md:text-5xl uppercase mb-6 sm:mb-7 md:mb-8 pr-10">
+                    Реквизиты
+                </h2>
+
+                <div
+                    class="text-base sm:text-lg md:text-xl lg:text-2xl tracking-wide leading-relaxed space-y-1 mb-6 sm:mb-7 md:mb-8 uppercase">
+                    <p class="font-bold">ООО «Саммит»</p>
+                    <p>ИНН 7719676182</p>
+                    <p>ОГРН 1087746466334</p>
+                </div>
+
+                <div
+                    class="flex flex-col gap-2 sm:gap-1 text-base sm:text-lg md:text-xl tracking-wide leading-relaxed uppercase">
+                    <a href="assets/docs/accept-privacy-policy.pdf"
+                        class="hover:text-muted transition-colors wrap-break-word" target="_blank">
+                        Согласие на обработку персональных данных
+                    </a>
+
+                    <a href="assets/docs/privacy-policy.pdf" class="hover:text-muted transition-colors wrap-break-word"
+                        target="_blank">
+                        Политика конфиденциальности
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/112671475" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
+    <?php wp_footer(); ?>
+</body>
+
+</html>
