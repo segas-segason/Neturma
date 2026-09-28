@@ -3,7 +3,7 @@
 
 @font-face {
 	font-family: "Hagin Caps Medium";
-	src: url("/assets/fonts/HaginCapsMedium-Medium.woff2") format("woff2");
+	src: url("/assets/fonts/hagin-caps-medium.woff2") format("woff2");
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
@@ -11,7 +11,7 @@
 
 @font-face {
 	font-family: "Segoe UI";
-	src: url("/assets/fonts/segoe-ui-variable.woff") format("woff2");
+	src: url("/assets/fonts/segoe-ui-variable.woff") format("woff");
 	font-style: normal;
 	font-display: swap;
 }
@@ -53,7 +53,7 @@
 }
 
 a {
-	@apply text-muted hover:text-primary transition-colors w-fit;
+	@apply text-muted hover:text-primary w-fit transition-colors;
 }
 
 p {
@@ -65,15 +65,15 @@ strong {
 }
 
 .text-semilight {
-	@apply [font-variation-settings:'wght'_300,'wdth'_75] tracking-[0.05em] align-middle;
+	@apply align-middle tracking-[0.05em] [font-variation-settings:'wght'_300,'wdth'_75];
 }
 
 .text-semibold {
-	@apply [font-variation-settings:'wght'_600,'wdth'_75] tracking-[0.05em];
+	@apply tracking-[0.05em] [font-variation-settings:'wght'_600,'wdth'_75];
 }
 
 .text-bold {
-	@apply [font-variation-settings:'wght'_700,'wdth'_75] tracking-[0.05em];
+	@apply tracking-[0.05em] [font-variation-settings:'wght'_700,'wdth'_75];
 }
 
 .text-slogan {
@@ -81,7 +81,7 @@ strong {
 }
 
 .btn {
-	@apply bg-primary py-4 px-12 inline-flex items-center justify-center h-fit w-fit text-neutral hover:text-neutral rounded-full uppercase font-deco clamp-[text,xl,2xl,xs,2xl] transition-colors text-nowrap relative;
+	@apply bg-primary text-neutral hover:text-neutral font-deco clamp-[text,xl,2xl,xs,2xl] relative inline-flex h-fit w-fit items-center justify-center rounded-full px-12 py-4 text-nowrap uppercase transition-colors;
 }
 
 .btn__label {
@@ -93,11 +93,11 @@ strong {
 }
 
 .btn__label-item--clone {
-	@apply absolute left-0 top-full w-full;
+	@apply absolute top-full left-0 w-full;
 }
 
 .btn-hero__label {
-	@apply block relative overflow-hidden h-[1.2em] leading-[1.2];
+	@apply relative block h-[1.2em] overflow-hidden leading-[1.2];
 }
 
 .btn-hero__label-item {
@@ -105,7 +105,7 @@ strong {
 }
 
 .logo {
-	@apply mask-[url(/assets/logo.svg)] mask-no-repeat mask-cover pointer-events-none bg-primary aspect-240/41 relative;
+	@apply bg-primary pointer-events-none relative aspect-240/41 mask-[url(/assets/logo.svg)] mask-cover mask-no-repeat;
 }
 
 .logo-mask-image {
@@ -165,7 +165,7 @@ strong {
 }
 
 #carousel-art-objects .f-carousel__slide:hover img {
-	@apply lg:grayscale-0 lg:scale-110;
+	@apply lg:scale-110 lg:grayscale-0;
 }
 
 .food-first-gallery a[data-fancybox] img,
@@ -178,7 +178,7 @@ strong {
 }
 
 #menu-item-panel a[data-fancybox]:hover img {
-	@apply lg:grayscale-0 lg:scale-110;
+	@apply lg:scale-110 lg:grayscale-0;
 }
 
 #menu-item-trigger {
@@ -206,15 +206,15 @@ strong {
 }
 
 .cursor-square {
-	@apply fixed inset-0 flex items-center justify-center bg-primary rounded-full pointer-events-none z-9999 invert mix-blend-difference text-neutral;
+	@apply bg-primary text-neutral pointer-events-none fixed inset-0 z-9999 flex items-center justify-center rounded-full mix-blend-difference invert;
 }
 
 .cursor-square-label {
-	@apply absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none;
+	@apply pointer-events-none absolute inset-0 flex items-center justify-center opacity-0;
 }
 
 .cursor-square-label svg {
-	@apply block w-6 h-6 pt-0.75;
+	@apply block h-6 w-6 pt-0.75;
 }
 
 #map > ymaps,

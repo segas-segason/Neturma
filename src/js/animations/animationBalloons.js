@@ -3,11 +3,11 @@ import { gsap } from "gsap";
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 const BALLOON_IMAGES = [
-	"/assets/img/balloons/1.png",
-	"/assets/img/balloons/2.png",
-	"/assets/img/balloons/3.png",
-	"/assets/img/balloons/4.png",
-	"/assets/img/balloons/5.png",
+	"/assets/img/balloons/baloon-01.webp",
+	"/assets/img/balloons/baloon-02.webp",
+	"/assets/img/balloons/baloon-03.webp",
+	"/assets/img/balloons/baloon-04.webp",
+	"/assets/img/balloons/baloon-05.webp",
 ];
 
 /* ======================= КОНФИГУРАЦИЯ ======================= */

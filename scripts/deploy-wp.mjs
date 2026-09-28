@@ -92,9 +92,16 @@ const createTemplates = async () => {
 	}
 };
 
+const copyThemeScreenshot = async () => {
+	const screenshotPath = path.join(buildDirectory, "screenshot.png");
+	await requireFile(screenshotPath);
+	await cp(screenshotPath, path.join(themeDirectory, "screenshot.png"), { force: true });
+};
+
 const validateTheme = async () => {
 	const requiredFiles = [
 		"style.css",
+		"screenshot.png",
 		"functions.php",
 		"front-page.php",
 		"404.php",
@@ -170,6 +177,7 @@ const deploy = async () => {
 	await requireFile(path.join(buildDirectory, "404.html"));
 	await copyBuildAssets();
 	await createTemplates();
+	await copyThemeScreenshot();
 	await validateTheme();
 	await mkdir(path.dirname(targetDirectory), { recursive: true });
 	await cp(themeDirectory, targetDirectory, { recursive: true, force: true });
@@ -180,7 +188,7 @@ const deploy = async () => {
 		throw new Error(`Путь темы не является каталогом: ${targetDirectory}`);
 	}
 
-	console.log(`Тема neturma обновлена: ${targetDirectory}`);
+	console.log(`Тема НЕтюрьма обновлена: ${targetDirectory}`);
 	console.log(`Проверено файлов: ${fileCount}`);
 };
 

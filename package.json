@@ -1,6 +1,6 @@
 {
-	"name": "landing",
-	"version": "1.2.7",
+	"name": "NEturma",
+	"version": "1.2.8",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
@@ -22,7 +22,8 @@
 	},
 	"devDependencies": {
 		"kill-port": "^2.0.1",
-		"prettier": "3.8.3",
+		"prettier": "^3.9.9",
+		"prettier-plugin-tailwindcss": "^0.8.1",
 		"sass": "^1.97.3",
 		"vite": "^7.3.1"
 	}
