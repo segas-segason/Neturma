@@ -108,6 +108,7 @@ export function initAnimationAccordionSections(options = {}) {
 			}
 
 			ScrollTrigger.refresh();
+			contentAnimation?.opened?.();
 
 			section.dispatchEvent(
 				new CustomEvent("menu-item:opened", { bubbles: true })

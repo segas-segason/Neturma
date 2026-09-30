@@ -575,8 +575,7 @@
                             </div>
                         </div>
 
-                        <div class="min-h-dvh w-full relative z-0 [clip-path:inset(0)] inset-0 "
-                            data-screen-visit>
+                        <div class="min-h-dvh w-full relative z-0 [clip-path:inset(0)] inset-0 " data-screen-visit>
                             <div class="fixed inset-0 w-full pointer-events-none h-full" data-scene-bg-man-paint>
                                 <canvas id="man-paint-canvas" class="block size-full" data-man-paint-canvas></canvas>
                             </div>
