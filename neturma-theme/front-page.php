@@ -574,6 +574,14 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="min-h-dvh w-full relative z-0 [clip-path:inset(0)] inset-0 "
+                            data-screen-visit>
+                            <div class="fixed inset-0 w-full pointer-events-none h-full" data-scene-bg-man-paint>
+                                <canvas id="man-paint-canvas" class="block size-full" data-man-paint-canvas></canvas>
+                            </div>
+                        </div>
+
                         
                     </div>
 
@@ -581,8 +589,6 @@
                         class="absolute bottom-0 left-1/2 z-100 w-full max-w-450 -translate-x-1/2 px-4 sm:px-6">
                         <div class="h-0.5 bg-primary"></div>
                     </div>
-
-
                 </section>
 
                 <section id="on-freedom" class="menu-item relative" data-on-freedom>

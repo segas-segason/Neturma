@@ -29,7 +29,8 @@ import { initPopup } from "./popup";
 import { initFixedBgOnFreedom } from "./fixedBgOnFreedom";
 
 document.addEventListener("DOMContentLoaded", () => {
-	const accordionSections = initAnimationAccordionSections(); /* Анимация секций */
+	const accordionSections =
+		initAnimationAccordionSections(); /* Анимация секций */
 	initAirParticles(); /* Пыль */
 	initAnimationHero(); /* Анимация главного экрана */
 	initAnimationLogoMaskEffect(); /* Анимация логотипа при движении мыши */

@@ -11,6 +11,64 @@ const FOOD_SLIDE_SELECTOR = '.food-slider__slide, [data-fancybox="food-first"]';
 const FOOD_FANCYBOX_SELECTOR =
 	'[data-fancybox="food-first"], [data-fancybox="food-secondary"]';
 
+const FANCYBOX_ARROW_TEMPLATE = `
+	<svg viewBox="0 0 39 36" aria-hidden="true">
+		<path d="M19.0508 36L38.1033 0H-0.00177765L19.0508 36Z" />
+	</svg>
+`;
+
+function getCursorSquare() {
+	return document.querySelector(".cursor-square");
+}
+
+function getFancyboxDialog(instance) {
+	return instance.getContainer()?.closest("dialog");
+}
+
+const FANCYBOX_OPTIONS = {
+	mainClass: "neturma-fancybox",
+	theme: "light",
+	zoomEffect: false,
+	showClass: "f-fadeIn",
+	hideClass: "f-fadeOut",
+	fadeEffect: true,
+	idle: false,
+	on: {
+		initLayout: (instance) => {
+			const cursor = getCursorSquare();
+			const dialog = getFancyboxDialog(instance);
+
+			if (cursor && dialog) dialog.append(cursor);
+		},
+		destroy: (instance) => {
+			const cursor = getCursorSquare();
+			const dialog = getFancyboxDialog(instance);
+
+			if (cursor && dialog?.contains(cursor)) document.body.append(cursor);
+		},
+	},
+	l10n: {
+		CLOSE: "Закрыть",
+		NEXT: "Следующее изображение",
+		PREV: "Предыдущее изображение",
+		MODAL: "Галерея изображений. Для закрытия нажмите Escape",
+	},
+	Carousel: {
+		transition: "fade",
+		Toolbar: {
+			display: {
+				left: ["counter"],
+				right: ["close"],
+			},
+		},
+		Thumbs: false,
+		Arrows: {
+			prevTpl: FANCYBOX_ARROW_TEMPLATE,
+			nextTpl: FANCYBOX_ARROW_TEMPLATE,
+		},
+	},
+};
+
 let currentFoodSlide = null;
 let delegationBound = false;
 
@@ -62,8 +120,8 @@ function bindFoodDelegation() {
 				alt: l.querySelector("img")?.alt || "",
 			})),
 			{
+				...FANCYBOX_OPTIONS,
 				startIndex: Math.max(0, links.indexOf(link)),
-				zoomEffect: false,
 			}
 		);
 	});
@@ -102,7 +160,7 @@ export function initArtSlider() {
 		prevBtn?.addEventListener("click", () => carousel.prev());
 		nextBtn?.addEventListener("click", () => carousel.next());
 
-		Fancybox.bind('[data-fancybox="art-objects"]', { zoomEffect: false });
+		Fancybox.bind('[data-fancybox="art-objects"]', FANCYBOX_OPTIONS);
 	});
 }
 

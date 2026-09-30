@@ -109,14 +109,7 @@ strong {
 }
 
 .logo-mask-image {
-	position: absolute;
-	inset: 0;
-	z-index: 2;
-	pointer-events: none;
-	opacity: 0;
-	transition: opacity 0.35s ease;
-
-	background: url("/assets/img/bg.webp") center / cover no-repeat;
+	@apply pointer-events-none absolute inset-0 z-2 bg-[url(/assets/img/bg.webp)] bg-cover bg-center bg-no-repeat opacity-0 transition-opacity duration-300;
 
 	--x: 50%;
 	--y: 50%;
@@ -143,6 +136,7 @@ strong {
 #carousel-art-objects {
 	--f-carousel-slide-width: max-content !important;
 	--f-carousel-gap: 8px;
+
 	@apply overflow-hidden;
 }
 
@@ -166,6 +160,122 @@ strong {
 
 #carousel-art-objects .f-carousel__slide:hover img {
 	@apply lg:scale-110 lg:grayscale-0;
+}
+
+.neturma-fancybox {
+	--f-button-color: var(--color-primary);
+	--f-button-hover-color: var(--color-primary);
+	--f-button-bg: transparent;
+	--f-button-hover-bg: transparent;
+	--f-button-active-bg: transparent;
+	--f-button-outline-color: var(--color-primary);
+	--f-arrow-width: clamp(2rem, 3vw, 2.75rem);
+	--f-arrow-height: clamp(2.25rem, 3.5vw, 3.25rem);
+	--f-arrow-bg: transparent;
+	--f-arrow-color: var(--color-muted);
+	--f-arrow-hover-color: var(--color-primary);
+	--f-arrow-border-radius: 0;
+	--f-transition-duration: 0.45s;
+
+	@apply bg-secondary font-body;
+}
+
+.neturma-fancybox .fancybox__carousel {
+	--f-carousel-slide-padding: clamp(5rem, 9vw, 8.5rem) clamp(1rem, 9vw, 8rem)
+		clamp(4.75rem, 9vw, 7rem);
+}
+
+.neturma-fancybox .fancybox__backdrop::before {
+	@apply pointer-events-none absolute inset-5 content-[''];
+}
+
+.neturma-fancybox .f-carousel__toolbar {
+	min-height: 5rem;
+	padding: 1.25rem clamp(1.25rem, 3vw, 3rem);
+}
+
+.neturma-fancybox .f-carousel__toolbar::after {
+	@apply font-brand clamp-[text,xl,4xl,xs,2xl] absolute top-1/2 left-1/2 z-20 -translate-1/2 content-['НЕТЮРЬМА'];
+}
+
+.neturma-fancybox .f-counter {
+	@apply font-deco clamp-[text,xl,2xl,xs,2xl] pointer-events-none;
+}
+
+.neturma-fancybox .f-button[data-fancybox-close] {
+	--f-button-width: clamp(2.75rem, 4vw, 3.5rem);
+	--f-button-height: clamp(2.75rem, 4vw, 3.5rem);
+	--f-button-color: var(--color-neutral);
+	--f-button-hover-color: var(--color-neutral);
+	--f-button-bg: var(--color-primary);
+	--f-button-hover-bg: var(--color-primary);
+	--f-button-active-bg: var(--color-primary);
+	--f-button-border-radius: 9999px;
+	--f-button-svg-width: 1.5rem;
+	--f-button-svg-height: 1.5rem;
+	--f-button-svg-stroke-width: 1.5;
+	transition: transform 0.35s ease;
+}
+
+.neturma-fancybox .f-button.is-arrow {
+	--f-button-color: var(--color-muted);
+	--f-button-hover-color: var(--color-primary);
+	--f-button-active-color: var(--color-primary);
+
+	@apply bg-transparent transition duration-500;
+}
+
+.neturma-fancybox .f-button.is-arrow:hover,
+.neturma-fancybox .f-button.is-arrow:active {
+	@apply bg-transparent;
+}
+
+.neturma-fancybox .f-button.is-arrow svg {
+	@apply size-full fill-current stroke-none;
+}
+
+.neturma-fancybox .f-button.is-prev svg {
+	transform: rotate(90deg);
+}
+
+.neturma-fancybox .f-button.is-next svg {
+	transform: rotate(-90deg);
+}
+
+.neturma-fancybox .f-button.is-prev:hover {
+	transform: translateX(-0.35rem);
+}
+
+.neturma-fancybox .f-button.is-next:hover {
+	transform: translateX(0.35rem);
+}
+
+@media (max-width: 47.999rem) {
+	.neturma-fancybox {
+		--f-arrow-pos: 1rem;
+	}
+
+	.neturma-fancybox .fancybox__carousel {
+		--f-carousel-slide-padding: 5.5rem 1rem 5rem;
+	}
+
+	.neturma-fancybox .fancybox__backdrop::before {
+		inset: 0.625rem;
+	}
+
+	.neturma-fancybox .f-carousel__toolbar {
+		min-height: 4.5rem;
+		padding: 1rem;
+	}
+
+	.neturma-fancybox .f-carousel__toolbar::after {
+		display: none;
+	}
+
+	.neturma-fancybox .f-button.is-arrow {
+		top: auto;
+		bottom: 1.125rem;
+	}
 }
 
 .food-first-gallery a[data-fancybox] img,

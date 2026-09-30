@@ -17,8 +17,12 @@ export function initAnimationSceneBackground(options) {
 		start = "top top",
 		end = "bottom top",
 		scrub = 0,
+		mobileScrub = 0.15,
 		ease = "power2",
 		useWindowSize = true,
+		horizontalPosition = 0.5,
+		mobileHorizontalPan = false,
+		mobileHorizontalStartPosition = 0,
 		onRender = null,
 	} = options;
 
@@ -41,11 +45,16 @@ export function initAnimationSceneBackground(options) {
 	const images = [];
 	const sceneData = {
 		frame: 0,
+		progress: 0,
 	};
+	const desktopViewport = window.matchMedia("(min-width: 768px)");
 
 	let scrollTriggerInstance = null;
 	let resizeHandler = null;
 	let destroyed = false;
+	let lastRenderedFrame = null;
+	let lastRenderedX = null;
+	let lastRenderedY = null;
 
 	let lastWidth = window.innerWidth;
 	let lastHeight = window.innerHeight;
@@ -75,14 +84,13 @@ export function initAnimationSceneBackground(options) {
 		const img = images[frameIndex];
 
 		if (!img || !img.complete || img.naturalWidth === 0) {
+			lastRenderedFrame = null;
 			context.fillStyle = "#1a1a1a";
 
 			context.fillRect(0, 0, canvas.width, canvas.height);
 
 			return;
 		}
-
-		context.clearRect(0, 0, canvas.width, canvas.height);
 
 		const canvasRatio = canvas.width / canvas.height;
 
@@ -103,9 +111,25 @@ export function initAnimationSceneBackground(options) {
 			sH = img.height;
 			sW = img.height * canvasRatio;
 
-			sX = (img.width - sW) / 2;
+			const startPosition = Math.min(1, Math.max(0, mobileHorizontalStartPosition));
+			const position = mobileHorizontalPan && !desktopViewport.matches
+				? startPosition + sceneData.progress * (1 - startPosition)
+				: horizontalPosition;
+
+			sX = (img.width - sW) * Math.min(1, Math.max(0, position));
 			sY = 0;
 		}
+
+		if (
+			frameIndex === lastRenderedFrame &&
+			sX === lastRenderedX &&
+			sY === lastRenderedY &&
+			typeof onRender !== "function"
+		) {
+			return;
+		}
+
+		context.clearRect(0, 0, canvas.width, canvas.height);
 
 		context.drawImage(
 			img,
@@ -119,6 +143,10 @@ export function initAnimationSceneBackground(options) {
 			canvas.height
 		);
 
+		lastRenderedFrame = frameIndex;
+		lastRenderedX = sX;
+		lastRenderedY = sY;
+
 		if (typeof onRender === "function") {
 			onRender(context, canvas, frameIndex);
 		}
@@ -127,7 +155,9 @@ export function initAnimationSceneBackground(options) {
 	function updateSize() {
 		if (destroyed) return;
 
-		const dpr = window.devicePixelRatio || 1;
+		const dpr = desktopViewport.matches
+			? window.devicePixelRatio || 1
+			: Math.min(window.devicePixelRatio || 1, 1.5);
 
 		let width;
 		let height;
@@ -151,6 +181,7 @@ export function initAnimationSceneBackground(options) {
 
 		canvas.width = width * dpr;
 		canvas.height = height * dpr;
+		lastRenderedFrame = null;
 
 		render();
 	}
@@ -195,20 +226,24 @@ export function initAnimationSceneBackground(options) {
 
 		const tween = gsap.to(sceneData, {
 			frame: frameCount - 1,
+			progress: 1,
 
 			snap: {
 				frame: 1,
 			},
 
 			ease,
+			onUpdate: render,
 
 			scrollTrigger: {
 				trigger: triggerSelector,
 				start,
 				end,
-				scrub,
-				invalidateOnRefresh: true,
-				onUpdate: render,
+				scrub: desktopViewport.matches ? scrub : mobileScrub,
+				onRefresh: (self) => {
+					self.animation.totalProgress(self.progress, true);
+					render();
+				},
 			},
 		});
 
@@ -246,6 +281,10 @@ export function initAnimationSceneBackground(options) {
 		lastWidth = currentWidth;
 		lastHeight = currentHeight;
 		lockedMobileHeight = currentHeight;
+
+		scrollTriggerInstance?.scrubDuration(
+			desktopViewport.matches ? scrub : mobileScrub
+		);
 
 		updateSize();
 		refresh();

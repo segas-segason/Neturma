@@ -387,9 +387,6 @@ export function initAnimationStartScrollDown() {
 		(e) => {
 			if (isAnimating) {
 				e.preventDefault();
-				if (isHeroVisible) {
-					window.scrollTo(0, 0);
-				}
 				return;
 			}
 
@@ -400,12 +397,24 @@ export function initAnimationStartScrollDown() {
 		{ passive: false }
 	);
 
-	let touchStartY = 0;
+	let touchStart = null;
+	let consumeTouch = false;
 
 	window.addEventListener(
 		"touchstart",
 		(e) => {
-			touchStartY = e.touches[0].clientY;
+			consumeTouch = consumeTouch || isAnimating;
+			touchStart = null;
+
+			if (!isHeroVisible || isAnimating || e.touches.length !== 1) return;
+			if (e.target.closest?.("#sidebar, #sidebar-toggle, [data-lenis-prevent]")) return;
+
+			const touch = e.touches[0];
+			touchStart = {
+				id: touch.identifier,
+				x: touch.clientX,
+				y: touch.clientY,
+			};
 		},
 		{ passive: true }
 	);
@@ -413,23 +422,44 @@ export function initAnimationStartScrollDown() {
 	window.addEventListener(
 		"touchmove",
 		(e) => {
-			if (isAnimating) {
-				e.preventDefault();
-				if (isHeroVisible) {
-					window.scrollTo(0, 0);
-				}
+			if (isAnimating || consumeTouch) {
+				consumeTouch = true;
+				if (e.cancelable) e.preventDefault();
 				return;
 			}
 
-			const touchEndY = e.touches[0].clientY;
-			const deltaY = touchStartY - touchEndY;
+			if (!isHeroVisible || !touchStart) return;
+			if (e.touches.length !== 1) {
+				touchStart = null;
+				return;
+			}
 
-			if (deltaY > 30) {
+			const touch = Array.from(e.touches).find(
+				(item) => item.identifier === touchStart.id
+			);
+			if (!touch) return;
+			if (e.cancelable) e.preventDefault();
+
+			const deltaX = touchStart.x - touch.clientX;
+			const deltaY = touchStart.y - touch.clientY;
+
+			if (deltaY > 40 && deltaY > Math.abs(deltaX) * 1.25) {
+				consumeTouch = true;
+				touchStart = null;
 				goDown();
 			}
 		},
 		{ passive: false }
 	);
+
+	const endTouch = (e) => {
+		if (e.touches.length > 0) return;
+		touchStart = null;
+		consumeTouch = false;
+	};
+
+	window.addEventListener("touchend", endTouch, { passive: true });
+	window.addEventListener("touchcancel", endTouch, { passive: true });
 
 	return {
 		balloonSystem,

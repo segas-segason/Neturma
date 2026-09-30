@@ -14,6 +14,8 @@ let lenisInstance = null;
 export function initAnimationsSmoothScroll() {
 	const lenis = new Lenis({
 		easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+		autoResize: false,
+		virtualScroll: ({ event }) => !event.defaultPrevented,
 	});
 
 	lenis.on("scroll", ScrollTrigger.update);
@@ -21,8 +23,16 @@ export function initAnimationsSmoothScroll() {
 	gsap.ticker.add((time) => lenis.raf(time * 1000));
 	gsap.ticker.lagSmoothing(0);
 
-	const ro = new ResizeObserver(() => lenis.resize());
-	ro.observe(document.querySelector("main") || document.body);
+	let resizeFrame = null;
+	const resizeObserver = new ResizeObserver(() => {
+		if (resizeFrame !== null) return;
+
+		resizeFrame = requestAnimationFrame(() => {
+			resizeFrame = null;
+			lenis.dimensions.resize();
+		});
+	});
+	resizeObserver.observe(document.documentElement);
 
 	let refreshTimer = null;
 	const scheduleRefresh = () => {

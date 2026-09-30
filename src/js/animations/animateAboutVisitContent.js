@@ -14,6 +14,7 @@ export function initAnimateAboutVisitContent(panel) {
 	const faqItems = gsap.utils.toArray(
 		panel.querySelectorAll("[data-questions-block]")
 	);
+	const lineHidden = document.querySelector("[data-visit-line-hidden]");
 
 	const allElements = [ticketBlock, mapContainer, ...faqItems].filter(
 		Boolean
@@ -89,20 +90,29 @@ export function initAnimateAboutVisitContent(panel) {
 			},
 		});
 
-		openTimeline.to(
-			allElements,
-			{
-				opacity: 1,
-				yPercent: 0,
-				duration: 0.5,
-				stagger: {
-					each: 0.1,
-					from: "start",
-					ease: "power2.out",
+		openTimeline
+			.to(
+				allElements,
+				{
+					opacity: 1,
+					yPercent: 0,
+					duration: 0.5,
+					stagger: {
+						each: 0.1,
+						from: "start",
+						ease: "power2.out",
+					},
 				},
-			},
-			0
-		);
+				0
+			)
+
+			.to(
+				lineHidden,
+				{
+					opacity: 0,
+				},
+				0
+			);
 
 		return openTimeline;
 	};
@@ -145,15 +155,20 @@ export function initAnimateAboutVisitContent(panel) {
 			},
 		});
 
-		closeTimeline.to(
-			allElements,
-			{
-				opacity: 0,
-				yPercent: 10,
-				duration: 0.4,
-			},
-			0
-		);
+		closeTimeline
+			.to(
+				allElements,
+				{
+					opacity: 0,
+					yPercent: 10,
+					duration: 0.4,
+				},
+				0
+			)
+
+			.to(lineHidden, {
+				opacity: 1,
+			});
 
 		return closeTimeline;
 	};

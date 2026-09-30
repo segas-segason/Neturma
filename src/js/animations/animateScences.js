@@ -15,12 +15,15 @@ export function initAnimationScenes() {
 	const sceneVisit = initAnimationSceneBackground({
 		canvasSelector: "#man-paint-canvas",
 		triggerSelector: "[data-screen-visit]",
-		frameCount: 150,
+		frameCount: 147,
 		framePath: "/assets/img/man-painter-frames/frame-{index}.webp",
 		start: "top bottom",
-		end: "+=2500",
+		end: "bottom top",
 		scrub: 0,
 		ease: "none",
 		useWindowSize: true,
+		horizontalPosition: 1,
+		mobileHorizontalPan: true,
+		mobileHorizontalStartPosition: 0.5,
 	});
 }

@@ -1,5 +1,8 @@
 import { gsap } from "gsap";
 
+const INTERACTIVE_SELECTOR =
+	'a, button, .cursor-pointer, [role="button"], input, select, textarea';
+
 export function initCursorSquareDecoration() {
 	const isMobileTouch =
 		window.matchMedia("(pointer: coarse)").matches &&
@@ -232,7 +235,7 @@ export function initCursorSquareDecoration() {
 			return;
 		}
 
-		const interactive = e.target.closest("a, button");
+		const interactive = e.target.closest(INTERACTIVE_SELECTOR);
 
 		resetCursor(Boolean(interactive));
 	});
