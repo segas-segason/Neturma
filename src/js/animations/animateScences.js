@@ -3,6 +3,7 @@ import { initAnimationSceneBackground } from "./animateSceneBackground";
 export function initAnimationScenes() {
 	const sceneAbout = initAnimationSceneBackground({
 		canvasSelector: "[data-neturma-canvas]",
+		stableTouchViewport: true,
 		triggerSelector: "[data-about-project]",
 		frameCount: 175,
 		framePath: "/assets/img/neturma-corridor-frames/frame-{index}.webp",
@@ -14,6 +15,8 @@ export function initAnimationScenes() {
 
 	const sceneVisit = initAnimationSceneBackground({
 		canvasSelector: "#man-paint-canvas",
+		stableTouchViewport: true,
+		progressFromBounds: true,
 		triggerSelector: "[data-screen-visit]",
 		frameCount: 147,
 		framePath: "/assets/img/man-painter-frames/frame-{index}.webp",

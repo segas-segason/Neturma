@@ -107,11 +107,13 @@ export function initAnimationStartScrollDown() {
 	const balloonSystem = initBalloons(12);
 	const { balloons, elements: balloonEls } = balloonSystem;
 
-	const isMobile = window.matchMedia("(max-width: 1023px)").matches;
-	const SIZE = isMobile ? 320 : 620;
-
-	const belowViewport = () => ((window.innerHeight + SIZE) / SIZE) * 100;
-	const aboveViewport = () => -((window.innerHeight + SIZE) / SIZE) * 100;
+	const viewportTravel = (index, element) => {
+		const height = element.offsetHeight;
+		const viewportHeight = element.closest("#balloons-layer").clientHeight;
+		return ((viewportHeight + height) / height) * 100;
+	};
+	const belowViewport = viewportTravel;
+	const aboveViewport = (index, element) => -viewportTravel(index, element);
 
 	gsap.set(balloonEls, {
 		yPercent: belowViewport,

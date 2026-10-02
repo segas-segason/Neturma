@@ -20,9 +20,11 @@ export function initAnimationSceneBackground(options) {
 		mobileScrub = 0.15,
 		ease = "power2",
 		useWindowSize = true,
+		stableTouchViewport = false,
 		horizontalPosition = 0.5,
 		mobileHorizontalPan = false,
 		mobileHorizontalStartPosition = 0,
+		progressFromBounds = false,
 		onRender = null,
 	} = options;
 
@@ -41,6 +43,7 @@ export function initAnimationSceneBackground(options) {
 	}
 
 	const context = canvas.getContext("2d");
+	const trigger = document.querySelector(triggerSelector);
 
 	const images = [];
 	const sceneData = {
@@ -55,10 +58,12 @@ export function initAnimationSceneBackground(options) {
 	let lastRenderedFrame = null;
 	let lastRenderedX = null;
 	let lastRenderedY = null;
+	let liveProgressInitialized = false;
 
 	let lastWidth = window.innerWidth;
 	let lastHeight = window.innerHeight;
-	let lockedMobileHeight = window.innerHeight;
+	let stableWidth = null;
+	let stableHeight = null;
 
 	for (let i = 0; i < frameCount; i++) {
 		const img = new Image();
@@ -159,16 +164,19 @@ export function initAnimationSceneBackground(options) {
 			? window.devicePixelRatio || 1
 			: Math.min(window.devicePixelRatio || 1, 1.5);
 
+		if (stableTouchViewport && stableWidth !== window.innerWidth) {
+			canvas.parentElement.style.height = "";
+			canvas.parentElement.style.bottom = "";
+		}
+
 		let width;
 		let height;
 
 		if (useWindowSize) {
 			width = window.innerWidth;
 
-			height = Math.max(
-				window.innerHeight,
-				window.screen.height || window.innerHeight
-			);
+			height = parseFloat(window.getComputedStyle(canvas.parentElement).height)
+				|| window.innerHeight;
 		} else {
 			const rect = canvas.parentElement.getBoundingClientRect();
 
@@ -176,11 +184,31 @@ export function initAnimationSceneBackground(options) {
 			height = rect.height;
 		}
 
+		if (stableTouchViewport && ScrollTrigger.isTouch === 1 && useWindowSize) {
+			if (stableWidth !== width || stableHeight === null) {
+				stableWidth = width;
+				const screenHeight = window.matchMedia("(orientation: landscape)").matches
+					? Math.min(window.screen.width, window.screen.height)
+					: Math.max(window.screen.width, window.screen.height);
+				stableHeight = Math.max(height, window.innerHeight, screenHeight);
+			}
+			height = stableHeight;
+			canvas.parentElement.style.height = `${height}px`;
+			canvas.parentElement.style.bottom = "auto";
+		}
+
 		canvas.style.width = `${width}px`;
 		canvas.style.height = `${height}px`;
 
-		canvas.width = width * dpr;
-		canvas.height = height * dpr;
+		const pixelWidth = Math.round(width * dpr);
+		const pixelHeight = Math.round(height * dpr);
+
+		if (canvas.width === pixelWidth && canvas.height === pixelHeight) {
+			return;
+		}
+
+		canvas.width = pixelWidth;
+		canvas.height = pixelHeight;
 		lastRenderedFrame = null;
 
 		render();
@@ -250,8 +278,35 @@ export function initAnimationSceneBackground(options) {
 		scrollTriggerInstance = tween.scrollTrigger;
 	}
 
+	function updateProgressFromBounds(time, deltaTime = 0) {
+		if (destroyed || ScrollTrigger.isRefreshing || !trigger) return;
+
+		const rect = trigger.getBoundingClientRect();
+		const viewportHeight = window.innerHeight;
+		const progress = Math.min(1, Math.max(0,
+			(viewportHeight - rect.top) / (viewportHeight + rect.height)
+		));
+		const duration = desktopViewport.matches ? scrub : mobileScrub;
+		const factor = !liveProgressInitialized || !duration
+			? 1
+			: 1 - Math.exp(-deltaTime / (duration * 1000));
+
+		sceneData.progress += (progress - sceneData.progress) * factor;
+		if (Math.abs(progress - sceneData.progress) < 0.0001) {
+			sceneData.progress = progress;
+		}
+		sceneData.frame = sceneData.progress * (frameCount - 1);
+		liveProgressInitialized = true;
+		render();
+	}
+
 	function refresh() {
-		if (destroyed || !scrollTriggerInstance) {
+		if (destroyed) return;
+		if (progressFromBounds) {
+			updateProgressFromBounds();
+			return;
+		}
+		if (!scrollTriggerInstance) {
 			return;
 		}
 
@@ -263,7 +318,11 @@ export function initAnimationSceneBackground(options) {
 
 		updateSize();
 
-		createScrollTrigger();
+		if (progressFromBounds) {
+			gsap.ticker.add(updateProgressFromBounds);
+		} else {
+			createScrollTrigger();
+		}
 
 		refresh();
 	});
@@ -272,15 +331,16 @@ export function initAnimationSceneBackground(options) {
 		const currentWidth = window.innerWidth;
 		const currentHeight = window.innerHeight;
 
-		const heightDiff = Math.abs(currentHeight - lastHeight);
-
-		if (currentWidth === lastWidth && heightDiff < 150) {
+		if (
+			currentWidth === lastWidth &&
+			(ScrollTrigger.isTouch === 1 || currentHeight === lastHeight)
+		) {
+			updateSize();
 			return;
 		}
 
 		lastWidth = currentWidth;
 		lastHeight = currentHeight;
-		lockedMobileHeight = currentHeight;
 
 		scrollTriggerInstance?.scrubDuration(
 			desktopViewport.matches ? scrub : mobileScrub
@@ -291,11 +351,15 @@ export function initAnimationSceneBackground(options) {
 	};
 
 	window.addEventListener("resize", resizeHandler);
+	const resizeObserver = new ResizeObserver(updateSize);
+	resizeObserver.observe(canvas.parentElement);
 
 	function destroy() {
 		if (destroyed) return;
 
 		destroyed = true;
+		resizeObserver.disconnect();
+		if (progressFromBounds) gsap.ticker.remove(updateProgressFromBounds);
 
 		if (scrollTriggerInstance) {
 			scrollTriggerInstance.kill();

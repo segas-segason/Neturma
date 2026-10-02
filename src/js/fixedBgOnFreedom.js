@@ -3,14 +3,13 @@ export function initFixedBgOnFreedom() {
 	const wrapper = document.querySelector("[data-freedom-bg-wrapper]");
 	if (!inner || !wrapper) return;
 
-	if (window.matchMedia("(min-width: 1024px)").matches) {
-		inner.style.height = "";
-		wrapper.style.height = "";
-		return;
-	}
+	const desktopViewport = window.matchMedia("(min-width: 1024px)");
+	const updateSize = () => {
+		const height = desktopViewport.matches ? "" : "calc(100lvh + 50px)";
+		inner.style.height = height;
+		wrapper.style.height = height;
+	};
 
-	const maxHeight = Math.max(window.innerHeight, window.screen.height);
-	const finalHeight = maxHeight + 50;
-	inner.style.height = `${finalHeight}px`;
-	wrapper.style.height = `${finalHeight}px`;
+	updateSize();
+	desktopViewport.addEventListener("change", updateSize);
 }

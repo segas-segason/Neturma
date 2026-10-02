@@ -114,7 +114,20 @@ function createLayer() {
 		"position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:100;"
 	);
 	document.body.appendChild(layer);
-	return { layer };
+	let viewportWidth = null;
+	const resizeLayer = () => {
+		if (viewportWidth === window.innerWidth) return;
+		viewportWidth = window.innerWidth;
+		if (!window.matchMedia("(pointer: coarse)").matches) return;
+		const screenHeight = window.matchMedia("(orientation: landscape)").matches
+			? Math.min(window.screen.width, window.screen.height)
+			: Math.max(window.screen.width, window.screen.height);
+		layer.style.height = `${Math.max(window.innerHeight, screenHeight)}px`;
+		layer.style.bottom = "auto";
+	};
+	resizeLayer();
+	window.addEventListener("resize", resizeLayer);
+	return { layer, resizeLayer };
 }
 
 /* ======================= РАСКЛАДКА ======================= */
@@ -399,7 +412,7 @@ function renderString(b, ax, ay, scale, cfg) {
 /* ======================= СБОРКА СЦЕНЫ ======================= */
 
 function buildScene(count, cfg) {
-	const { layer } = createLayer();
+	const { layer, resizeLayer } = createLayer();
 	const slots = stratify(count, cfg);
 
 	const balloons = [];
@@ -431,8 +444,8 @@ function buildScene(count, cfg) {
 	window.addEventListener("touchmove", onTouchMove, { passive: true });
 
 	const update = () => {
-		const vw = window.innerWidth;
-		const vh = window.innerHeight;
+		const vw = layer.clientWidth;
+		const vh = layer.clientHeight;
 		const t = gsap.ticker.time;
 
 		/* --- 1. Естественный дрейф шариков --- */
@@ -724,6 +737,7 @@ function buildScene(count, cfg) {
 
 	const teardown = () => {
 		gsap.ticker.remove(update);
+		window.removeEventListener("resize", resizeLayer);
 		window.removeEventListener("mousemove", onMouseMove);
 		window.removeEventListener("touchmove", onTouchMove);
 		balloons.forEach((b) => {

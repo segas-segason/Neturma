@@ -36,59 +36,6 @@ export function initAnimateOnFreedomContent(panel) {
 	const opened = () => {
 		if (isDestroyed) return;
 
-		flickerMedia.revert();
-		if (background) {
-			flickerMedia.add("(prefers-reduced-motion: no-preference)", () => {
-				const flickerTimeline = gsap.timeline({
-					paused: true,
-					repeat: -1,
-					repeatDelay: 3.7,
-					defaults: { ease: "steps(1)" },
-				});
-
-				flickerTimeline
-					.set(background, { filter: "grayscale(0)" })
-					.to(
-						background,
-						{ filter: "grayscale(1)", duration: 0.1 },
-						0.2
-					)
-					.to(
-						background,
-						{ filter: "grayscale(0)", duration: 0.3 },
-						0.34
-					)
-					.to(
-						background,
-						{ filter: "grayscale(1)", duration: 0.06 },
-						0.58
-					)
-					.to(
-						background,
-						{ filter: "grayscale(0)", duration: 0.1 },
-						0.68
-					)
-					.to(
-						background,
-						{ filter: "grayscale(1)", duration: 0.2 },
-						1.1
-					)
-					.to(
-						background,
-						{ filter: "grayscale(0)", duration: 0.1 },
-						1.38
-					);
-
-				ScrollTrigger.create({
-					trigger: panel,
-					start: "top bottom",
-					end: "bottom top",
-					animation: flickerTimeline,
-					toggleActions: "play pause resume pause",
-				});
-			});
-		}
-
 		if (!backgroundWrapper) return;
 
 		parallaxMedia.revert();

@@ -23,7 +23,7 @@ export function initAnimationAccordionFaq() {
 			},
 		});
 
-		icon.textContent = "−";
+		icon.textContent = "-";
 	}
 
 	function closeItem(item) {

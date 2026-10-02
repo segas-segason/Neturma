@@ -1,5 +1,26 @@
 @import "tailwindcss";
+@source not "../../neturma-theme";
 @plugin "tailwind-clamp";
+
+#page-screen {
+	padding-left: env(safe-area-inset-left, 0px);
+	padding-right: env(safe-area-inset-right, 0px);
+}
+
+@media (max-width: 639px) {
+	#hero {
+		padding-top: max(1.5rem, env(safe-area-inset-top, 0px));
+	}
+
+	#sidebar-toggle {
+		top: max(1.25rem, env(safe-area-inset-top, 0px));
+		right: max(1rem, env(safe-area-inset-right, 0px));
+	}
+}
+
+@utility bg-freedom-mask {
+	background-image: url("/assets/mask-01.svg");
+}
 
 @font-face {
 	font-family: "Hagin Caps Medium";
@@ -351,4 +372,59 @@ html.lenis body {
 
 .lenis-scrolling iframe {
 	@apply pointer-events-none;
+}
+
+@keyframes twinkle {
+	0% {
+		opacity: 0.1;
+	}
+
+	15% {
+		opacity: 0.1;
+	}
+	15.75% {
+		opacity: 0.6;
+	}
+	16.25% {
+		opacity: 0;
+	}
+
+	30% {
+		opacity: 0;
+	}
+	30.75% {
+		opacity: 0.6;
+	}
+	31.5% {
+		opacity: 0;
+	}
+	32% {
+		opacity: 0.7;
+	}
+
+	50% {
+		opacity: 0;
+	}
+	50.25% {
+		opacity: 0.5;
+	}
+
+	70% {
+		opacity: 0;
+	}
+	70.25% {
+		opacity: 0.4;
+	}
+	70.5% {
+		opacity: 0.1;
+	}
+	71% {
+		opacity: 0.4;
+	}
+	71.5% {
+		opacity: 0.6;
+	}
+	72% {
+		opacity: 0.1;
+	}
 }

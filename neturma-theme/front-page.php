@@ -4,7 +4,13 @@
 <head>
     <base href="<?php echo esc_url( trailingslashit( get_template_directory_uri() ) ); ?>">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <script>document.documentElement.classList.add("hero-pending");</script>
+    <style>
+        .hero-pending :is(#hero-year, #hero-city, #logo-head, #hero-slogan, #hero-btn-down, #sidebar-toggle, #air) {
+            visibility: hidden;
+        }
+    </style>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <?php wp_head(); ?>
 </head>
@@ -12,9 +18,9 @@
 <body id="page" class="font-body bg-secondary text-2xl text-semilight selection:bg-primary selection:text-secondary"><?php wp_body_open(); ?>
     <div id="page-wrapper">
         <div id="page-screen" class="w-full flex flex-col items-center overflow-hidden">
-            <section id="hero" class="w-full min-h-dvh py-6 sm:py-10 lg:py-16 flex justify-center">
+            <section id="hero" class="w-full min-h-svh py-6 sm:py-10 lg:py-16 flex justify-center">
                 <div
-                    class="flex flex-col justify-between items-center h-full min-h-[calc(100dvh-3rem)] sm:min-h-[calc(100dvh-5rem)] lg:min-h-[calc(100dvh-8rem)] w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] lg:w-[calc(100%-8rem)] max-w-406.25">
+                    class="flex flex-col justify-between items-center h-full min-h-[calc(100svh-3rem)] sm:min-h-[calc(100svh-5rem)] lg:min-h-[calc(100svh-8rem)] w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] lg:w-[calc(100%-8rem)] max-w-406.25">
 
                     <div class="overflow-hidden">
                         <p id="hero-year" class="font-deco clamp-[text,xl,2xl,xs,2xl] font-bold will-change-transform">
@@ -138,7 +144,8 @@
                             </div>
                         </div>
 
-                        <div class="fixed inset-0 w-full pointer-events-none overflow-hidden z-0" data-scene-bg-neturma>
+                        <div class="fixed inset-0 w-full pointer-events-none overflow-hidden z-0 h-lvh"
+                            data-scene-bg-neturma>
                             <canvas id="neturma-canvas" class="block size-full" data-neturma-canvas></canvas>
                         </div>
                     </div>
@@ -335,14 +342,14 @@
                                     class="mx-auto w-full max-w-406.25 px-4 sm:px-8 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)] xl:px-0">
                                     <div class="relative bg-neutral
                                     before:pointer-events-none before:absolute before:inset-y-0 before:left-0 before:w-3
-                                    before:bg-[radial-gradient(circle_at_0_12.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_37.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_62.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_87.5%,var(--color-secondary)_0_8px,transparent_8.5px)]
+                                    before:bg-[radial-gradient(circle_at_0_8.333%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_25%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_41.667%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_58.333%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_75%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_0_91.667%,var(--color-secondary)_0_8px,transparent_8.5px)]
                                     sm:before:w-5 sm:before:bg-[radial-gradient(circle_at_0_12.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_0_37.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_0_62.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_0_87.5%,var(--color-secondary)_0_12px,transparent_12.5px)]
                                     after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:w-3
-                                    after:bg-[radial-gradient(circle_at_100%_12.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_37.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_62.5%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_87.5%,var(--color-secondary)_0_8px,transparent_8.5px)]
+                                    after:bg-[radial-gradient(circle_at_100%_8.333%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_25%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_41.667%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_58.333%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_75%,var(--color-secondary)_0_8px,transparent_8.5px),radial-gradient(circle_at_100%_91.667%,var(--color-secondary)_0_8px,transparent_8.5px)]
                                     sm:after:w-5 sm:after:bg-[radial-gradient(circle_at_100%_12.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_100%_37.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_100%_62.5%,var(--color-secondary)_0_12px,transparent_12.5px),radial-gradient(circle_at_100%_87.5%,var(--color-secondary)_0_12px,transparent_12.5px)]"
                                         data-tickets-block>
                                         <div
-                                            class="flex w-full flex-col gap-6 px-4 py-8 sm:py-12 sm:px-8 md:clamp-[px,2.5rem,5rem,sm,xl] xl:gap-6 xl:px-20.5">
+                                            class="flex w-full flex-col gap-6 px-4 py-8 sm:py-12 sm:px-8 md:clamp-[px,2.5rem,5rem,sm,xl] xl:gap-6 xl:px-20.5 text-center">
 
                                             <h3
                                                 class="text-2xl uppercase -mb-2 text-bold sm:text-3xl md:text-4xl xl:text-[40px]">
@@ -381,19 +388,18 @@
                                         Вопросы и ответы
                                     </h3>
                                 </div>
-                                <div class="px-4 tracking-[10%] text-muted sm:px-6 xl:px-6 clamp-[text,xl,3xl,xs,2xl]">
+                                <div class="px-4 tracking-[10%] text-muted sm:px-6 clamp-[text,xl,3xl,xs,2xl]">
                                     <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
                                         <button type="button"
                                             class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
-                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span class="faq-item__icon absolute left-4 min-[1800px]:left-12">+</span>
                                             <span
-                                                class="ml-10 xl:mx-auto max-w-406.25 text-semibold md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)]">
+                                                class="mx-10 max-w-406.25 text-semibold xl:w-[calc(100%-5rem)] xl:mx-auto">
                                                 Что такое «НЕтюрьма»?
                                             </span>
                                         </button>
                                         <div class="faq-item__content h-0 overflow-hidden">
-                                            <p
-                                                class="mx-auto w-full max-w-406.25 pb-6 md:w-[calc(100%-4rem)] xl:w-[calc(100%-8rem)]">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-5rem)]">
                                                 «НЕтюрьма» — это арт-город, который не стирает прошлое,
                                                 а&nbsp;<strong>«консервирует» его</strong>, сохраняя для будущих
                                                 поколений. Мы даём художникам и гостям простор для творчества,
@@ -410,14 +416,14 @@
                                     <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
                                         <button type="button"
                                             class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
-                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span class="faq-item__icon absolute left-4 min-[1800px]:left-12">+</span>
                                             <span
-                                                class="ml-10 xl:mx-auto max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                class="mx-10 max-w-406.25 text-semibold xl:w-[calc(100%-5rem)] xl:mx-auto">
                                                 Это правда бывшая тюрьма?
                                             </span>
                                         </button>
                                         <div class="faq-item__content h-0 overflow-hidden">
-                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-5rem)]">
                                                 Да, за 150 с лишним лет «НЕтюрьма» успела послужить острогом,
                                                 Домом
                                                 труда, колонией для несовершеннолетних, детским домом и
@@ -436,14 +442,14 @@
                                     <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
                                         <button type="button"
                                             class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
-                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span class="faq-item__icon absolute left-4 min-[1800px]:left-12">+</span>
                                             <span
-                                                class="ml-10 xl:mx-auto max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                class="mx-10 max-w-406.25 text-semibold xl:w-[calc(100%-5rem)] xl:mx-auto">
                                                 Почему такое название — «НЕтюрьма»?
                                             </span>
                                         </button>
                                         <div class="faq-item__content h-0 overflow-hidden">
-                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-5rem)]">
                                                 Название работает в двух смыслах. Во-первых, это
                                                 прямая&nbsp;<strong>
                                                     отсылка к
@@ -464,14 +470,14 @@
                                     <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
                                         <button type="button"
                                             class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
-                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span class="faq-item__icon absolute left-4 min-[1800px]:left-12">+</span>
                                             <span
-                                                class="ml-10 xl:mx-auto w-full max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                class="mx-10 max-w-406.25 text-semibold xl:w-[calc(100%-5rem)] xl:mx-auto">
                                                 Где вы находитесь?
                                             </span>
                                         </button>
                                         <div class="faq-item__content h-0 overflow-hidden">
-                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-5rem)]">
                                                 Мы в сердце Мышкина, на его главной исторической улице, с лучшим
                                                 видом
                                                 на Волгу. <strong>Адрес:</strong> Ярославская обл., г. Мышкин,
@@ -484,18 +490,18 @@
                                     <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
                                         <button type="button"
                                             class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
-                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span class="faq-item__icon absolute left-4 min-[1800px]:left-12">+</span>
                                             <span
-                                                class="ml-10 xl:mx-auto w-full max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                class="mx-10 max-w-406.25 text-semibold xl:w-[calc(100%-5rem)] xl:mx-auto">
                                                 Что можно увидеть и сделать на территории?
                                             </span>
                                         </button>
                                         <div class="faq-item__content h-0 overflow-hidden">
-                                            <p class="ml-10 mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-5rem)]">
                                                 «НЕтюрьма» — это целый мир. Вы можете:
                                             </p>
                                             <ul
-                                                class="mx-auto w-full max-w-406.25 pb-6 pl-7 list-disc xl:w-[calc(100%-8rem)]">
+                                                class="mx-auto w-full max-w-406.25 pb-6 pl-7 list-disc xl:w-[calc(100%-5rem)]">
                                                 <li>Погрузиться в&nbsp;<strong>историю места</strong>&nbsp;в
                                                     нашей
                                                     экспозиции.</li>
@@ -523,14 +529,15 @@
                                     <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
                                         <button type="button"
                                             class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
-                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span class="faq-item__icon absolute left-4 min-[1800px]:left-12">+</span>
                                             <span
-                                                class="ml-10 xl:mx-auto w-full max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                class="mx-10 max-w-406.25 text-semibold xl:w-[calc(100%-5rem)] xl:mx-auto">
                                                 Можно ли провести фото- или видеосъёмку?
                                             </span>
                                         </button>
+
                                         <div class="faq-item__content h-0 overflow-hidden">
-                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-5rem)]">
                                                 <strong>Конечно!</strong> «НЕтюрьма» — готовая, драматичная
                                                 съёмочная
                                                 площадка.
@@ -550,15 +557,15 @@
                                     <article class="faq-item border-b-2 border-primary last:border-b-0" data-question>
                                         <button type="button"
                                             class="faq-item__trigger relative flex w-full cursor-pointer py-6 text-left">
-                                            <span class="faq-item__icon absolute left-4 sm:left-6 xl:left-12">+</span>
+                                            <span class="faq-item__icon absolute left-4 min-[1800px]:left-12">+</span>
                                             <span
-                                                class="ml-10 xl:mx-auto w-full max-w-406.25 text-semibold xl:w-[calc(100%-8rem)]">
+                                                class="mx-10 max-w-406.25 text-semibold xl:w-[calc(100%-5rem)] xl:mx-auto">
                                                 А можно организовать мероприятие (праздник, корпоратив,
                                                 воркшоп)?
                                             </span>
                                         </button>
                                         <div class="faq-item__content h-0 overflow-hidden">
-                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-8rem)]">
+                                            <p class="mx-auto w-full max-w-406.25 pb-6 xl:w-[calc(100%-5rem)]">
                                                 <strong>Да, это одна из наших ключевых функций</strong>. У нас
                                                 есть
                                                 уютное кафе-лофт и
@@ -575,13 +582,11 @@
                             </div>
                         </div>
 
-                        <div class="min-h-dvh w-full relative z-0 [clip-path:inset(0)] inset-0 " data-screen-visit>
-                            <div class="fixed inset-0 w-full pointer-events-none h-full" data-scene-bg-man-paint>
+                        <div class="h-svh w-full relative z-0 [clip-path:inset(0)] inset-0 " data-screen-visit>
+                            <div class="fixed inset-0 w-full pointer-events-none h-lvh" data-scene-bg-man-paint>
                                 <canvas id="man-paint-canvas" class="block size-full" data-man-paint-canvas></canvas>
                             </div>
                         </div>
-
-                        
                     </div>
 
                     <div id="line-divider" data-visit-line-hidden
@@ -664,8 +669,11 @@
 
                         <div class="w-full absolute z-0 inset-0" data-freedom-bg-inner>
                             <div class="fixed inset-0 w-full pointer-events-none h-lvh" data-freedom-bg-wrapper>
-                                <img src="assets/img/freedom-bg.webp" alt=""
-                                    class="size-full object-cover object-[60%] lg:object-center" data-freedom-bg>
+                                <div class="size-full relative before:absolute before:inset-0 before:bg-freedom-mask before:bg-cover before:bg-position-[60%_center] before:bg-no-repeat lg:before:bg-center before:mix-blend-multiply before:opacity-10 before:animate-[twinkle_10s_linear_infinite] before:z-2"
+                                    data-freedom-bg>
+                                    <img src="assets/img/freedom-bg.webp" alt=""
+                                        class="size-full object-cover object-[60%] lg:object-center">
+                                </div>
                             </div>
                         </div>
                     </div>

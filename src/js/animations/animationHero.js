@@ -5,7 +5,10 @@ export function initAnimationHero() {
 	const heroSection = document.querySelector("#hero");
 	const toggle = document.querySelector("#sidebar-toggle");
 
-	if (!heroSection) return;
+	if (!heroSection) {
+		document.documentElement.classList.remove("hero-pending");
+		return;
+	}
 
 	const year = heroSection.querySelector("#hero-year");
 	const city = heroSection.querySelector("#hero-city");
@@ -14,7 +17,10 @@ export function initAnimationHero() {
 	const btnDown = heroSection.querySelector("#hero-btn-down");
 	const dustLayer = document.querySelector("#air");
 
-	if (!dustLayer) return;
+	if (!dustLayer) {
+		document.documentElement.classList.remove("hero-pending");
+		return;
+	}
 
 	const enableLogoMask = initAnimationLogoMaskEffect();
 
@@ -51,6 +57,8 @@ export function initAnimationHero() {
 		scale: 0,
 		transformOrigin: "center center",
 	});
+
+	document.documentElement.classList.remove("hero-pending");
 
 	const tl = gsap.timeline({
 		delay: 0.2,
